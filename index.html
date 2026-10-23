@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BURROW OUTFIT TOOL</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bowlby+One&family=Nunito:wght@600;800&display=swap');
+body{margin:0;padding:8px;min-height:100vh;display:flex;align-items:center;background:#d9d9d9}
+body.ajp-dark{background:#121212}
+body>#ajp{width:100%}
+#ajp{--panel:#fff;--text:#222;--muted:#777;--slotbg:#fafafa;--slotbd:#ccc;--btn:#222;--btnfg:#fff;--sec:#eee;--secfg:#222;--pill:#f0f0f0;--ring:#222;
+  font-family:'Nunito',system-ui,sans-serif;max-width:1000px;margin:0 auto;padding:12px 32px;color:var(--text);background:var(--panel);text-align:center;
+  border-radius:16px;border:12px solid rgba(255,255,255,.5);background-clip:padding-box}
+#ajp.dark{--panel:#1e1e1e;--text:#eee;--muted:#999;--slotbg:#262626;--slotbd:#555;--btn:#eee;--btnfg:#111;--sec:#333;--secfg:#eee;--pill:#2a2a2a;--ring:#fff;border-color:rgba(255,255,255,.12)}
+#ajp *{box-sizing:border-box}
+#ajp header{position:sticky;top:0;z-index:25;background:var(--panel);display:flex;align-items:baseline;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:6px;padding:4px 90px 6px}
+#ajp h1{font-family:'Bowlby One',Impact,sans-serif;text-transform:uppercase;font-weight:400;letter-spacing:1px;font-size:clamp(20px,3vw,28px);margin:0}
+#ajp .sub{font-weight:600;color:var(--muted);font-size:13px}
+#ajp #theme{position:absolute;right:0;top:0;font-family:inherit;font-weight:800;font-size:12px;padding:6px 10px;border:0;border-radius:6px;background:var(--sec);color:var(--secfg);cursor:pointer}
+#ajp .top{display:flex;gap:20px;align-items:center;justify-content:space-between;width:min(100%,max(620px,calc((100vh - 390px) * 1.538)));margin:0 auto 6px}
+#ajp .ctl{flex:1;display:flex;flex-direction:column;gap:12px;align-items:center;min-width:0}
+#ajp .slots{display:flex;gap:12px;justify-content:center}
+#ajp .slot{position:relative;width:84px;height:84px;border:2px dashed var(--slotbd);border-radius:6px;background:var(--slotbg);cursor:default}
+#ajp .slot.filled{border:0;cursor:grab;box-shadow:inset 0 0 0 1px rgba(128,128,128,.35)}
+#ajp .slot.over{outline:3px solid var(--ring)}
+#ajp .num{position:absolute;left:0;right:0;bottom:5px;font-weight:800;font-size:18px}
+#ajp .idx{position:absolute;top:5px;left:8px;font-weight:800;font-size:12px;opacity:.8}
+#ajp .label{position:absolute;top:50%;left:0;right:0;transform:translateY(-50%);font-size:11px;font-weight:600;color:var(--muted)}
+#ajp .act{display:flex;flex-direction:column;gap:8px;align-items:center}
+#ajp .act .r{display:flex;gap:8px;align-items:center;justify-content:center}
+#ajp .act button,#ajp .add button{font-family:inherit;font-weight:800;padding:9px 16px;border:0;border-radius:6px;background:var(--btn);color:var(--btnfg);font-size:15px;cursor:pointer}
+#ajp .act button.sec,#ajp .add button.sec{background:var(--sec);color:var(--secfg)}
+#ajp .act button:hover,#ajp #theme:hover{opacity:.85}
+#ajp #result{font-size:21px;font-weight:800;min-width:130px;padding:6px 10px;background:var(--pill);border-radius:6px}
+#ajp .prev{flex:0 0 210px;display:flex;flex-direction:column;gap:8px;position:relative}
+#ajp #item-input{width:100%;font-family:inherit;font-weight:700;font-size:14px;padding:9px 10px;border:2px solid var(--slotbd);border-radius:6px;background:var(--slotbg);color:var(--text)}
+#ajp #item-results{position:absolute;top:46px;right:0;width:340px;max-width:92vw;max-height:340px;overflow-y:auto;z-index:30;margin:0;padding:4px;list-style:none;text-align:left;background:var(--panel);border:2px solid var(--slotbd);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#ajp #item-results[hidden]{display:none}
+#ajp #item-results li{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:700}
+#ajp #item-results li:hover,#ajp #item-results li.active{background:var(--pill)}
+#ajp #item-results img,#ajp #item-results .ph{width:56px;height:56px;object-fit:contain;flex:0 0 56px;background:var(--slotbg);border-radius:6px}
+#ajp #item-results li.note{cursor:default;color:var(--muted);font-weight:600;font-size:13px}
+#ajp .pbox{position:relative;height:170px;padding:16px;border-radius:6px;background:var(--slotbg);border:2px dashed var(--slotbd);display:flex;align-items:center;justify-content:center;overflow:hidden}
+#ajp .pbox canvas{max-width:100%;max-height:100%;width:auto;height:auto;display:block}
+#ajp .pbox .ph[hidden]{display:none}
+#ajp .pbox .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;font-size:12px;font-weight:600;color:var(--muted);padding:0 12px}
+#ajp #pickfolder{font-family:inherit;font-weight:800;font-size:12px;padding:7px 12px;border:0;border-radius:6px;background:var(--btn);color:var(--btnfg);cursor:pointer}
+#ajp #pickfolder[hidden]{display:none}
+#ajp .hint{font-size:12px;color:var(--muted);margin:0 0 8px}
+#ajp .grid{font-size:12px;display:grid;grid-template-columns:repeat(20,1fr);margin:0 auto;width:min(100%,calc((100vh - 390px) * 1.538))}
+#ajp .grid button{aspect-ratio:1;border:0;border-radius:0;cursor:pointer;padding:0;font-family:inherit;font-weight:800;font-size:inherit;line-height:1}
+#ajp .grid button:hover{outline:3px solid #fff;outline-offset:-3px}
+#ajp .saved{margin-top:28px;text-align:left}
+#ajp .saved h3{font-weight:800;font-size:16px;margin:0 0 8px;text-align:center}
+#ajp .add{display:flex;gap:8px;justify-content:center;margin-bottom:10px;flex-wrap:wrap}
+#ajp .add input{font-family:inherit;font-weight:800;font-size:15px;padding:8px 10px;border:2px solid var(--slotbd);border-radius:6px;background:var(--slotbg);color:var(--text);width:170px}
+#ajp #savedList{max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-right:4px}
+#ajp .srow{display:flex;align-items:center;gap:12px;background:var(--pill);border-radius:8px;padding:8px 10px;flex-wrap:wrap}
+#ajp .strip{display:flex;border-radius:4px;overflow:hidden;flex:0 0 auto}
+#ajp .strip div{width:56px;height:44px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:3px;font-weight:800;font-size:14px}
+#ajp .strip div.none{background:repeating-linear-gradient(45deg,var(--slotbg),var(--slotbg) 5px,var(--slotbd) 5px,var(--slotbd) 6px);color:var(--muted);align-items:center;padding:0}
+#ajp .scode{font-weight:800;font-size:18px;flex:1;min-width:110px}
+#ajp .srow button{font-family:inherit;font-weight:800;font-size:13px;padding:7px 12px;border:0;border-radius:6px;background:var(--btn);color:var(--btnfg);cursor:pointer}
+#ajp .srow button.sec{background:var(--sec);color:var(--secfg)}
+#ajp .srow button:hover{opacity:.85}
+#ajp .empty{text-align:center;color:var(--muted);font-size:13px;padding:14px}
+#ajp .foot{margin-top:12px;font-size:10px;color:var(--muted);opacity:.8}
+#ajp .foot a{color:inherit;text-decoration:underline}
+#ajp .msg{min-height:16px;font-size:12px;color:var(--muted);margin:4px 0}
+#ajp .titlewrap{display:flex;align-items:center;gap:10px}
+#ajp #info{width:26px;height:26px;padding:0;border:0;border-radius:50%;background:var(--sec);color:var(--secfg);font-family:'Bowlby One',Impact,sans-serif;font-size:14px;line-height:1;cursor:pointer;flex:0 0 auto}
+#ajp #info:hover{opacity:.85}
+#about{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);font-family:'Nunito',system-ui,sans-serif}
+#about[hidden]{display:none}
+#about .box{--panel:#fff;--text:#222;--muted:#777;--btn:#222;--btnfg:#fff;background:var(--panel);color:var(--text);max-width:460px;width:100%;max-height:90vh;overflow-y:auto;padding:24px 28px;border-radius:16px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+#about.dark .box{--panel:#1e1e1e;--text:#eee;--muted:#999;--btn:#eee;--btnfg:#111}
+#about p{margin:0 0 12px;font-weight:600;font-size:14px;line-height:1.5;color:var(--muted)}
+#about a{color:var(--text);font-weight:800;text-decoration:underline;word-break:break-word}
+#about a:hover{opacity:.7}
+#about button{font-family:inherit;font-weight:800;font-size:15px;padding:9px 22px;border:0;border-radius:6px;background:var(--btn);color:var(--btnfg);cursor:pointer;margin-top:4px}
+#about button:hover{opacity:.85}
+@media (max-width:800px){
+  #ajp header{padding:0}
+  #ajp #theme{position:static}
+  #ajp .top{flex-direction:column;width:100%}
+  #ajp .prev{flex:none;width:100%;max-width:320px}
+  #ajp .grid{width:100%}
+}
+
+#ajp .nav{display:flex;gap:8px;justify-content:center;margin:0 0 14px}
+#ajp .nav button{font-family:inherit;font-weight:800;font-size:14px;padding:8px 18px;border:0;border-radius:6px;background:var(--sec);color:var(--secfg);cursor:pointer}
+#ajp .nav button.on{background:var(--btn);color:var(--btnfg)}
+#ajp .nav a{font-family:inherit;font-weight:800;font-size:14px;padding:8px 18px;border-radius:6px;background:var(--sec);color:var(--secfg);text-decoration:none;display:inline-block}
+#ajp .nav a:hover{opacity:.85}
+#pg-outfit[hidden],#pg-color[hidden]{display:none}
+#ajp.wide{max-width:none;margin:0;min-height:calc(100vh - 16px);border-width:6px;padding:8px 16px}
+#ajp.wide .nav{margin-bottom:8px}
+#ajp .o3{display:grid;grid-template-columns:minmax(240px,1fr) minmax(320px,1.25fr) minmax(360px,1.25fr);gap:16px;text-align:left;align-items:stretch}
+#o-worn{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:8px;align-content:start;overflow-y:auto;max-height:max(320px,calc(100vh - 190px))}
+#o-panel{overflow-y:auto;overflow-x:hidden;max-height:max(320px,calc(100vh - 195px))}
+#ajp .oc{background:var(--pill);border-radius:10px;padding:10px;min-width:0}
+#ajp .o3 button,#o-ov button{font-family:inherit;font-weight:800;font-size:13px;padding:7px 10px;border:0;border-radius:6px;background:var(--btn);color:var(--btnfg);cursor:pointer}
+#ajp .o3 button.sec,#o-ov button.sec{background:var(--sec);color:var(--secfg)}
+#ajp .o3 input[type=text],#ajp .o3 input:not([type]){width:100%;font-family:inherit;font-weight:700;font-size:14px;padding:8px 10px;border:2px solid var(--slotbd);border-radius:6px;background:var(--slotbg);color:var(--text)}
+#ajp .osearch{position:relative;margin-bottom:8px}
+#ajp #o-res{position:absolute;top:42px;left:0;width:380px;max-width:88vw;max-height:360px;overflow-y:auto;z-index:30;margin:0;padding:4px;list-style:none;background:var(--panel);border:2px solid var(--slotbd);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#ajp #o-res[hidden]{display:none}
+#ajp #o-res li{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:700}
+#ajp #o-res li:hover{background:var(--pill)}
+#ajp #o-res li.note{cursor:default;color:var(--muted);font-weight:600}
+#ajp #o-res img{width:48px;height:48px;object-fit:contain;flex:0 0 48px}
+#ajp .ocard{background:var(--slotbg);border-radius:8px;padding:8px;text-align:center}
+#ajp .othumb{display:block;margin:0 auto 4px;max-width:100%;max-height:100px;width:auto;height:auto}
+#ajp .oname{font-weight:800;font-size:13px;margin-bottom:6px}
+#ajp .obtn{display:flex;gap:6px;justify-content:center}
+#ajp .obtn button{padding:5px 9px;font-size:15px}
+#ajp .onote{color:var(--muted);font-size:13px;font-weight:600;text-align:center;padding:6px}
+#ajp .oavrow{display:flex;flex-direction:column;gap:6px;margin-bottom:8px;font-size:13px;font-weight:700}
+#ajp .oavrow label{display:flex;gap:6px;align-items:center}
+#ajp .ostage{min-height:max(280px,calc(100vh - 375px));display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--slotbg);border-radius:8px;padding:10px;overflow:hidden}
+#ajp #o-cv{image-rendering:pixelated;object-fit:contain;max-width:100%;max-height:max(260px,calc(100vh - 395px))}
+#ajp .oact{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+#ajp .oact input{flex:1;min-width:110px}
+#ajp .orow{display:flex;align-items:center;gap:8px;background:var(--slotbg);border-radius:8px;padding:4px 8px;margin-top:6px;font-weight:800;font-size:13px}
+#ajp .orow img{height:44px;width:auto}#ajp .orow span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#ajp{--tab:rgba(255,255,255,.28);--tabon:rgba(255,255,255,.6)}
+#ajp.dark{--tab:rgba(255,255,255,.06);--tabon:rgba(255,255,255,.14)}
+#ajp .otabs{display:flex;gap:3px;margin-bottom:0}
+#ajp .otabs button{flex:1;background:var(--tab);color:var(--muted);border-radius:10px 10px 0 0}
+#ajp .otabs button.on{background:var(--tabon);color:var(--text)}
+#o-panel{background:var(--tabon);border-radius:0 0 10px 10px;padding:12px}
+#ajp .otitle{font-weight:800;font-size:13px;margin:8px 0 4px}
+#ajp .pslots{display:flex;gap:4px;margin-bottom:4px}
+#ajp .o3 .pslots button,#o-ov .pslots button{flex:1;height:30px;padding:0;font-size:12px;border-radius:4px}
+#ajp .pslots button.on{outline:3px solid var(--ring);outline-offset:1px}
+#ajp .pgrid{display:grid;grid-template-columns:repeat(20,1fr);width:min(100%,calc((max(320px,100vh - 250px) - var(--rsv,70px)) / var(--n,1) * 1.4286));min-width:180px;margin:0 auto}
+#ajp .pgrid button.on{box-shadow:inset 0 0 0 2px #000,inset 0 0 0 4px #fff}
+#ajp .o3 .pgrid button,#o-ov .pgrid button{aspect-ratio:1;padding:0;border-radius:0;font-size:0}
+#ajp .pgrid button:hover{outline:2px solid #fff;outline-offset:-2px}
+#ajp .opick{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:4px}
+#ajp .opv{flex:0 0 auto;width:140px;height:140px;padding:8px;box-sizing:border-box;object-fit:contain;image-rendering:pixelated;background:var(--slotbg);border:3px solid var(--slotbd);border-radius:16px}
+#ajp .olab{text-align:center;font-weight:800;font-size:13px;margin-bottom:6px}
+#o-ov{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px}
+#o-ov[hidden]{display:none}
+#o-ov .box{background:var(--panel);color:var(--text);width:min(92vw,720px);max-height:92vh;overflow-y:auto;padding:16px;border-radius:14px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Nunito',system-ui,sans-serif}
+#o-ov .box>.l{flex:1 1 220px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--slotbg);border-radius:8px;padding:8px}
+#o-ov .box>.r{flex:1 1 280px;min-width:0}
+#o-ov .oview{display:flex;gap:6px;margin-bottom:8px;width:100%}
+#o-ov .oview button{flex:1;background:var(--sec);color:var(--secfg)}
+#o-ov .oview button.on{background:var(--btn);color:var(--btnfg)}
+#o-ovcv{image-rendering:pixelated;object-fit:contain;max-width:100%;max-height:60vh}
+#ajp .oavsel{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14px;white-space:nowrap}
+#ajp .oavwrap{position:relative;flex:1;min-width:0}
+#ajp #o-av{padding-right:28px;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+#ajp #o-avres{position:absolute;top:42px;left:0;right:0;max-height:360px;overflow-y:auto;z-index:30;margin:0;padding:4px;list-style:none;background:var(--panel);border:2px solid var(--slotbd);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#ajp #o-avres[hidden]{display:none}
+#ajp #o-avres li{padding:6px 10px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:700}
+#ajp #o-avres li:hover{background:var(--pill)}#ajp #o-avres li.note{cursor:default;color:var(--muted);font-weight:600}
+#o-ov .box{width:min(94vw,780px)}
+#o-ov .box>.r{flex:1 1 340px}
+#o-ov .slots{gap:8px;justify-content:center;margin-bottom:8px}
+#o-ov .slot{width:64px;height:64px}
+#o-ov .act{margin-top:6px}
+#o-ov .act button{padding:7px 12px;font-size:13px}
+#o-ov .pr{font-size:16px;font-weight:800;min-width:110px;padding:5px 8px;background:var(--pill);border-radius:6px;text-align:center}
+#o-ov .grid{width:100%;font-size:7px;margin:10px 0 0}
+#o-ov .grid button:hover{outline-width:2px}
+@media (max-width:900px){#ajp .o3{grid-template-columns:1fr}#o-worn,#o-panel{max-height:none}#ajp #o-res{width:100%}}
+#ajp .o3 .oview{display:flex;gap:6px;margin-bottom:8px}
+#ajp .o3 .oview button{flex:1;background:var(--sec);color:var(--secfg)}
+#ajp .o3 .oview button.on{background:var(--btn);color:var(--btnfg)}
+#ajp .o3 .oact button[hidden]{display:none}
+@media (max-width:900px){#ajp .pgrid{width:100%}}
+#ajp .pgrid{border:3px solid var(--slotbd);border-radius:10px;overflow:hidden}
+#ajp .otitle{text-align:center;font-size:14px;margin:0 0 6px}
+#o-panel>div{margin-bottom:22px}
+#ajp .o3 .opick button{width:72px;height:72px;padding:0;font-size:34px;line-height:1;border-radius:50%}
+#o-ov .box{width:min(96vw,1300px);max-height:96vh;padding:22px;gap:24px}
+#o-ov .box>.l{flex:1 1 420px}
+#o-ov .box>.r{flex:1 1 520px}
+#o-ovcv{width:100%;height:min(62vh,640px);max-height:none}
+#o-ov .slot{width:84px;height:84px}
+#o-ov .grid{font-size:11px}
+#o-ov .pr{font-size:20px;min-width:140px}
+#o-ov .act button{font-size:15px;padding:9px 16px}
+#o-ov .box>.s{flex:0 1 230px;min-width:180px;display:flex;flex-direction:column;align-self:stretch}
+#o-ov .s .st{font-weight:800;font-size:14px;text-align:center;margin-bottom:8px}
+#o-ovs{flex:1 1 0;min-height:160px;max-height:min(70vh,640px);overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-right:4px}
+#o-ovs .sp{display:flex;flex-direction:column;gap:4px;width:100%;padding:6px;border-radius:8px;background:var(--pill);color:var(--text);border:2px solid transparent;cursor:pointer;flex:0 0 auto}
+#o-ov #o-ovs button.sp{background:var(--pill);color:var(--text);padding:6px}
+#o-ovs .sp:hover{border-color:var(--ring)}
+#o-ovs .sp .sw{display:flex;height:30px;border-radius:4px;overflow:hidden}
+#o-ovs .sp .sw i{flex:1;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:11px;font-weight:800}
+#o-ovs .sp .sc{font-size:12px;font-weight:700;color:var(--muted)}
+#o-ovs .sn{color:var(--muted);font-size:13px;font-weight:600;text-align:center;padding:6px}
+/* in-game preview sits smaller, with room around it */
+#o-opal{margin-top:10px;background:var(--tabon);border-radius:10px;padding:12px}
+#o-opal .otitle{margin:0 0 8px}
+#o-opg{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+#o-opg i{width:36px;height:36px;display:block;border-radius:4px;cursor:grab;box-shadow:inset 0 0 0 1px rgba(128,128,128,.35)}
+#o-opg.clk i{cursor:pointer}
+#o-opg i:hover{outline:2px solid var(--ring);outline-offset:1px}
+#ajp .pgrid.drop{outline:3px solid var(--ring);outline-offset:2px}
+#o-ovcv.game{padding:min(12vh,120px) 21%}   /* same canvas box as Dress Up, so the window never resizes; the sprite just sits smaller inside */
+</style></head>
+<body data-ajp-page>
+<div id="about" role="dialog" aria-modal="true" aria-labelledby="about-title" hidden>
+  <div class="box">
+    <p id="about-title">This website was coded entirely using Claude by a person who knows nothing about code and something about better user-centered design.</p>
+    <p>This website only exists thanks to the lovely open-source resources listed below:</p>
+    <p>The OG Color Picker - <a href="https://aj-color-picker.carrd.co" target="_blank" rel="noopener noreferrer">aj-color-picker.carrd.co</a><br>
+    AJB Lookbook - <a href="https://warpedfart.github.io/ajb-lookbook/" target="_blank" rel="noopener noreferrer">warpedfart.github.io/ajb-lookbook/</a><br>
+    AJ Assets - <a href="https://ajfeetpics.art/" target="_blank" rel="noopener noreferrer">ajfeetpics.art</a><br>
+    Backgrounds - <a href="https://www.animaljamarchives.com/" target="_blank" rel="noopener noreferrer">animaljamarchives.com</a></p>
+    <button id="about-ok" type="button">I understand</button>
+  </div>
+</div>
+<div id="ajp">
+<header>
+  <div class="titlewrap"><h1>BURROW OUTFIT TOOL</h1><button id="info" type="button" aria-label="About this website" title="About this website">i</button></div>
+  <button id="theme">Dark mode</button>
+</header>
+<nav class="nav"><button id="n-outfit" class="on" type="button">Outfit creator</button><button id="n-color" type="button">Palette creator</button><a id="n-cat" href="https://warpedfart.github.io/ajb-lookbook/clothing.html" target="_blank" rel="noopener noreferrer">Clothing item catalogue</a></nav>
+<div id="pg-color" hidden>
+<div class="top">
+  <div class="ctl">
+    <div class="slots" id="slots"></div>
+    <div class="act">
+      <div class="r">
+        <button id="gen">Generate</button>
+        <div id="result">-</div>
+        <button id="copy" class="sec">Copy</button>
+      </div>
+      <div class="r">
+        <button id="clear" class="sec">Clear all</button>
+        <button id="reset" class="sec" title="Set the item back to its original colours">Reset</button>
+        <button id="save" class="sec">Save palette</button>
+      </div>
+    </div>
+  </div>
+  <div class="prev">
+    <input id="item-input" type="text" placeholder="Search for an item" autocomplete="off" aria-label="Clothing item">
+    <ul id="item-results" hidden></ul>
+    <div class="pbox">
+      <div class="ph" id="ph"><span id="phtext">Pick an item to see your colours on it</span><button id="pickfolder" type="button" hidden>Choose AJB Lookbook folder</button></div>
+      <input type="file" id="folder" webkitdirectory multiple hidden>
+      <canvas id="preview" width="10" height="10" hidden></canvas>
+    </div>
+  </div>
+</div>
+<div class="msg" id="msg"></div>
+<div class="hint">Click a colour to add it, or drag it onto a slot to replace it. Drag a slot onto another to swap. Click a slot to remove it.</div>
+<div class="grid" id="grid"></div>
+<div class="saved">
+  <h3>Saved palettes</h3>
+  <div class="add">
+    <input id="code-input" type="text" inputmode="numeric" maxlength="10" placeholder="Paste a code to save" aria-label="Color code">
+    <button id="add-code" class="sec">Save code</button>
+  </div>
+  <div id="savedList"></div>
+</div>
+</div>
+<div id="pg-outfit">
+<div class="o3">
+  <section class="oc">
+    <div class="osearch"><input id="o-q" type="text" placeholder="Search for an item" autocomplete="off" aria-label="Clothing item"><ul id="o-res" hidden></ul></div>
+    <div id="o-worn"></div>
+  </section>
+  <section class="oc">
+    <div class="oavrow">
+      <div class="oavsel"><span>Animal Selector</span><div class="oavwrap"><input id="o-av" type="text" placeholder="Type to search, or pick" autocomplete="off" aria-label="Animal"><ul id="o-avres" hidden></ul></div></div>
+      <label><input type="checkbox" id="o-keep"> Keep outfit and colors across avatars</label>
+    </div>
+    <div class="oview"><button id="o-vd" class="on" type="button">Dress Up preview</button><button id="o-vg" type="button">In-game preview</button></div>
+    <div class="ostage"><canvas id="o-cv" width="10" height="10"></canvas><div class="onote" id="o-note"></div></div>
+    <div class="oact"><button id="o-img" type="button">Save outfit as image</button><button id="o-gif" type="button" hidden>Save as GIF</button><button id="o-reset" class="sec" type="button" title="Back to the animal's own colours, with no items on">Reset animal</button></div>
+    <div class="oact"><input id="o-name" type="text" placeholder="Outfit name" maxlength="30"><button id="o-save" class="sec" type="button">Save outfit</button></div>
+    <div id="o-saved"></div>
+  </section>
+  <section class="oc" id="o-right">
+    <div class="otabs"><button data-t="color" type="button">Color</button><button data-t="pattern" type="button">Pattern</button><button data-t="eyes" type="button">Eyes</button></div>
+    <div id="o-panel"></div>
+    <div id="o-opal"><div class="otitle">Outfit palette</div><div class="onote" style="padding:0 0 8px">Drag a colour onto Main or Secondary Color. On the Pattern and Eyes tabs you can just click it.</div><div id="o-opg"></div></div>
+  </section>
+</div>
+<div id="o-ov" hidden><div class="box"><div class="l"><div class="oview"><button id="o-ovd" class="on" type="button">Dress Up preview</button><button id="o-ovg" type="button">In-game preview</button></div><canvas id="o-ovcv" width="10" height="10"></canvas><div class="oname" id="o-ovn" style="font-weight:800;margin-top:6px"></div></div><div class="r" id="o-ovp"></div><div class="s"><div class="st">Saved Palettes</div><div id="o-ovs"></div></div></div></div>
+</div>
+<div class="foot">Not affiliated with or endorsed by Wild Works LLC. All Animal Jam copyright is owned by them. Item sprites, data and recolour rendering are from <a href="https://warpedfart.github.io/ajb-lookbook/" target="_blank" rel="noopener noreferrer">AJB Lookbook</a> (MIT licence, &copy; 2026 warpedfart). Colour picker inspired by <a href="https://aj-color-picker.carrd.co" target="_blank" rel="noopener noreferrer">aj-color-picker.carrd.co</a>. Background images from <a href="https://www.animaljamarchives.com/" target="_blank" rel="noopener noreferrer">Animal Jam Archives</a>. Assets from <a href="https://github.com/butterbarned/applejack_gifs" target="_blank" rel="noopener noreferrer">butterbarned/applejack_gifs</a>. For personal use.</div>
+</div>
+
+<script>
+/* ---- sprite renderer, from AJB Lookbook js/sprite-render.js (MIT, (c) 2026 warpedfart) ---- */
+function hexToGame(hexes) {
+  return hexes.map((hex) => (0xff000000 | Number.parseInt(hex.slice(1, 7), 16)) >>> 0);
+}
+
+function mixColors(a, b) {
+  const r = (((a >>> 16) & 255) + ((b >>> 16) & 255)) / 2;
+  const g = (((a >>> 8) & 255) + ((b >>> 8) & 255)) / 2;
+  const bl = ((a & 255) + (b & 255)) / 2;
+  return (r << 16) | (g << 8) | bl;
+}
+
+function setGradient(pal, color, start, count) {
+  let r = (color >>> 16) & 255;
+  let g = (color >>> 8) & 255;
+  let b = color & 255;
+  const dr = r / (count + 2);
+  const dg = g / (count + 2);
+  const db = b / (count + 2);
+  let pos = start + count - 1;
+  for (let i = 0; i < count; i += 1) {
+    const rgb = ((r << 16) | (g << 8) | b) & 0xffffff;
+    pal[pos] = (0xff000000 | rgb) >>> 0;
+    pal[pos + 25] = (0xc0000000 | rgb) >>> 0;
+    pal[pos + 50] = (0x80000000 | rgb) >>> 0;
+    pal[pos + 75] = (0x40000000 | rgb) >>> 0;
+    r -= dr;
+    g -= dg;
+    b -= db;
+    pos -= 1;
+  }
+}
+
+function buildPalette(game, indexes) {
+  const [c0, c1, c2, c3] = indexes.map((i) => game[i] ?? 0);
+  const pal = new Array(100).fill(0);
+  setGradient(pal, c0, 1, 3);
+  setGradient(pal, c1, 4, 3);
+  setGradient(pal, c2, 7, 3);
+  setGradient(pal, c3, 10, 3);
+  setGradient(pal, mixColors(c0, c1), 13, 2);
+  setGradient(pal, mixColors(c1, c2), 15, 2);
+  setGradient(pal, mixColors(c0, c2), 17, 2);
+  setGradient(pal, mixColors(c0, c3), 19, 2);
+  setGradient(pal, mixColors(c1, c3), 21, 2);
+  setGradient(pal, mixColors(c2, c3), 23, 2);
+  return pal;
+}
+
+function forEachPixel(bytes, x0, y0, x1, cb) {
+  const w = x1 - x0;
+  let pos = 0;
+  let x = x0;
+  let y = y0;
+  while (pos < bytes.length) {
+    let v = bytes[pos++];
+    let run = 1;
+    if (v & 128) {
+      v &= 127;
+      run = bytes[pos++] + 1;
+    }
+    if (v === 0) {
+      x += run;
+      if (x >= x1) {
+        run = x - x1;
+        x = x0 + (run % w);
+        y += Math.floor(run / w) + 1;
+      }
+    } else {
+      while (run-- > 0) {
+        cb(v, x, y);
+        x += 1;
+        if (x === x1) {
+          x = x0;
+          y += 1;
+        }
+      }
+    }
+  }
+}
+
+function colorPass(px, W, H, f, pal, minX, minY) {
+  const x0 = f.x - minX;
+  const y0 = f.y - minY;
+  forEachPixel(f.b.data, x0, y0, x0 + f.w, (v, x, y) => {
+    if (x < 0 || y < 0 || x >= W || y >= H) return;
+    const c = pal[v] >>> 0;
+    const o = (y * W + x) * 4;
+    const sa = c >>> 24;
+    const sr = (c >>> 16) & 255;
+    const sg = (c >>> 8) & 255;
+    const sb = c & 255;
+    if (c >= 0xff000000) {
+      px[o] = sr; px[o + 1] = sg; px[o + 2] = sb; px[o + 3] = 255;
+      return;
+    }
+    const dr = px[o], dg = px[o + 1], db = px[o + 2], da = px[o + 3];
+    if ((dr | dg | db | da) === 0) {
+      px[o] = sr; px[o + 1] = sg; px[o + 2] = sb; px[o + 3] = sa;
+      return;
+    }
+    let r, g, b;
+    if (sa === 192) {
+      r = (3 * sr + dr) >> 2; g = (3 * sg + dg) >> 2; b = (3 * sb + db) >> 2;
+    } else if (sa === 128) {
+      r = (sr + dr) >> 1; g = (sg + dg) >> 1; b = (sb + db) >> 1;
+    } else {
+      r = (sr + 3 * dr) >> 2; g = (sg + 3 * dg) >> 2; b = (sb + 3 * db) >> 2;
+    }
+    px[o] = r; px[o + 1] = g; px[o + 2] = b; px[o + 3] = Math.max(da, sa);
+  });
+}
+
+function shadowPass(px, W, H, f, minX, minY) {
+  const x0 = f.x - minX;
+  const y0 = f.y - minY;
+  forEachPixel(f.s.data, x0, y0, x0 + f.w, (v, x, y) => {
+    if (x < 0 || y < 0 || x >= W || y >= H) return;
+    const o = (y * W + x) * 4;
+    if ((px[o] | px[o + 1] | px[o + 2] | px[o + 3]) === 0) return;
+    const t = (v << f.sm) + 24;
+    const k = t > 255 ? 1 : t / 255;
+    px[o] = Math.floor(px[o] * k);
+    px[o + 1] = Math.floor(px[o + 1] * k);
+    px[o + 2] = Math.floor(px[o + 2] * k);
+    if (px[o + 3] === 0) px[o + 3] = 255;
+  });
+}
+
+function renderSprite(canvas, layers, game, frame = 0) {
+  let minX = 1000, minY = 1000, maxX = 0, maxY = 0, any = false;
+  for (const layer of layers) {
+    for (const f of layer?.data?.f ?? []) {
+      if (!f) continue;
+      any = true;
+      minX = Math.min(minX, f.x);
+      minY = Math.min(minY, f.y);
+      maxX = Math.max(maxX, f.x + f.w);
+      maxY = Math.max(maxY, f.y + f.h);
+    }
+  }
+  if (!any) return false;
+  const W = 1 + maxX - minX;
+  const H = 1 + maxY - minY;
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext("2d");
+  const img = ctx.createImageData(W, H);
+  for (const layer of layers) {
+    const f = layer?.data?.f?.[frame];
+    if (!f) continue;
+    colorPass(img.data, W, H, f, buildPalette(game, layer.indexes), minX, minY);
+    if (f.s) shadowPass(img.data, W, H, f, minX, minY);
+  }
+  ctx.putImageData(img, 0, 0);
+  return true;
+}
+/* ---- end renderer ---- */
+
+const EMBEDDED_PALETTE = ["#793647", "#762626", "#8b4c2b", "#9c8726", "#426b31", "#346851", "#396573", "#263876", "#463779", "#61316c", "#5c2e39", "#563520", "#6a4e31", "#6c643a", "#565a36", "#4b6351", "#33415e", "#3d3443", "#591d1d", "#6d7164", "#c5647d", "#be4b4b", "#e08654", "#fadb4d", "#73ae5a", "#5eab89", "#67a8bb", "#4b66be", "#7b66c6", "#a05aaf", "#965264", "#8c5c3d", "#ad8459", "#b1a669", "#8f9560", "#82a58b", "#5c6f99", "#675a70", "#903838", "#b8bdab", "#ee94ac", "#ed8383", "#ffb48a", "#ffec95", "#a8de90", "#95dbbd", "#98d4e6", "#839bed", "#a895ef", "#d190e0", "#cd8f9f", "#ca9d80", "#ddb890", "#ded39b", "#c5ca9a", "#afd1b9", "#95a7cf", "#a89bb0", "#ce7c7c", "#d7dcca", "#8b8a68", "#82727d", "#69838b", "#1a1a1a", "#666666", "#b3b3b3", "#987b35", "#80421e", "#07050c", "#eb6923", "#26632d", "#805912", "#20d998", "#d9cd20", "#080905", "#070a08", "#1c6075", "#060507", "#090303", "#0b0b0a", "#e7e5b4", "#dac2d3", "#b6dce7", "#333333", "#808080", "#cccccc", "#f7cd66", "#ce723e", "#612f25", "#100911", "#34944f", "#eea621", "#944c22", "#ee555d", "#eb5ba1", "#0d100e", "#2098d9", "#e13a74", "#0e0505", "#82d92b", "#faf8ca", "#eed8e6", "#cceff9", "#4d4d4d", "#999999", "#e6e6e6", "#ffe4a1", "#fca575", "#e1654c", "#140e16", "#8fdc9f", "#ffb870", "#ffd040", "#8c1414", "#f589bd", "#4b87bf", "#4ac3e8", "#45ae53", "#d32626", "#151614", "#853e3e", "#854b3e", "#85593e", "#85633e", "#85713e", "#857d3e", "#84853e", "#77853e", "#63853e", "#3e8565", "#3e857f", "#3e7285", "#3e4e85", "#403e85", "#4d3e85", "#5c3e85", "#693e85", "#783e85", "#853e70", "#853e5a", "#b96161", "#b97161", "#b98261", "#b99061", "#b9a161", "#b9af61", "#b8b961", "#a8b961", "#8fb961", "#61b993", "#61b9b2", "#61a2b9", "#6175b9", "#6461b9", "#7461b9", "#8761b9", "#9761b9", "#a961b9", "#b9619f", "#b96184", "#de9e9e", "#dea99e", "#deb59e", "#debf9e", "#decc9e", "#ded69e", "#dcde9e", "#d1de9e", "#bfde9e", "#9edec2", "#9eded9", "#9ecdde", "#9eacde", "#9f9ede", "#ab9ede", "#b99ede", "#c49ede", "#d29ede", "#de9ecb", "#de9eb7", "#705555", "#705a55", "#706155", "#706355", "#706955", "#706e55", "#707055", "#6b7055", "#637055", "#557065", "#55706f", "#556970", "#555b70", "#565570", "#5b5570", "#615570", "#655570", "#6b5570", "#705569", "#705561", "#a07e7e", "#a0847e", "#a08c7e", "#a0907e", "#a0977e", "#a09c7e", "#a0a07e", "#99a07e", "#90a07e", "#7ea092", "#7ea09e", "#7e97a0", "#7e86a0", "#7f7ea0", "#857ea0", "#8d7ea0", "#937ea0", "#997ea0", "#a07e96", "#a07e8c", "#cbb2b2", "#cbb7b2", "#cbbcb2", "#cbbeb2", "#cbc3b2", "#cbc7b2", "#cbcbb2", "#c6cbb2", "#becbb2", "#b2cbc1", "#b2cbc8", "#b2c3cb", "#b2b8cb", "#b3b2cb", "#b7b2cb", "#bdb2cb", "#c1b2cb", "#c6b2cb", "#cbb2c3", "#cbb2bc", "#d34242", "#d57740", "#e9ce2c", "#75c054", "#4bc993", "#62b4cc", "#4264d3", "#7b60da", "#ae54c1", "#0b180b", "#0e1812", "#0d1717", "#0d0e15", "#110c15", "#000000", "#ffffff"];
+
+// XMLHttpRequest (not fetch) so it also works when opened straight from a folder in a browser started with file access allowed
+let folderMap=null;   // filled when the person picks the AJB Lookbook folder by hand
+async function getJSON(url){
+  if(folderMap){
+    const f=folderMap.get(url);
+    if(!f) throw new Error("missing");
+    return JSON.parse(await f.text());
+  }
+  return xhrJSON(url);
+}
+function xhrJSON(url){
+  return new Promise((resolve,reject)=>{
+    const x=new XMLHttpRequest();
+    x.open("GET",url); x.responseType="json";
+    x.onload=()=>{ if((x.status===200||x.status===0)&&x.response!==null) resolve(x.response); else reject(new Error("bad response")); };
+    x.onerror=()=>reject(new Error("network")); x.send();
+  });
+}
+const root = document.getElementById("ajp");
+const $ = (id) => document.getElementById(id);
+let PALETTE = [];
+let GAME = [];
+
+const colourOf = (i) => PALETTE[i] || "#888888";
+function isLight(c){
+  const m=/^#(..)(..)(..)$/.exec(c); if(!m) return false;
+  return (0.299*parseInt(m[1],16)+0.587*parseInt(m[2],16)+0.114*parseInt(m[3],16))>150;
+}
+const inkFor = (i) => isLight(colourOf(i)) ? "#111" : "#fff";
+
+/* ---------- code maths (same as the game) ---------- */
+function pack(a){
+  const n=a.map(v=>v===null?0:v);
+  if(n[0]===0xfd) return null;               // not a valid combination
+  return ((n[0]<<24)|(n[1]<<16)|(n[2]<<8)|n[3])>>>0;
+}
+function unpack(v){
+  if(!Number.isInteger(v)||v<0||v>0xffffffff) return null;
+  if(v>=0xfd000000&&v<=0xfdffffff) return null;
+  return [v>>>24,(v>>>16)&255,(v>>>8)&255,v&255];
+}
+
+/* ---------- dark mode ---------- */
+const themeBtn=$("theme");
+let dark=false;
+try{ const s=localStorage.getItem("ajp-theme"); dark = s ? s==="dark" : matchMedia("(prefers-color-scheme: dark)").matches; }catch(e){}
+function applyTheme(){
+  root.classList.toggle("dark",dark);
+  document.body.classList.toggle("ajp-dark",dark);
+  themeBtn.textContent=dark?"Light mode":"Dark mode";
+  const ab=document.getElementById("about"); if(ab) ab.classList.toggle("dark",dark);
+}
+themeBtn.onclick=()=>{ dark=!dark; applyTheme(); try{localStorage.setItem("ajp-theme",dark?"dark":"light")}catch(e){} };
+applyTheme();
+
+/* ---------- state ---------- */
+let slots=[null,null,null,null];
+let dragFrom=null, dragColour=null;
+let sprite=null, currentItem=null;
+let custom=false;   // true once the person has picked their own colours; stays on when switching items
+const slotsEl=$("slots"), gridEl=$("grid"), result=$("result"), copyBtn=$("copy"), msg=$("msg");
+const say=(t)=>{ msg.textContent=t; if(t) setTimeout(()=>{ if(msg.textContent===t) msg.textContent=""; },3500); };
+
+function move(from,to){
+  if(to<0||to>3||from===to) return;
+  const t=slots[from]; slots[from]=slots[to]; slots[to]=t; custom=true; render();
+}
+
+/* ---------- preview ---------- */
+const canvas=$("preview"), ph=$("ph");
+function drawPreview(){
+  if(!sprite) return;
+  const idx=slots.map(v=>v===null?0:v);
+  const ok=renderSprite(canvas,[{data:sprite,indexes:idx}],GAME,0);
+  canvas.hidden=!ok; ph.hidden=ok;
+}
+
+/* ---------- slots ---------- */
+function render(){
+  slotsEl.innerHTML="";
+  slots.forEach((v,idx)=>{
+    const d=document.createElement("div");
+    d.className="slot"+(v!==null?" filled":"");
+    d.draggable=v!==null;
+    if(v!==null){
+      d.style.background=colourOf(v);
+      d.innerHTML='<div class="idx" style="color:'+inkFor(v)+'">'+(idx+1)+'</div><div class="num" style="color:'+inkFor(v)+'">'+v+'</div>';
+      d.title="Click to remove";
+      d.onclick=()=>{ slots[idx]=null; custom=true; render(); };
+    } else {
+      d.innerHTML='<div class="label">Slot '+(idx+1)+'</div>';
+    }
+    d.ondragstart=(e)=>{ dragFrom=idx; dragColour=null; e.dataTransfer.effectAllowed="move"; try{e.dataTransfer.setData("text/plain",idx)}catch(x){} };
+    d.ondragover=(e)=>{ e.preventDefault(); d.classList.add("over"); };
+    d.ondragleave=()=>d.classList.remove("over");
+    d.ondrop=(e)=>{
+      e.preventDefault(); d.classList.remove("over");
+      if(dragColour!==null){ slots[idx]=dragColour; dragColour=null; custom=true; render(); }
+      else if(dragFrom!==null) move(dragFrom,idx);
+      dragFrom=null;
+    };
+    slotsEl.appendChild(d);
+  });
+  drawPreview();
+}
+
+function buildGrid(){
+  PALETTE.forEach((hex,n)=>{
+    const b=document.createElement("button");
+    b.style.background=hex; b.textContent=n; b.title="Colour "+n; b.style.color=inkFor(n);
+    if(n===240) b.style.gridColumnStart=3;
+    b.draggable=true;
+    b.ondragstart=(e)=>{ dragColour=n; dragFrom=null; e.dataTransfer.effectAllowed="copy"; try{e.dataTransfer.setData("text/plain",n)}catch(x){} };
+    b.ondragend=()=>{ dragColour=null; };
+    b.onclick=()=>{
+      const free=slots.indexOf(null);
+      if(free===-1){ say("All 4 slots are full. Click a slot to remove one, or drag a colour onto it."); return; }
+      slots[free]=n; custom=true; render();
+    };
+    gridEl.appendChild(b);
+  });
+}
+
+/* ---------- buttons ---------- */
+$("gen").onclick=()=>{
+  const p=pack(slots);
+  result.textContent = p===null ? "Not valid" : p;
+  if(p===null) say("Colour 253 can't be in slot 1. Move it to another slot.");
+  copyBtn.textContent="Copy";
+};
+copyBtn.onclick=()=>{
+  const t=result.textContent;
+  if(t==="-"||t==="Not valid") return;
+  navigator.clipboard.writeText(t).then(()=>{ copyBtn.textContent="Copied!"; setTimeout(()=>copyBtn.textContent="Copy",2000); });
+};
+$("clear").onclick=()=>{ slots=[null,null,null,null]; custom=false; result.textContent="-"; render(); };
+function itemDefault(it){ return it && typeof it.code==="string" ? unpack(Number(it.code)) : null; }
+$("reset").onclick=()=>{
+  if(!currentItem){ say("Pick an item first."); return; }
+  const def=itemDefault(currentItem);
+  if(!def){ say("This item has no original colours on record."); return; }
+  slots=def.slice(); custom=false; result.textContent="-"; render();
+  say("Back to the original colours.");
+};
+
+/* ---------- saved palettes ---------- */
+let saved=[];
+try{ saved=JSON.parse(localStorage.getItem("ajp-saved")||"[]"); }catch(e){ saved=[]; }
+if(!Array.isArray(saved)) saved=[];
+const persist=()=>{ try{localStorage.setItem("ajp-saved",JSON.stringify(saved))}catch(e){} };
+const listEl=$("savedList");
+function renderSaved(){
+  listEl.innerHTML="";
+  if(!saved.length){ listEl.innerHTML='<div class="empty">No saved palettes yet. Make one above and press Save palette, or paste a code.</div>'; return; }
+  saved.forEach((p,i)=>{
+    const row=document.createElement("div"); row.className="srow";
+    const strip=document.createElement("div"); strip.className="strip";
+    p.forEach(v=>{
+      const c=document.createElement("div");
+      if(v===null){ c.className="none"; c.textContent="-"; }
+      else { c.style.background=colourOf(v); c.style.color=inkFor(v); c.textContent=v; }
+      strip.appendChild(c);
+    });
+    const code=pack(p);
+    const codeEl=document.createElement("div"); codeEl.className="scode"; codeEl.textContent = code===null ? "Not valid" : code;
+    const cp=document.createElement("button"); cp.textContent="Copy";
+    cp.onclick=()=>{ if(code===null) return; navigator.clipboard.writeText(String(code)).then(()=>{ cp.textContent="Copied!"; setTimeout(()=>cp.textContent="Copy",1500); }); };
+    const use=document.createElement("button"); use.className="sec"; use.textContent="Load";
+    use.onclick=()=>{ slots=p.slice(); custom=true; result.textContent="-"; render(); window.scrollTo({top:0,behavior:"smooth"}); };
+    const del=document.createElement("button"); del.className="sec"; del.textContent="\u2715"; del.title="Delete";
+    del.onclick=()=>{ saved.splice(i,1); persist(); renderSaved(); };
+    row.append(strip,codeEl,cp,use,del);
+    listEl.appendChild(row);
+  });
+}
+$("save").onclick=()=>{
+  if(slots.every(v=>v===null)) return;
+  saved.unshift(slots.slice()); persist(); renderSaved();
+  const b=$("save"); b.textContent="Saved!"; setTimeout(()=>b.textContent="Save palette",1500);
+};
+function saveCode(){
+  const input=$("code-input"); const t=input.value.trim();
+  if(!/^\d{1,10}$/.test(t)){ say("Enter a whole number code."); return; }
+  const a=unpack(Number(t));
+  if(!a||a.some(i=>i>=PALETTE.length)){ say("That isn't a valid colour code."); return; }
+  saved.unshift(a); persist(); renderSaved(); input.value="";
+}
+$("add-code").onclick=saveCode;
+$("code-input").addEventListener("keydown",(e)=>{ if(e.key==="Enter") saveCode(); });
+
+/* ---------- item picker (type to search, with picture previews) ---------- */
+const items=[];
+let itemsFailed=false;
+const input=$("item-input"), results=$("item-results");
+let shown=[], active=-1;
+
+async function loadItems(){
+  try{
+    const [idx,clothing]=await Promise.all([getJSON("data/sprites/index.json"),getJSON("data/clothing.json").catch(()=>[])]);
+    const images=new Map();
+    for(const e of (Array.isArray(clothing)?clothing:[])){ if(e&&typeof e.id==="string"&&typeof e.image==="string"&&e.image.startsWith("https://")) images.set(e.id,e.image); }
+    for(const it of idx){ if(typeof it.id==="string"&&typeof it.name==="string") items.push({...it,image:images.get(it.id)||""}); }
+    items.sort((a,b)=>a.name.localeCompare(b.name));
+  }catch(e){ itemsFailed=true; }
+  if(!items.length) itemsFailed=true;
+}
+function closeResults(){ results.hidden=true; active=-1; }
+function note(text){
+  results.innerHTML=""; const li=document.createElement("li"); li.className="note"; li.textContent=text; results.append(li); results.hidden=false;
+}
+function showResults(){
+  if(itemsFailed){ note("Item list not loaded. Use the Choose AJB Lookbook folder button in the preview box."); return; }
+  if(!items.length){ note("Loading items..."); return; }
+  const q=input.value.trim().toLowerCase();
+  const starts=[],contains=[];
+  for(const it of items){
+    const n=it.name.toLowerCase();
+    if(q===""||n.startsWith(q)) starts.push(it); else if(n.includes(q)) contains.push(it);
+  }
+  shown=starts.concat(contains).slice(0,40);
+  results.innerHTML="";
+  if(!shown.length){ note("No items found."); return; }
+  shown.forEach(it=>{
+    const li=document.createElement("li");
+    if(it.image){
+      const im=document.createElement("img"); im.src=it.image; im.alt=""; im.loading="lazy"; im.referrerPolicy="no-referrer";
+      im.onerror=()=>{ im.style.visibility="hidden"; };
+      li.append(im);
+    } else { const sp=document.createElement("span"); sp.className="ph"; li.append(sp); }
+    const nm=document.createElement("span"); nm.textContent=it.name; li.append(nm);
+    li.onmousedown=(e)=>{ e.preventDefault(); choose(it); };
+    results.append(li);
+  });
+  results.hidden=false; active=-1;
+}
+function highlight(p){
+  [...results.children].forEach((r,i)=>r.classList.toggle("active",i===p));
+  active=p; if(results.children[p]) results.children[p].scrollIntoView({block:"nearest"});
+}
+async function choose(it){
+  input.value=it.name; closeResults();
+  try{
+    const d=await getJSON("data/sprites/"+it.id+".json");
+    if(!d||!Array.isArray(d.f)) throw 0;
+    sprite=d; currentItem=it;
+  }catch(e){ say("Couldn't load that item's sprite."); return; }
+  if(custom){
+    say("Keeping your custom colours. Press Reset for this item's original colours.");
+  } else {
+    const def=itemDefault(it);
+    if(def){ slots=def.slice(); result.textContent="-"; }   // no custom palette yet: start from the item's own colours
+  }
+  render();
+}
+input.addEventListener("input",showResults);
+input.addEventListener("focus",showResults);
+input.addEventListener("click",showResults);
+input.addEventListener("keydown",(e)=>{
+  if(e.key==="ArrowDown"){ e.preventDefault(); if(results.hidden) showResults(); if(shown.length) highlight((active+1)%shown.length); }
+  else if(e.key==="ArrowUp"){ e.preventDefault(); if(shown.length) highlight((active-1+shown.length)%shown.length); }
+  else if(e.key==="Enter"){ const c=shown[active]||shown[0]; if(c){ e.preventDefault(); choose(c); } }
+  else if(e.key==="Escape") closeResults();
+});
+document.addEventListener("click",(e)=>{ if(!e.target.closest(".prev")) closeResults(); });
+
+/* ---------- start ---------- */
+function updatePlaceholder(){
+  const t=$("phtext"), pf=$("pickfolder");
+  if(itemsFailed){
+    t.textContent="Item previews need the AJB Lookbook folder (the one that contains the data folder).";
+    pf.hidden=false;
+  } else {
+    t.textContent="Pick an item to see your colours on it";
+    pf.hidden=true;
+  }
+}
+$("pickfolder").onclick=()=>$("folder").click();
+$("folder").onchange=async (e)=>{
+  folderMap=new Map();
+  for(const f of e.target.files){
+    const p=f.webkitRelativePath||"";
+    const i=p.indexOf("/data/");
+    if(i>=0) folderMap.set(p.slice(i+1),f);
+  }
+  items.length=0; itemsFailed=false;
+  await loadItems();
+  if(itemsFailed) say("That folder doesn't look right. Pick the AJB Lookbook folder that contains the data folder.");
+  updatePlaceholder();
+  input.placeholder = itemsFailed ? "Item list not loaded" : "Search for an item";
+  if(!itemsFailed) say("Loaded "+items.length+" items.");
+};
+async function init(){
+  PALETTE=EMBEDDED_PALETTE;
+  GAME=hexToGame(PALETTE);
+  buildGrid(); render(); renderSaved();
+  const fit=()=>{ const w=gridEl.clientWidth/20; gridEl.style.fontSize=Math.max(7,Math.floor(w*0.38))+"px"; };
+  if(window.ResizeObserver) new ResizeObserver(fit).observe(gridEl);
+  fit();
+  await loadItems();
+  updatePlaceholder();
+  if(itemsFailed) input.placeholder="Item list not loaded";
+}
+/* ---------- about popup ---------- */
+const about=$("about");
+function openAbout(){ about.hidden=false; $("about-ok").focus(); }
+function closeAbout(){ about.hidden=true; $("info").focus(); }
+$("info").onclick=openAbout;
+$("about-ok").onclick=closeAbout;
+about.addEventListener("click",(e)=>{ if(e.target===about) closeAbout(); });
+document.addEventListener("keydown",(e)=>{ if(e.key==="Escape"&&!about.hidden) closeAbout(); });
+about.classList.toggle("dark",dark);
+about.hidden=false; $("about-ok").focus();
+
+init();
+</script>
+<script>
+/* ---------- nav + Outfit creator (art comes from data/outfit/, made by export_outfit_assets.py) ---------- */
+(()=>{
+let DB="data/outfit/";const mk=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;};
+const norm=v=>String(v).toLowerCase().trim(),cv=$("o-cv"),cache=new Map();
+let IDX=null,byName=new Map(),byId=new Map(),av=null,worn=[],cl=[],pi=-1,ei=-1,tab="color",tok=0,editing=null,curShow=null,nt=0,palApply=null,dragCol=null;
+const ok4=x=>Array.isArray(x)&&x.length===4&&x.every(v=>v===null||(Number.isInteger(v)&&v>=0&&v<PALETTE.length));
+const u8=t=>Uint8Array.from(atob(t),c=>c.charCodeAt(0));
+function note(t,keep){const n=$("o-note");n.textContent=t;clearTimeout(nt);if(t&&!keep)nt=setTimeout(()=>{if(n.textContent===t)n.textContent="";},3500);}
+/* page switching */
+function show(p){const o=p==="outfit";root.classList.toggle("wide",o);$("pg-color").hidden=o;$("pg-outfit").hidden=!o;$("n-color").classList.toggle("on",!o);$("n-outfit").classList.toggle("on",o);
+  try{history.replaceState(null,"",o?location.pathname+location.search:"#palette");}catch(e){} if(!o)stopAnim();else{ensure();if(av&&mode==="game")paint();}}
+$("n-color").onclick=()=>show("color");$("n-outfit").onclick=()=>show("outfit");
+/* art */
+const lay=(l,g)=>{const k=av.id+(g?"/g/":"/")+l;if(!cache.has(k))cache.set(k,xhrJSON(DB+"a"+av.id+"/"+(g?"g14/":"")+"l"+l+".json").then(d=>{for(const f of d.f){if(typeof f.b.data==="string")f.b.data=u8(f.b.data);if(f.s&&typeof f.s.data==="string")f.s.data=u8(f.s.data);}return d;}).catch(()=>null));return cache.get(k);};
+async function stack(list,only,g){
+  const b=av.box,L=only||g?[]:[{data:{f:[{x:b[0],y:b[1],w:b[2]-b[0],h:b[3]-b[1],b:{data:[]}}]},indexes:[0,0,0,0]}];
+  const add=async(l,ix)=>{const d=l!=null&&await lay(l,g);if(d)L.push({data:d,indexes:ix.map(v=>v==null?0:v)});};
+  if(!only){await add(av.body,cl[0]);if(pi>=0)await add(av.pat[pi].l,cl[1]);if(ei>=0)await add(av.eyes[ei].l,cl[2]);}
+  const o=list.map((w,i)=>[w.it.s,i,w]).sort((x,y)=>x[0]-y[0]||x[1]-y[1]);   // slot order, then the order they were put on
+  for(const[,,w]of o)await add(w.it.l[av.id],w.idx);
+  return L;
+}
+const fitBig=c=>{c.style.width=c.style.height="";};   // size comes from the CSS so the popup never jumps between previews
+const fit=c=>{c.style.width=c.width*2+"px";c.style.height=c.height*2+"px";};
+/* In-game preview: animation 14, played from data/outfit/a<avatar>/g14/ (made by export_ingame_anim.py) */
+const FRAME_MS=80;let mode="dress";const gm={frames:[],timer:0};
+const gseqC=new Map();
+const gseq=()=>{if(!gseqC.has(av.id))gseqC.set(av.id,xhrJSON(DB+"a"+av.id+"/g14/seq.json").then(d=>Array.isArray(d)?d:Array.isArray(d&&d.seq)?d.seq:null).catch(()=>null));return gseqC.get(av.id);};
+function ovDraw(s){const o=$("o-ovcv");if(!editing||!o)return;const x=o.getContext("2d");
+  if(o.width!==s.width||o.height!==s.height){o.width=s.width;o.height=s.height;}else x.clearRect(0,0,o.width,o.height);
+  x.drawImage(s,0,0);fitBig(o);}
+function stopAnim(){clearInterval(gm.timer);gm.timer=0;}
+function play(){
+  stopAnim();const f=gm.frames;if(!f.length)return;let i=0;
+  const draw=()=>{const s=f[i++%f.length],x=cv.getContext("2d");
+    if(cv.width!==s.width||cv.height!==s.height){cv.width=s.width;cv.height=s.height;}else x.clearRect(0,0,cv.width,cv.height);
+    x.drawImage(s,0,0);fit(cv);ovDraw(s);};
+  draw();if(f.length>1)gm.timer=setInterval(draw,FRAME_MS);
+}
+async function gamePaint(t){
+  const[L,seq]=await Promise.all([stack(worn,false,true),gseq()]);if(t!==tok)return;
+  stopAnim();gm.frames=[];
+  const n=L.reduce((m,l)=>Math.max(m,l.data.f.length),0);
+  if(!L.length||!n){cv.width=cv.width;note("No in-game art found for "+av.name+" yet. Run export_ingame_anim.py to add it.",true);return;}
+  note("",true);
+  const order=(seq&&seq.length?seq:Array.from({length:n},(_,i)=>i)).map(i=>Number.isInteger(i)?i:0);
+  for(const i of order){const c=document.createElement("canvas");if(renderSprite(c,L,GAME,i))gm.frames.push(c);}
+  play();
+}
+function outfitPal(){
+  const h=$("o-opg");h.innerHTML="";const seen=new Set();
+  for(const w of worn)for(const v of w.idx)if(v!==null&&v!==undefined&&!seen.has(v)){seen.add(v);
+    const c=mk("i");c.style.background=colourOf(v);c.draggable=true;c.title="Drag onto a colour palette, or click on the Pattern and Eyes tabs";
+    c.ondragstart=e=>{dragCol=v;e.dataTransfer.effectAllowed="copy";try{e.dataTransfer.setData("text/plain",String(v));}catch(x){}};
+    c.ondragend=()=>{dragCol=null;};
+    c.onclick=()=>{if(palApply)palApply(v);};h.append(c);}
+  if(!seen.size)h.append(mk("div","onote","Put on some items to see their colours here."));
+}
+async function paint(){
+  if(!av)return;const t=++tok;saveDraft();outfitPal();
+  if(mode==="game"){
+    await gamePaint(t);thumbs();return;
+  }
+  stopAnim();const L=await stack(worn);if(t!==tok)return;
+  if(renderSprite(cv,L,GAME,0))fit(cv);
+  if(editing){const o=$("o-ovcv");if(renderSprite(o,L,GAME,0))fitBig(o);}
+  thumbs();
+}
+function setMode(m){mode=m;for(const[a,b]of[["o-vd","o-vg"],["o-ovd","o-ovg"]]){$(a).classList.toggle("on",m==="dress");$(b).classList.toggle("on",m==="game");}
+  $("o-gif").hidden=m!=="game";$("o-ovcv").classList.toggle("game",m==="game");$("o-img").textContent=m==="game"?"Save as image":"Save outfit as image";stopAnim();note("",true);paint();}
+$("o-vd").onclick=$("o-ovd").onclick=()=>setMode("dress");$("o-vg").onclick=$("o-ovg").onclick=()=>setMode("game");
+/* GIF writer: one shared 255-colour palette (median cut), colour 0 = transparent, every frame cleared before the next */
+function gifEncode(frames,scale,delayMs){
+  const w=frames[0].width,h=frames[0].height,W=w*scale,H=h*scale;
+  const imgs=frames.map(f=>{const c=document.createElement("canvas");c.width=w;c.height=h;const x=c.getContext("2d");x.drawImage(f,0,0);return x.getImageData(0,0,w,h).data;});
+  const cnt=new Map();
+  for(const d of imgs)for(let i=0;i<d.length;i+=4){if(d[i+3]<128)continue;const k=(d[i]<<16)|(d[i+1]<<8)|d[i+2];cnt.set(k,(cnt.get(k)||0)+1);}
+  let boxes=[[...cnt.entries()].map(([k,n])=>({k,n,c:[k>>16,(k>>8)&255,k&255]}))];
+  while(boxes.length<255){
+    let bi=-1,bc=0,bs=0;
+    boxes.forEach((b,i)=>{if(b.length<2)return;for(let c=0;c<3;c++){let lo=255,hi=0;for(const e of b){if(e.c[c]<lo)lo=e.c[c];if(e.c[c]>hi)hi=e.c[c];}if(hi-lo>bs){bs=hi-lo;bi=i;bc=c;}}});
+    if(bi<0)break;
+    const b=boxes[bi].sort((p,q)=>p.c[bc]-q.c[bc]);let tot=0;for(const e of b)tot+=e.n;
+    let acc=0,cut=1;for(let i=0;i<b.length-1;i++){acc+=b[i].n;cut=i+1;if(acc>=tot/2)break;}
+    boxes.splice(bi,1,b.slice(0,cut),b.slice(cut));
+  }
+  const pal=new Uint8Array(256*3),map=new Map();
+  boxes.forEach((b,i)=>{let n=0,r=0,g=0,bl=0;for(const e of b){n+=e.n;r+=e.c[0]*e.n;g+=e.c[1]*e.n;bl+=e.c[2]*e.n;map.set(e.k,i+1);}
+    if(n){pal[(i+1)*3]=Math.round(r/n);pal[(i+1)*3+1]=Math.round(g/n);pal[(i+1)*3+2]=Math.round(bl/n);}});
+  const out=[],u16=v=>out.push(v&255,(v>>8)&255);
+  out.push(71,73,70,56,57,97);u16(W);u16(H);out.push(0xF7,0,0);for(let i=0;i<768;i++)out.push(pal[i]);
+  out.push(0x21,0xFF,11,...[..."NETSCAPE2.0"].map(c=>c.charCodeAt(0)),3,1,0,0,0);
+  const delay=Math.max(2,Math.round(delayMs/10));
+  for(const d of imgs){
+    const small=new Uint8Array(w*h);
+    for(let i=0,p=0;i<d.length;i+=4,p++)small[p]=d[i+3]<128?0:map.get((d[i]<<16)|(d[i+1]<<8)|d[i+2]);
+    const px=new Uint8Array(W*H);
+    for(let y=0;y<H;y++){const sy=((y/scale)|0)*w;for(let x=0;x<W;x++)px[y*W+x]=small[sy+((x/scale)|0)];}
+    out.push(0x21,0xF9,4,0x09,delay&255,(delay>>8)&255,0,0);   // disposal 2 (clear), transparent colour 0
+    out.push(0x2C);u16(0);u16(0);u16(W);u16(H);out.push(0,8);
+    const data=lzw(px);for(let i=0;i<data.length;i+=255){const n=Math.min(255,data.length-i);out.push(n);for(let j=0;j<n;j++)out.push(data[i+j]);}
+    out.push(0);
+  }
+  out.push(0x3B);return new Uint8Array(out);
+}
+function lzw(idx){
+  const min=8,clear=256,eoi=257,out=[];let size=9,next=258,cur=0,bits=0,dict=new Map();
+  const emit=c=>{cur|=c<<bits;bits+=size;while(bits>=8){out.push(cur&255);cur>>>=8;bits-=8;}};
+  emit(clear);let p=idx[0];
+  for(let i=1;i<idx.length;i++){
+    const c=idx[i],k=p*256+c,v=dict.get(k);
+    if(v!==undefined){p=v;continue;}
+    emit(p);dict.set(k,next);if(next===(1<<size)&&size<12)size++;next++;
+    if(next>4095){emit(clear);dict.clear();size=9;next=258;}
+    p=c;
+  }
+  emit(p);emit(eoi);if(bits>0)out.push(cur&255);return out;
+}
+
+$("o-gif").onclick=()=>{if(mode!=="game"||!gm.frames.length)return;note("Making the GIF...",true);
+  setTimeout(()=>{try{const b=new Blob([gifEncode(gm.frames,3,FRAME_MS)],{type:"image/gif"}),a=document.createElement("a");
+    a.href=URL.createObjectURL(b);a.download=(av.name||"outfit")+" in-game.gif";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000);note("GIF saved.");}
+    catch(e){note("Couldn't make the GIF.");}},30);};
+const spr=new Map();let ajbMap=null;
+const ajbSprite=a=>{if(!spr.has(a.id))spr.set(a.id,getJSON("data/sprites/"+a.id+".json").then(d=>d&&Array.isArray(d.f)?d:null).catch(()=>null));return spr.get(a.id);};
+function ajbOf(n){if(!ajbMap||!ajbMap.size){ajbMap=new Map();for(const it of items)ajbMap.set(norm(it.name),it);}return ajbMap.get(norm(n));}
+async function thumbs(){for(const t of document.querySelectorAll("#o-worn .othumb")){const w=worn[t.dataset.i];if(!w)continue;
+  const a=w.a||ajbOf(w.it.n),d=a&&await ajbSprite(a);
+  if(!(d&&renderSprite(t,[{data:d,indexes:w.idx.map(v=>v==null?0:v)}],GAME,0)))renderSprite(t,await stack([w],true),GAME,0);}}   // same preview as the Color picker page
+/* compact one-colour palette (animal colours, pattern, eyes): click a colour to set slot j */
+function mkPal(host,get,set,j){
+  const g=mk("div","pgrid"),cells=[];
+  const mark=()=>cells.forEach((b,n)=>b.classList.toggle("on",n===get()[j]));
+  PALETTE.forEach((hex,n)=>{const b=mk("button");b.type="button";b.style.background=hex;b.title="Colour "+n;
+    b.onclick=()=>apply(n);cells.push(b);g.append(b);});
+  const apply=n=>{if(!j&&n===253)return;const a=get().slice();a[j]=n;set(a);mark();};
+  /* colours dragged in from the Outfit palette land here */
+  g.ondragover=e=>{if(dragCol===null)return;e.preventDefault();e.dataTransfer.dropEffect="copy";g.classList.add("drop");};
+  g.ondragleave=e=>{if(!g.contains(e.relatedTarget))g.classList.remove("drop");};
+  g.ondrop=e=>{e.preventDefault();g.classList.remove("drop");if(dragCol!==null)apply(dragCol);dragCol=null;};
+  mark();host.append(g);return apply;
+}
+/* the Color picker page's slots, drag and drop, and code maker, fitted into the item edit window */
+function mkPicker(host,get,set,reset){
+  host.innerHTML="";
+  const sl=mk("div","slots"),act=mk("div","act"),gr=mk("div","grid"),r1=mk("div","r"),r2=mk("div","r");
+  const gen=mk("button",null,"Generate"),pr=mk("div","pr","-"),cp=mk("button","sec","Copy"),clr=mk("button","sec","Clear all"),rs=mk("button","sec","Reset");
+  [gen,cp,clr,rs].forEach(b=>b.type="button");r1.append(gen,pr,cp);r2.append(clr,rs);act.append(r1,r2);
+  let dFrom=null,dCol=null,tm=0;
+  const flash=t=>{pr.textContent=t;clearTimeout(tm);tm=setTimeout(()=>{pr.textContent="-";},2200);};
+  const put=a=>{set(a);pr.textContent="-";draw();};
+  function draw(){
+    sl.innerHTML="";
+    get().forEach((v,i)=>{
+      const d=mk("div","slot"+(v!==null?" filled":""));d.draggable=v!==null;
+      if(v!==null){d.style.background=colourOf(v);const ink=inkFor(v);
+        d.innerHTML='<div class="idx" style="color:'+ink+'">'+(i+1)+'</div><div class="num" style="color:'+ink+'">'+v+'</div>';
+        d.title="Click to remove";d.onclick=()=>{const a=get().slice();a[i]=null;put(a);};}
+      else d.innerHTML='<div class="label">Slot '+(i+1)+'</div>';
+      d.ondragstart=e=>{dFrom=i;dCol=null;e.dataTransfer.effectAllowed="move";try{e.dataTransfer.setData("text/plain",i);}catch(x){}};
+      d.ondragover=e=>{e.preventDefault();d.classList.add("over");};d.ondragleave=()=>d.classList.remove("over");
+      d.ondrop=e=>{e.preventDefault();d.classList.remove("over");const a=get().slice();
+        if(dCol!==null){a[i]=dCol;dCol=null;put(a);}else if(dFrom!==null&&dFrom!==i){[a[dFrom],a[i]]=[a[i],a[dFrom]];put(a);}dFrom=null;};
+      sl.append(d);
+    });
+  }
+  PALETTE.forEach((hex,n)=>{const b=mk("button",null,n);b.type="button";b.style.background=hex;b.style.color=inkFor(n);b.title="Colour "+n;
+    if(n===240)b.style.gridColumnStart=3;b.draggable=true;
+    b.ondragstart=e=>{dCol=n;dFrom=null;e.dataTransfer.effectAllowed="copy";try{e.dataTransfer.setData("text/plain",n);}catch(x){}};b.ondragend=()=>{dCol=null;};
+    b.onclick=()=>{const a=get().slice(),f=a.indexOf(null);if(f<0){flash("Slots full");return;}a[f]=n;put(a);};gr.append(b);});
+  gen.onclick=()=>{const c=pack(get());pr.textContent=c===null?"Not valid":c;cp.textContent="Copy";};
+  cp.onclick=()=>{const t=pr.textContent;if(t==="-"||t==="Not valid"||t==="Slots full")return;navigator.clipboard.writeText(t).then(()=>{cp.textContent="Copied!";setTimeout(()=>cp.textContent="Copy",1800);});};
+  clr.onclick=()=>put([null,null,null,null]);rs.onclick=()=>{reset();pr.textContent="-";draw();};
+  host.append(sl,act,gr);draw();
+}
+/* equipped items */
+function renderWorn(){
+  const h=$("o-worn");h.innerHTML="";
+  if(!worn.length){h.append(mk("div","onote","Search for an item to put it on."));return;}
+  worn.forEach((w,i)=>{
+    const c=mk("div","ocard"),t=mk("canvas","othumb"),bt=mk("div","obtn");t.dataset.i=i;
+    const B=(ic,tt,fn)=>{const b=mk("button","sec",ic);b.type="button";b.title=tt;b.setAttribute("aria-label",tt);b.onclick=fn;return b;};
+    bt.append(B("\u270E","Edit colours",()=>openEdit(w)),
+      B("\u29C9","Copy colour code",e=>{const p=pack(w.idx);if(p===null)return;navigator.clipboard.writeText(String(p)).then(()=>{const b=e.currentTarget;b.textContent="\u2713";setTimeout(()=>b.textContent="\u29C9",1200);});}),
+      B("\uD83D\uDDD1","Remove item",()=>{worn.splice(i,1);renderWorn();paint();}));
+    c.append(t,mk("div","oname",w.it.n),bt);h.append(c);
+  });
+  thumbs();
+}
+function equip(it){
+  const z=byName.get(norm(it.name));
+  if(!z){note("No outfit art for that item.");return;}
+  if(!z.l[av.id]){note(z.n+" has no art for "+av.name+".");return;}
+  if(worn.some(w=>w.it===z)){note("Already on.");return;}
+  const same=worn.filter(w=>w.it.s===z.s);if(same.length>=3)worn.splice(worn.indexOf(same[0]),1);   // 3 per place, oldest comes off
+  worn.push({it:z,idx:unpack(z.c)||[0,0,0,0],a:it});renderWorn();paint();
+}
+const q=$("o-q"),res=$("o-res");
+function search(){
+  if(!av)return;
+  const s=norm(q.value),a=[],b=[];
+  for(const it of items){const n=norm(it.name);if(!s||n.startsWith(s))a.push(it);else if(n.includes(s))b.push(it);}
+  const L=a.concat(b).slice(0,40);res.innerHTML="";
+  if(!L.length)res.append(mk("li","note",items.length?"No items found.":"Item list not loaded."));
+  L.forEach(it=>{const li=mk("li"),z=byName.get(norm(it.name));if(!(z&&z.l[av.id]))li.style.opacity=.45;
+    if(it.image){const im=mk("img");im.src=it.image;im.alt="";im.loading="lazy";im.referrerPolicy="no-referrer";im.onerror=()=>{im.style.visibility="hidden";};li.append(im);}
+    li.append(mk("span",null,it.name));li.onmousedown=e=>{e.preventDefault();res.hidden=true;q.value="";equip(it);};res.append(li);});
+  res.hidden=false;L.first=L[0];res.first=L[0];
+}
+q.addEventListener("input",search);q.addEventListener("focus",search);q.addEventListener("click",search);
+q.addEventListener("keydown",e=>{if(e.key==="Enter"&&res.first){e.preventDefault();res.hidden=true;const it=res.first;q.value="";equip(it);}else if(e.key==="Escape")res.hidden=true;});
+document.addEventListener("click",e=>{if(!e.target.closest(".osearch"))res.hidden=true;});
+/* edit overlay */
+function openEdit(w){editing=w;$("o-ovn").textContent=w.it.n;const h=$("o-ovp");h.innerHTML="";
+  const ph=mk("div"),build=()=>mkPicker(ph,()=>w.idx,a=>{w.idx=a;paint();},()=>{w.idx=unpack(w.it.c)||[0,0,0,0];paint();});
+  build();h.append(ph);
+  const d=mk("button",null,"Done");d.type="button";d.style.marginTop="12px";d.onclick=closeEdit;h.append(d);
+  /* saved palettes (made on the Palette creator tab): click one to put it on this item */
+  const sv=$("o-ovs");sv.innerHTML="";let L=[];try{L=JSON.parse(localStorage.getItem("ajp-saved")||"[]");}catch(e){}
+  L=Array.isArray(L)?L.filter(ok4):[];
+  if(!L.length)sv.append(mk("div","sn","No saved palettes yet. Save some in the Palette creator tab."));
+  L.forEach(pl=>{const b=mk("button","sp"),sw=mk("div","sw");b.type="button";
+    pl.forEach(v=>{const c=mk("i");if(v===null){c.textContent="-";c.style.color="var(--muted)";}else{c.style.background=colourOf(v);c.style.color=inkFor(v);c.textContent=v;}sw.append(c);});
+    const pk=pack(pl);b.append(sw,mk("div","sc",pk===null?"Not valid":String(pk)));b.title="Apply to this item";
+    b.onclick=()=>{if(pk===null)return;w.idx=pl.slice();build();paint();};sv.append(b);});
+  $("o-ov").hidden=false;paint();}
+const closeEdit=()=>{editing=null;$("o-ov").hidden=true;};
+$("o-ov").addEventListener("click",e=>{if(e.target.id==="o-ov")closeEdit();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&editing)closeEdit();});
+/* right panel */
+function panel(){
+  const p=$("o-panel");p.innerHTML="";curShow=null;palApply=null;$("o-opg").classList.toggle("clk",tab!=="color");
+  document.querySelectorAll("#o-right .otabs button").forEach(b=>b.classList.toggle("on",b.dataset.t===tab));
+  if(!av)return;
+  const pal=(k,title,j)=>{const d=mk("div");d.append(mk("div","otitle",title));palApply=mkPal(d,()=>cl[k],a=>{cl[k]=a;paint();if(curShow)curShow();},j);p.append(d);};
+  p.style.setProperty("--n",tab==="color"?2:1);p.style.setProperty("--rsv",tab==="color"?"130px":"260px");
+  if(tab==="color"){pal(0,"Main Color",0);pal(0,"Secondary Color",1);palApply=null;return;}   // two targets here, so colours are dragged rather than clicked
+  const pat=tab==="pattern",list=pat?av.pat:av.eyes;
+  const L=mk("button","sec","\u25C0\uFE0E"),R=mk("button","sec","\u25B6\uFE0E"),c=mk("canvas","opv"),lab=mk("div","olab"),pick=mk("div","opick");
+  L.type=R.type="button";L.setAttribute("aria-label","Previous");R.setAttribute("aria-label","Next");
+  curShow=async()=>{const i=pat?pi:ei;lab.textContent=!list.length?"No art found":i<0?"None":"("+(i+1)+"/"+list.length+")";
+    if(i<0){c.width=c.width;return;}
+    const d=await lay(list[i].l);if(d)renderSprite(c,[{data:d,indexes:cl[pat?1:2]}],GAME,0);};
+  const step=d=>{if(!list.length)return;const lo=pat?-1:0,n=list.length-lo,i=((pat?pi:ei)-lo+d+n)%n+lo;if(pat)pi=i;else ei=i;curShow();paint();};   // patterns have a "None" stop before the first one
+  L.onclick=()=>step(-1);R.onclick=()=>step(1);pick.append(L,c,R);p.append(pick,lab);curShow();
+  pal(pat?1:2,pat?"Pattern colour":"Eye colour",0);   // only the first slot; the rest stay as the animal's defaults
+}
+document.querySelectorAll("#o-right .otabs button").forEach(b=>b.onclick=()=>{tab=b.dataset.t;panel();});
+/* animal */
+const fi=(list,id,dflt,must)=>{const i=list.findIndex(x=>x.id===id);if(i>=0)return i;const j=list.findIndex(x=>x.id===dflt);return j>=0?j:must&&list.length?0:-1;};   // must: eyes always have one, patterns can be none
+function setAv(a,keep){
+  const prev=av,op=prev&&prev.pat[pi],oe=prev&&prev.eyes[ei];av=a;
+  if(keep&&prev){const gone=[];worn=worn.filter(w=>w.it.l[a.id]||(gone.push(w.it.n),false));if(gone.length)note("No art for "+a.name+": "+gone.join(", "));}
+  else{cl=a.c.map(unpack);worn=[];}
+  if(keep&&prev){const k=cl;cl=a.c.map(unpack);cl[0][0]=k[0][0];cl[0][1]=k[0][1];cl[1][0]=k[1][0];cl[2][0]=k[2][0];}   // carry over only the colours you can change; the animal's own other slots (e.g. a black nose) stay
+  const same=(list,old,id,must)=>{const m=keep&&old?list.findIndex(x=>x.n===old.n):-1;return m>=0?m:fi(list,id,id,must);};
+  pi=keep&&prev&&!op?-1:same(a.pat,op,a.dp);ei=same(a.eyes,oe,a.de,true);
+  $("o-av").value=a.name;renderWorn();panel();paint();
+}
+const avi=$("o-av"),avl=$("o-avres");
+function avList(){
+  const s=norm(avi.value),a=[],b=[];
+  for(const x of IDX.avatars){const n=norm(x.name);if(!s||n.startsWith(s))a.push(x);else if(n.includes(s))b.push(x);}
+  const L=a.concat(b);avl.innerHTML="";avl.first=L[0];
+  if(!L.length)avl.append(mk("li","note","No animals found."));
+  L.forEach(x=>{const li=mk("li",null,x.name);li.onmousedown=e=>{e.preventDefault();pickAv(x);};avl.append(li);});
+  avl.hidden=false;
+}
+function pickAv(x){avl.hidden=true;setAv(x,$("o-keep").checked);avi.blur();}
+avi.addEventListener("focus",()=>{if(IDX){avi.value="";avList();}});   // opens blank, with every animal listed
+avi.addEventListener("click",()=>{if(IDX&&avl.hidden){avi.value="";avList();}});
+avi.addEventListener("input",()=>{if(IDX)avList();});
+avi.addEventListener("blur",()=>{avl.hidden=true;if(av)avi.value=av.name;});
+avi.addEventListener("keydown",e=>{if(e.key==="Enter"&&avl.first){e.preventDefault();pickAv(avl.first);}else if(e.key==="Escape")avi.blur();});
+$("o-reset").onclick=()=>{if(av){setAv(av,false);note("Animal reset.");}};
+/* save as image, save and load outfits (the code stays hidden; it is kept in this browser) */
+$("o-img").onclick=()=>{if(!av||cv.width<20)return;const s=3,o=document.createElement("canvas");o.width=cv.width*s;o.height=cv.height*s;
+  const x=o.getContext("2d");x.imageSmoothingEnabled=false;x.drawImage(cv,0,0,o.width,o.height);
+  o.toBlob(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=(av.name||"outfit")+(mode==="game"?" in-game":"")+".png";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000);});};
+let saved=[];try{saved=JSON.parse(localStorage.getItem("ajp-outfits")||"[]");}catch(e){}if(!Array.isArray(saved))saved=[];
+const persist=()=>{try{localStorage.setItem("ajp-outfits",JSON.stringify(saved));}catch(e){note("Couldn't save: browser storage is full or blocked.");}};
+function snap(){const t=document.createElement("canvas"),h=96;t.height=h;t.width=Math.max(1,Math.round(cv.width*h/cv.height));t.getContext("2d").drawImage(cv,0,0,t.width,t.height);return t.toDataURL("image/png");}
+function load(str){
+  let d;try{d=JSON.parse(atob(str));}catch(e){note("That saved outfit is damaged.");return;}
+  const a=IDX.avatars.find(x=>x.id===d.a);if(!a){note("That animal isn't in the art any more.");return;}
+  av=a;cl=Array.isArray(d.c)&&d.c.length===3&&d.c.every(ok4)?d.c:a.c.map(unpack);pi=d.p==null?-1:fi(a.pat,d.p,a.dp);ei=fi(a.eyes,d.e,a.de,true);worn=[];
+  for(const[id,ix]of Array.isArray(d.w)?d.w:[]){const z=byId.get(String(id));if(z&&z.l[a.id])worn.push({it:z,idx:ok4(ix)?ix:unpack(z.c)||[0,0,0,0]});}
+  $("o-av").value=a.name;renderWorn();panel();paint();
+}
+function outfitCode(){return btoa(JSON.stringify({a:av.id,c:cl,p:pi>=0?av.pat[pi].id:null,e:ei>=0?av.eyes[ei].id:null,w:worn.map(w=>[w.it.id,w.idx])}));}
+function saveDraft(){if(!av)return;try{localStorage.setItem("ajp-draft",outfitCode());}catch(e){}}   // outfit in progress, restored after a refresh
+$("o-save").onclick=()=>{if(!av||cv.width<20)return;
+  const code=outfitCode();
+  saved.unshift({n:$("o-name").value.trim()||av.name,t:snap(),c:code});saved=saved.slice(0,40);persist();renderSaved();$("o-name").value="";note("Outfit saved.");};
+function renderSaved(){
+  const h=$("o-saved");h.innerHTML="";if(!saved.length){h.append(mk("div","onote","No saved outfits yet."));return;}
+  saved.forEach((s,i)=>{const r=mk("div","orow"),im=mk("img");if(String(s.t).startsWith("data:image/png"))im.src=s.t;im.alt="";
+    const l=mk("button",null,"Load"),d=mk("button","sec","\u2715");l.type=d.type="button";d.title="Delete";
+    l.onclick=()=>load(s.c);d.onclick=()=>{saved.splice(i,1);persist();renderSaved();};r.append(im,mk("span",null,s.n),l,d);h.append(r);});
+}
+/* start */
+async function ensure(){
+  if(IDX)return;
+  for(const d of ["data/outfit/","outfit/"]){DB=d;try{IDX=await xhrJSON(d+"index.json");if(IDX.avatars.length)break;}catch(e){}IDX=null;}   // also finds the folder if it sits right next to this page
+  if(!IDX){note("Outfit art not found. The folder needs to be data/outfit (with index.json inside), and the page must be opened from your website or a local server, not by double-clicking the file.",true);return;}
+  note("",true);
+  for(const z of IDX.items){byName.set(norm(z.n),z);byId.set(z.id,z);}
+  renderSaved();let dr=null;try{dr=localStorage.getItem("ajp-draft");}catch(e){}
+  if(dr)load(dr);if(!av){note("",true);setAv(IDX.avatars[0],false);}
+}
+show(location.hash==="#palette"?"color":"outfit");
+})();
+</script>
+</body></html>
