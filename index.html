@@ -904,11 +904,27 @@ async function thumbs(){for(const t of document.querySelectorAll("#o-worn .othum
   const a=w.a||ajbOf(w.it.n),d=a&&await ajbSprite(a);
   if(!(d&&renderSprite(t,[{data:d,indexes:w.idx.map(v=>v==null?0:v)}],GAME,0)))renderSprite(t,await stack([w],true),GAME,0);}}   // same preview as the Color picker page
 /* compact one-colour palette (animal colours, pattern, eyes): click a colour to set slot j */
+const PAL_ORDER=[
+254,78,77,74,98,68,75,79,89,95,249,252,253,250,109,251,119,63,83,17,
+103,37,64,19,61,84,104,57,65,39,85,59,101,105,255,18,113,88,1,38,
+120,121,180,181,118,21,240,140,141,108,200,201,58,41,160,161,220,221,11,67,
+92,2,122,31,182,69,87,241,142,202,22,51,107,162,222,223,42,12,71,123,
+183,184,124,66,32,143,203,204,91,144,52,111,86,163,224,164,106,13,185,125,
+3,60,205,33,73,145,242,112,23,225,53,165,43,80,100,14,187,186,127,126,
+34,207,206,147,146,54,227,226,167,166,128,188,148,208,168,4,24,99,243,44,
+228,70,117,110,15,90,35,55,5,129,189,72,25,244,149,209,45,169,229,190,
+130,210,150,230,170,76,6,62,26,245,116,46,82,102,191,131,96,115,211,151,
+231,171,16,36,56,7,132,192,27,246,152,212,47,172,232,8,133,134,193,194,
+153,154,214,213,28,247,173,174,48,233,234,135,195,155,215,175,235,196,136,156,
+216,236,176,9,197,137,29,217,248,157,49,237,177,198,138,218,158,238,178,81,
+0,139,199,30,97,159,20,219,94,50,40,179,239,114,10,93
+];   // colour codes in the order they appear on the animal palettes: 20 per row, top to bottom
 function mkPal(host,get,set,j){
   const g=mk("div","pgrid"),cells=[];
   const mark=()=>cells.forEach((b,n)=>b.classList.toggle("on",n===get()[j]));
-  PALETTE.forEach((hex,n)=>{const b=mk("button");b.type="button";b.style.background=hex;b.title="Colour "+n;
-    b.onclick=()=>apply(n);cells.push(b);g.append(b);});
+  const order=PALETTE.length===PAL_ORDER.length?PAL_ORDER:PALETTE.map((_,i)=>i);
+  order.forEach(n=>{const b=mk("button");b.type="button";b.style.background=PALETTE[n];b.title="Colour "+n;
+    b.onclick=()=>apply(n);cells[n]=b;g.append(b);});
   const apply=n=>{if(!j&&n===253)return;const a=get().slice();a[j]=n;set(a);mark();};
   /* colours dragged in from the Outfit palette land here */
   g.ondragover=e=>{if(dragCol===null)return;e.preventDefault();e.dataTransfer.dropEffect="copy";g.classList.add("drop");};
