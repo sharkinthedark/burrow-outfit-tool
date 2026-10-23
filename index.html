@@ -765,7 +765,18 @@ init();
 <script>
 /* ---------- nav + Outfit creator (art comes from data/outfit/, made by export_outfit_assets.py) ---------- */
 (()=>{
-let DB="data/outfit/";const mk=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;};
+let DB="data/outfit/";
+/* In-game animation art can live on extra free GitHub Pages sites (each one is limited to 1 GB).
+   List their addresses here, each ending in a slash and each holding the same layout as data/outfit/,
+   e.g. "https://YOUR-USERNAME.github.io/burrow-ingame-1/". Leave empty if everything is in this site. */
+const INGAME_SITES=["https://sharkinthedark.github.io/burrow-data/ingame-1/"];
+const gWhere=new Map();   // which site each animal's in-game art was found on
+async function gGet(av,rel){
+  const order=gWhere.has(av)?[gWhere.get(av)]:[DB].concat(INGAME_SITES);
+  for(const b of order){try{const d=await xhrJSON(b+rel);gWhere.set(av,b);return d;}catch(e){}}
+  throw new Error("not found");
+}
+const mk=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;};
 const norm=v=>String(v).toLowerCase().trim(),cv=$("o-cv"),cache=new Map();
 let IDX=null,byName=new Map(),byId=new Map(),av=null,worn=[],cl=[],pi=-1,ei=-1,tab="color",tok=0,editing=null,curShow=null,nt=0,palApply=null,dragCol=null;
 const ok4=x=>Array.isArray(x)&&x.length===4&&x.every(v=>v===null||(Number.isInteger(v)&&v>=0&&v<PALETTE.length));
@@ -776,7 +787,7 @@ function show(p){const o=p==="outfit";root.classList.toggle("wide",o);$("pg-colo
   try{history.replaceState(null,"",o?location.pathname+location.search:"#palette");}catch(e){} if(!o)stopAnim();else{ensure();if(av&&mode==="game")paint();}}
 $("n-color").onclick=()=>show("color");$("n-outfit").onclick=()=>show("outfit");
 /* art */
-const lay=(l,g)=>{const k=av.id+(g?"/g/":"/")+l;if(!cache.has(k))cache.set(k,xhrJSON(DB+"a"+av.id+"/"+(g?"g14/":"")+"l"+l+".json").then(d=>{for(const f of d.f){if(typeof f.b.data==="string")f.b.data=u8(f.b.data);if(f.s&&typeof f.s.data==="string")f.s.data=u8(f.s.data);}return d;}).catch(()=>null));return cache.get(k);};
+const lay=(l,g)=>{const k=av.id+(g?"/g/":"/")+l;if(!cache.has(k))cache.set(k,(g?gGet(av.id,"a"+av.id+"/g14/l"+l+".json"):xhrJSON(DB+"a"+av.id+"/l"+l+".json")).then(d=>{for(const f of d.f){if(typeof f.b.data==="string")f.b.data=u8(f.b.data);if(f.s&&typeof f.s.data==="string")f.s.data=u8(f.s.data);}return d;}).catch(()=>null));return cache.get(k);};
 async function stack(list,only,g){
   const b=av.box,L=only||g?[]:[{data:{f:[{x:b[0],y:b[1],w:b[2]-b[0],h:b[3]-b[1],b:{data:[]}}]},indexes:[0,0,0,0]}];
   const add=async(l,ix)=>{const d=l!=null&&await lay(l,g);if(d)L.push({data:d,indexes:ix.map(v=>v==null?0:v)});};
@@ -790,7 +801,7 @@ const fit=c=>{c.style.width=c.width*2+"px";c.style.height=c.height*2+"px";};
 /* In-game preview: animation 14, played from data/outfit/a<avatar>/g14/ (made by export_ingame_anim.py) */
 const FRAME_MS=80;let mode="dress";const gm={frames:[],timer:0};
 const gseqC=new Map();
-const gseq=()=>{if(!gseqC.has(av.id))gseqC.set(av.id,xhrJSON(DB+"a"+av.id+"/g14/seq.json").then(d=>Array.isArray(d)?d:Array.isArray(d&&d.seq)?d.seq:null).catch(()=>null));return gseqC.get(av.id);};
+const gseq=()=>{if(!gseqC.has(av.id))gseqC.set(av.id,gGet(av.id,"a"+av.id+"/g14/seq.json").then(d=>Array.isArray(d)?d:Array.isArray(d&&d.seq)?d.seq:null).catch(()=>null));return gseqC.get(av.id);};
 function ovDraw(s){const o=$("o-ovcv");if(!editing||!o)return;const x=o.getContext("2d");
   if(o.width!==s.width||o.height!==s.height){o.width=s.width;o.height=s.height;}else x.clearRect(0,0,o.width,o.height);
   x.drawImage(s,0,0);fitBig(o);}
