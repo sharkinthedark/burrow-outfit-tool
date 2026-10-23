@@ -13,7 +13,8 @@ body>#ajp{width:100%}
 #ajp header{position:sticky;top:0;z-index:25;background:var(--panel);display:flex;align-items:baseline;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:6px;padding:4px 90px 6px}
 #ajp h1{font-family:'Bowlby One',Impact,sans-serif;text-transform:uppercase;font-weight:400;letter-spacing:1px;font-size:clamp(20px,3vw,28px);margin:0}
 #ajp .sub{font-weight:600;color:var(--muted);font-size:13px}
-#ajp #theme{position:absolute;right:0;top:0;font-family:inherit;font-weight:800;font-size:12px;padding:6px 10px;border:0;border-radius:6px;background:var(--sec);color:var(--secfg);cursor:pointer}
+#ajp .hbtns{position:absolute;right:0;top:0;display:flex;gap:8px}
+#ajp #theme,#ajp #contact{font-family:inherit;font-weight:800;font-size:12px;padding:6px 10px;border:0;border-radius:6px;background:var(--sec);color:var(--secfg);cursor:pointer}
 #ajp .top{display:flex;gap:20px;align-items:center;justify-content:space-between;width:min(100%,max(620px,calc((100vh - 390px) * 1.538)));margin:0 auto 6px}
 #ajp .ctl{flex:1;display:flex;flex-direction:column;gap:12px;align-items:center;min-width:0}
 #ajp .slots{display:flex;gap:12px;justify-content:center}
@@ -27,7 +28,7 @@ body>#ajp{width:100%}
 #ajp .act .r{display:flex;gap:8px;align-items:center;justify-content:center}
 #ajp .act button,#ajp .add button{font-family:inherit;font-weight:800;padding:9px 16px;border:0;border-radius:6px;background:var(--btn);color:var(--btnfg);font-size:15px;cursor:pointer}
 #ajp .act button.sec,#ajp .add button.sec{background:var(--sec);color:var(--secfg)}
-#ajp .act button:hover,#ajp #theme:hover{opacity:.85}
+#ajp .act button:hover,#ajp #theme:hover,#ajp #contact:hover{opacity:.85}
 #ajp #result{font-size:21px;font-weight:800;min-width:130px;padding:6px 10px;background:var(--pill);border-radius:6px}
 #ajp .prev{flex:0 0 210px;display:flex;flex-direction:column;gap:8px;position:relative}
 #ajp #item-input{width:100%;font-family:inherit;font-weight:700;font-size:14px;padding:9px 10px;border:2px solid var(--slotbd);border-radius:6px;background:var(--slotbg);color:var(--text)}
@@ -67,18 +68,18 @@ body>#ajp{width:100%}
 #ajp .titlewrap{display:flex;align-items:center;gap:10px}
 #ajp #info{width:26px;height:26px;padding:0;border:0;border-radius:50%;background:var(--sec);color:var(--secfg);font-family:'Bowlby One',Impact,sans-serif;font-size:14px;line-height:1;cursor:pointer;flex:0 0 auto}
 #ajp #info:hover{opacity:.85}
-#about{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);font-family:'Nunito',system-ui,sans-serif}
-#about[hidden]{display:none}
-#about .box{--panel:#fff;--text:#222;--muted:#777;--btn:#222;--btnfg:#fff;background:var(--panel);color:var(--text);max-width:460px;width:100%;max-height:90vh;overflow-y:auto;padding:24px 28px;border-radius:16px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.4)}
-#about.dark .box{--panel:#1e1e1e;--text:#eee;--muted:#999;--btn:#eee;--btnfg:#111}
-#about p{margin:0 0 12px;font-weight:600;font-size:14px;line-height:1.5;color:var(--muted)}
-#about a{color:var(--text);font-weight:800;text-decoration:underline;word-break:break-word}
-#about a:hover{opacity:.7}
-#about button{font-family:inherit;font-weight:800;font-size:15px;padding:9px 22px;border:0;border-radius:6px;background:var(--btn);color:var(--btnfg);cursor:pointer;margin-top:4px}
-#about button:hover{opacity:.85}
+#about,#pop{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);font-family:'Nunito',system-ui,sans-serif}
+#about[hidden],#pop[hidden]{display:none}
+#about .box,#pop .box{--panel:#fff;--text:#222;--muted:#777;--btn:#222;--btnfg:#fff;background:var(--panel);color:var(--text);max-width:460px;width:100%;max-height:90vh;overflow-y:auto;padding:24px 28px;border-radius:16px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+#about.dark .box,#pop.dark .box{--panel:#1e1e1e;--text:#eee;--muted:#999;--btn:#eee;--btnfg:#111}
+#about p,#pop p{margin:0 0 12px;font-weight:600;font-size:14px;line-height:1.5;color:var(--muted)}
+#about a,#pop a{color:var(--text);font-weight:800;text-decoration:underline;word-break:break-word}
+#about a:hover,#pop a:hover{opacity:.7}
+#about button,#pop button{font-family:inherit;font-weight:800;font-size:15px;padding:9px 22px;border:0;border-radius:6px;background:var(--btn);color:var(--btnfg);cursor:pointer;margin-top:4px}
+#about button:hover,#pop button:hover{opacity:.85}
 @media (max-width:800px){
   #ajp header{padding:0}
-  #ajp #theme{position:static}
+  #ajp .hbtns{position:static}
   #ajp .top{flex-direction:column;width:100%}
   #ajp .prev{flex:none;width:100%;max-width:320px}
   #ajp .grid{width:100%}
@@ -212,10 +213,13 @@ body>#ajp{width:100%}
     <button id="about-ok" type="button">I understand</button>
   </div>
 </div>
+<div id="pop" role="dialog" aria-modal="true" hidden>
+  <div class="box"><p id="pop-t"></p><button id="pop-ok" type="button">OK</button></div>
+</div>
 <div id="ajp">
 <header>
   <div class="titlewrap"><h1>BURROW OUTFIT TOOL</h1><button id="info" type="button" aria-label="About this website" title="About this website">i</button></div>
-  <button id="theme">Dark mode</button>
+  <div class="hbtns"><button id="contact" type="button">Contact</button><button id="theme">Dark mode</button></div>
 </header>
 <nav class="nav"><button id="n-outfit" class="on" type="button">Outfit creator</button><button id="n-color" type="button">Palette creator</button><a id="n-cat" href="https://warpedfart.github.io/ajb-lookbook/clothing.html" target="_blank" rel="noopener noreferrer">Clothing item catalogue</a></nav>
 <div id="pg-color" hidden>
@@ -1084,11 +1088,30 @@ function saveDraft(){if(!av)return;try{localStorage.setItem("ajp-draft",outfitCo
 $("o-save").onclick=()=>{if(!av||cv.width<20)return;
   const code=outfitCode();
   saved.unshift({n:$("o-name").value.trim()||av.name,t:snap(),c:code});saved=saved.slice(0,40);persist();renderSaved();$("o-name").value="";note("Outfit saved.");};
+/* ---------- small popups (copy-code tip, contact) ---------- */
+const pop=$("pop");
+function showPop(html){$("pop-t").innerHTML=html;pop.classList.toggle("dark",dark);pop.hidden=false;$("pop-ok").focus();}
+function hidePop(){pop.hidden=true;}
+$("pop-ok").onclick=hidePop;
+pop.addEventListener("click",e=>{if(e.target===pop)hidePop();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!pop.hidden)hidePop();});
+$("contact").onclick=()=>showPop('Have feedback or a question? DM me on <a href="https://discord.com/users/220272512293011456" target="_blank" rel="noopener noreferrer">Discord</a>!');
+async function copyText(t){
+  try{await navigator.clipboard.writeText(t);return true;}catch(e){}
+  try{const a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.append(a);a.select();const ok=document.execCommand("copy");a.remove();return ok;}catch(e){return false;}
+}
+async function copyOutfitCode(code,btn){
+  if(!await copyText(code)){note("Couldn't copy. Your browser blocked it.");return;}
+  btn.textContent="Copied!";setTimeout(()=>{btn.textContent="Copy code";},1500);
+  let seen=false;try{seen=localStorage.getItem("ajp-codetip")==="1";}catch(e){}
+  if(!seen){try{localStorage.setItem("ajp-codetip","1");}catch(e){}
+    showPop('Hey Jammer! Did you know you can use this code on <a href="https://ajfeetpics.art/" target="_blank" rel="noopener noreferrer">https://ajfeetpics.art/</a> to see different animations of your avatar and save them as gifs? Go check it out :)');}
+}
 function renderSaved(){
   const h=$("o-saved");h.innerHTML="";if(!saved.length){h.append(mk("div","onote","No saved outfits yet."));return;}
   saved.forEach((s,i)=>{const r=mk("div","orow"),im=mk("img");if(String(s.t).startsWith("data:image/png"))im.src=s.t;im.alt="";
-    const l=mk("button",null,"Load"),d=mk("button","sec","\u2715");l.type=d.type="button";d.title="Delete";
-    l.onclick=()=>load(s.c);d.onclick=()=>{saved.splice(i,1);persist();renderSaved();};r.append(im,mk("span",null,s.n),l,d);h.append(r);});
+    const l=mk("button",null,"Load"),k=mk("button","sec","Copy code"),d=mk("button","sec","\u2715");l.type=k.type=d.type="button";d.title="Delete";
+    l.onclick=()=>load(s.c);k.onclick=()=>copyOutfitCode(s.c,k);d.onclick=()=>{saved.splice(i,1);persist();renderSaved();};r.append(im,mk("span",null,s.n),l,k,d);h.append(r);});
 }
 /* start */
 async function ensure(){
