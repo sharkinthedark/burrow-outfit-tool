@@ -36,7 +36,7 @@ body>#ajp{width:100%}
 #ajp #item-results[hidden]{display:none}
 #ajp #item-results li{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:700}
 #ajp #item-results li:hover,#ajp #item-results li.active{background:var(--pill)}
-#ajp #item-results img,#ajp #item-results .ph{width:56px;height:56px;object-fit:contain;flex:0 0 56px;background:var(--slotbg);border-radius:6px}
+#ajp #item-results canvas,#ajp #item-results img,#ajp #item-results .ph{width:56px;height:56px;object-fit:contain;flex:0 0 56px;background:var(--slotbg);border-radius:6px}
 #ajp #item-results li.note{cursor:default;color:var(--muted);font-weight:600;font-size:13px}
 #ajp .pbox{position:relative;height:170px;padding:16px;border-radius:6px;background:var(--slotbg);border:2px dashed var(--slotbd);display:flex;align-items:center;justify-content:center;overflow:hidden}
 #ajp .pbox canvas{max-width:100%;max-height:100%;width:auto;height:auto;display:block}
@@ -106,7 +106,7 @@ body>#ajp{width:100%}
 #ajp #o-res li{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:700}
 #ajp #o-res li:hover{background:var(--pill)}
 #ajp #o-res li.note{cursor:default;color:var(--muted);font-weight:600}
-#ajp #o-res img{width:48px;height:48px;object-fit:contain;flex:0 0 48px}
+#ajp #o-res canvas,#ajp #o-res img{width:48px;height:48px;object-fit:contain;flex:0 0 48px}
 #ajp .ocard{background:var(--slotbg);border-radius:8px;padding:8px;text-align:center}
 #ajp .othumb{display:block;margin:0 auto 4px;max-width:100%;max-height:100px;width:auto;height:auto}
 #ajp .oname{font-weight:800;font-size:13px;margin-bottom:6px}
@@ -200,6 +200,59 @@ body>#ajp{width:100%}
 #o-opg i:hover{outline:2px solid var(--ring);outline-offset:1px}
 #ajp .pgrid.drop{outline:3px solid var(--ring);outline-offset:2px}
 #o-ovcv.game{padding:min(12vh,120px) 21%}   /* same canvas box as Dress Up, so the window never resizes; the sprite just sits smaller inside */
+
+/* search + browse + palette-for-all */
+#ajp .oall{display:flex;gap:6px;margin-bottom:8px}
+#ajp .oall button:first-child{flex:1}
+#ajp .osearch{display:flex;gap:6px;align-items:stretch}
+#ajp .o3 .osearch input[type=text]{flex:1 1 0;width:auto;min-width:0;font-size:13px;padding:6px 8px}
+#ajp .osearch button{flex:1 1 0;min-width:0}
+.omod{position:fixed;inset:0;z-index:95;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px}
+.omod[hidden]{display:none}
+.omod .mbox{background:var(--panel);color:var(--text);width:min(96vw,1100px);height:min(90vh,820px);padding:18px;border-radius:14px;display:flex;flex-direction:column;gap:10px;font-family:'Nunito',system-ui,sans-serif;text-align:left}
+.omod .mbox.narrow{width:min(94vw,460px);height:auto;max-height:80vh}
+.omod .mh{display:flex;align-items:center;gap:10px}
+.omod .mh b{flex:1;font-size:17px;font-weight:800}
+.omod button{font-family:inherit;font-weight:800;font-size:14px;padding:7px 14px;border:0;border-radius:6px;background:var(--btn);color:var(--btnfg);cursor:pointer}
+.omod button:hover{opacity:.85}
+.omod input{font-family:inherit;font-weight:700;font-size:14px;padding:7px 10px;border:2px solid var(--slotbd);border-radius:6px;background:var(--slotbg);color:var(--text);width:200px}
+.omod .mtabs{display:flex;gap:6px;flex-wrap:wrap}
+.omod .mtabs button{background:var(--sec);color:var(--secfg)}
+.omod .mtabs button.on{background:var(--btn);color:var(--btnfg)}
+.omod .mst{min-height:18px;font-size:13px;font-weight:700;color:var(--muted)}
+.omod .cg{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px;align-content:start;padding-right:4px}
+.omod .cg .ct{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px;background:var(--pill);color:var(--text);border:2px solid transparent;font-size:12px}
+.omod .cg .ct:hover{border-color:var(--ring)}
+.omod .cg .ct{content-visibility:auto;contain-intrinsic-size:112px 135px}
+.omod .cg .ct.on{border-color:var(--ring);box-shadow:inset 0 0 0 1px var(--ring)}
+.omod .cg .ct canvas,.omod .cg .ct img,.omod .cg .ct .ph{width:80px;height:80px;object-fit:contain;background:var(--slotbg);border-radius:6px}
+.omod .cg .ct span{font-weight:700;line-height:1.2;word-break:break-word}
+.omod .onote,.omod .sn{color:var(--muted);font-size:13px;font-weight:600;text-align:center;padding:6px}
+#o-pl{overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+#o-pl .sp{display:flex;flex-direction:column;gap:4px;width:100%;padding:6px;border-radius:8px;background:var(--pill);color:var(--text);border:2px solid transparent;flex:0 0 auto}
+#o-pl .sp:hover{border-color:var(--ring)}
+#o-pl .sp .sw{display:flex;height:30px;border-radius:4px;overflow:hidden}
+#o-pl .sp .sw i{flex:1;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:11px;font-weight:800}
+#o-cat .mbox{width:min(96vw,1400px)}
+.omod .mbox.narrow{height:min(70vh,560px);max-height:none}
+#o-pl{flex:1;min-height:0}
+.omod .mbody{flex:1;min-height:0;display:flex;gap:14px}
+.omod .mprev{flex:0 0 min(42%,520px);display:flex;flex-direction:column;gap:8px;background:var(--slotbg);border-radius:10px;padding:10px;min-width:0}
+.omod .mprev .oview{display:flex;gap:6px}
+.omod .mprev .oview button{flex:1;background:var(--sec);color:var(--secfg)}
+.omod .mprev .oview button.on{background:var(--btn);color:var(--btnfg)}
+#o-ccv{flex:1 1 0;min-height:0;width:100%;object-fit:contain;image-rendering:pixelated}
+#o-ccv.game{padding:2% 4%}
+.omod .mmain{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;gap:10px}
+.omod .cg{min-height:0}
+@media (max-width:800px){.omod .mbody{flex-direction:column}.omod .mprev{flex:0 0 38%}}
+.omod .mstrip{flex:0 0 112px;display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;align-items:stretch}
+.omod .mstrip .cw{flex:0 0 84px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px;background:var(--pill);color:var(--text);border:2px solid transparent;font-size:11px;overflow:hidden}
+.omod .mstrip .cw:hover{border-color:var(--ring)}
+.omod .mstrip .cw canvas,.omod .mstrip .cw img,.omod .mstrip .cw .ph{width:56px;height:56px;object-fit:contain;background:var(--slotbg);border-radius:6px;flex:0 0 auto}
+.omod .mstrip .cw span{font-weight:700;line-height:1.15;width:100%;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.omod .mstrip .onote{flex:1;align-self:center}
+#o-pl .sp .sc{font-size:12px;font-weight:700;color:var(--muted)}
 </style></head>
 <body data-ajp-page>
 <div id="about" role="dialog" aria-modal="true" aria-labelledby="about-title" hidden>
@@ -264,7 +317,8 @@ body>#ajp{width:100%}
 <div id="pg-outfit">
 <div class="o3">
   <section class="oc">
-    <div class="osearch"><input id="o-q" type="text" placeholder="Search for an item" autocomplete="off" aria-label="Clothing item"><ul id="o-res" hidden></ul></div>
+    <div class="oall"><button id="o-all" type="button">Select palette to apply to all</button><button id="o-allr" class="sec" type="button" title="Put every item back to its original colours">Reset</button></div>
+    <div class="osearch"><input id="o-q" type="text" placeholder="Search for an item" autocomplete="off" aria-label="Clothing item"><button id="o-browse" type="button">Browse</button><ul id="o-res" hidden></ul></div>
     <div id="o-worn"></div>
   </section>
   <section class="oc">
@@ -285,6 +339,8 @@ body>#ajp{width:100%}
   </section>
 </div>
 <div id="o-ov" hidden><div class="box"><div class="l"><div class="oview"><button id="o-ovd" class="on" type="button">Dress Up preview</button><button id="o-ovg" type="button">In-game preview</button></div><canvas id="o-ovcv" width="10" height="10"></canvas><div class="oname" id="o-ovn" style="font-weight:800;margin-top:6px"></div></div><div class="r" id="o-ovp"></div><div class="s"><div class="st">Saved Palettes</div><div id="o-ovs"></div></div></div></div>
+<div id="o-cat" class="omod" hidden><div class="mbox"><div class="mh"><b>Item catalogue</b><input id="o-cq" type="text" placeholder="Filter items" autocomplete="off" aria-label="Filter items"><button id="o-cx" type="button">Close</button></div><div class="mbody"><div class="mprev"><div class="oview"><button id="o-cvd" class="on" type="button">Dress Up preview</button><button id="o-cvg" type="button">In-game preview</button></div><canvas id="o-ccv" width="10" height="10"></canvas><div class="mstrip" id="o-cw"></div></div><div class="mmain"><div class="mtabs" id="o-ct"></div><div class="mst" id="o-cs"></div><div class="cg" id="o-cg"></div></div></div></div></div>
+<div id="o-pp" class="omod" hidden><div class="mbox narrow"><div class="mh"><b>Select palette to apply to all</b><button id="o-px" type="button">Close</button></div><div id="o-pl"></div></div></div>
 </div>
 <div class="foot">Not affiliated with or endorsed by Wild Works LLC. All Animal Jam copyright is owned by them. Item sprites, data and recolour rendering are from <a href="https://warpedfart.github.io/ajb-lookbook/" target="_blank" rel="noopener noreferrer">AJB Lookbook</a> (MIT licence, &copy; 2026 warpedfart). Colour picker inspired by <a href="https://aj-color-picker.carrd.co" target="_blank" rel="noopener noreferrer">aj-color-picker.carrd.co</a>. Background images from <a href="https://www.animaljamarchives.com/" target="_blank" rel="noopener noreferrer">Animal Jam Archives</a>. Assets from <a href="https://github.com/butterbarned/applejack_gifs" target="_blank" rel="noopener noreferrer">butterbarned/applejack_gifs</a>. For personal use.</div>
 </div>
@@ -685,11 +741,7 @@ function showResults(){
   if(!shown.length){ note("No items found."); return; }
   shown.forEach(it=>{
     const li=document.createElement("li");
-    if(it.image){
-      const im=document.createElement("img"); im.src=it.image; im.alt=""; im.loading="lazy"; im.referrerPolicy="no-referrer";
-      im.onerror=()=>{ im.style.visibility="hidden"; };
-      li.append(im);
-    } else { const sp=document.createElement("span"); sp.className="ph"; li.append(sp); }
+    li.append(spriteThumb(it));
     const nm=document.createElement("span"); nm.textContent=it.name; li.append(nm);
     li.onmousedown=(e)=>{ e.preventDefault(); choose(it); };
     results.append(li);
@@ -779,6 +831,16 @@ if(!aboutSeen){about.hidden=false; $("about-ok").focus(); try{localStorage.setIt
 init();
 </script>
 <script>
+/* item thumbnails: the item's own sprite in its regular colours (loaded only when it scrolls into view) */
+const _sd=new Map();
+async function _fill(c){const it=c._it;try{
+  if(!_sd.has(it.id))_sd.set(it.id,getJSON("data/sprites/"+it.id+".json").then(d=>d&&Array.isArray(d.f)?d:null).catch(()=>null));
+  const d=await _sd.get(it.id);if(!d)return;
+  renderSprite(c,[{data:d,indexes:(itemDefault(it)||[0,0,0,0]).map(v=>v==null?0:v)}],GAME,0);}catch(e){}}
+const _io="IntersectionObserver" in window?new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting){_io.unobserve(e.target);_fill(e.target);}},{rootMargin:"300px"}):null;
+function spriteThumb(it){const c=document.createElement("canvas");c._it=it;if(_io)_io.observe(c);else _fill(c);return c;}
+</script>
+<script>
 /* ---------- nav + Outfit creator (art comes from data/outfit/, made by export_outfit_assets.py) ---------- */
 (()=>{
 let DB="data/outfit/";
@@ -816,9 +878,10 @@ const fit=c=>{c.style.width=c.width*2+"px";c.style.height=c.height*2+"px";};
 const FRAME_MS=80;let mode="dress";const gm={frames:[],timer:0};
 const gseqC=new Map();
 const gseq=()=>{if(!gseqC.has(av.id))gseqC.set(av.id,gGet(av.id,"a"+av.id+"/g14/seq.json").then(d=>Array.isArray(d)?d:Array.isArray(d&&d.seq)?d.seq:null).catch(()=>null));return gseqC.get(av.id);};
-function ovDraw(s){const o=$("o-ovcv");if(!editing||!o)return;const x=o.getContext("2d");
+function drawTo(o,on,s){if(!on||!o)return;const x=o.getContext("2d");
   if(o.width!==s.width||o.height!==s.height){o.width=s.width;o.height=s.height;}else x.clearRect(0,0,o.width,o.height);
   x.drawImage(s,0,0);fitBig(o);}
+function ovDraw(s){drawTo($("o-ovcv"),editing,s);drawTo($("o-ccv"),!$("o-cat").hidden,s);}
 function stopAnim(){clearInterval(gm.timer);gm.timer=0;}
 function play(){
   stopAnim();const f=gm.frames;if(!f.length)return;let i=0;
@@ -854,11 +917,12 @@ async function paint(){
   stopAnim();const L=await stack(worn);if(t!==tok)return;
   if(renderSprite(cv,L,GAME,0))fit(cv);
   if(editing){const o=$("o-ovcv");if(renderSprite(o,L,GAME,0))fitBig(o);}
+  if(!$("o-cat").hidden){const o=$("o-ccv");if(renderSprite(o,L,GAME,0))fitBig(o);}
   thumbs();
 }
-function setMode(m){mode=m;for(const[a,b]of[["o-vd","o-vg"],["o-ovd","o-ovg"]]){$(a).classList.toggle("on",m==="dress");$(b).classList.toggle("on",m==="game");}
-  $("o-gif").hidden=m!=="game";$("o-ovcv").classList.toggle("game",m==="game");$("o-img").textContent=m==="game"?"Save as image":"Save outfit as image";stopAnim();note("",true);paint();}
-$("o-vd").onclick=$("o-ovd").onclick=()=>setMode("dress");$("o-vg").onclick=$("o-ovg").onclick=()=>setMode("game");
+function setMode(m){mode=m;for(const[a,b]of[["o-vd","o-vg"],["o-ovd","o-ovg"],["o-cvd","o-cvg"]]){$(a).classList.toggle("on",m==="dress");$(b).classList.toggle("on",m==="game");}
+  $("o-gif").hidden=m!=="game";$("o-ovcv").classList.toggle("game",m==="game");$("o-ccv").classList.toggle("game",m==="game");$("o-img").textContent=m==="game"?"Save as image":"Save outfit as image";stopAnim();note("",true);paint();}
+$("o-vd").onclick=$("o-ovd").onclick=$("o-cvd").onclick=()=>setMode("dress");$("o-vg").onclick=$("o-ovg").onclick=$("o-cvg").onclick=()=>setMode("game");
 /* GIF writer: one shared 255-colour palette (median cut), colour 0 = transparent, every frame cleared before the next */
 function gifEncode(frames,scale,delayMs){
   const w=frames[0].width,h=frames[0].height,W=w*scale,H=h*scale;
@@ -980,7 +1044,7 @@ function mkPicker(host,get,set,reset){
   host.append(sl,act,gr);draw();
 }
 /* equipped items */
-function renderWorn(){
+function renderWorn(){catStrip();
   const h=$("o-worn");h.innerHTML="";
   if(!worn.length){h.append(mk("div","onote","Search for an item to put it on."));return;}
   worn.forEach((w,i)=>{
@@ -1009,7 +1073,7 @@ function search(){
   const L=a.concat(b).slice(0,40);res.innerHTML="";
   if(!L.length)res.append(mk("li","note",items.length?"No items found.":"Item list not loaded."));
   L.forEach(it=>{const li=mk("li"),z=byName.get(norm(it.name));if(!(z&&z.l[av.id]))li.style.opacity=.45;
-    if(it.image){const im=mk("img");im.src=it.image;im.alt="";im.loading="lazy";im.referrerPolicy="no-referrer";im.onerror=()=>{im.style.visibility="hidden";};li.append(im);}
+    li.append(spriteThumb(it));
     li.append(mk("span",null,it.name));li.onmousedown=e=>{e.preventDefault();res.hidden=true;q.value="";equip(it);};res.append(li);});
   res.hidden=false;L.first=L[0];res.first=L[0];
 }
@@ -1033,6 +1097,81 @@ function openEdit(w){editing=w;$("o-ovn").textContent=w.it.n;const h=$("o-ovp");
 const closeEdit=()=>{editing=null;$("o-ov").hidden=true;};
 $("o-ov").addEventListener("click",e=>{if(e.target.id==="o-ov")closeEdit();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&editing)closeEdit();});
+/* browse catalogue (tabs sort by body area) */
+const TABS=["All","Head","Neck","Body","Legs","Tail"];
+const SLOT_TAB={};   // optional manual fixes by slot number, e.g. {12:"Head"}
+const KW=[["Tail",/\btails?\b/i],
+["Neck",/\b(necklaces?|scarf|scarves|collars?|bandanas?|chokers?|pendants?|amulets?|leis?|bow ?ties?|ties?|lockets?|neckerchiefs?|medallions?)\b/i],
+["Head",/\b(hats?|caps?|crowns?|helm|helmets?|hoods?|headbands?|headdress|headpieces?|glasses|goggles|masks?|tiaras?|beanies?|circlets?|halos?|wigs?|hair|horns?|antlers?|bonnets?|veils?|fez|berets?|visors?|diadems?|monocles?|cowls?)\b/i],
+["Legs",/\b(boots?|shoes?|anklets?|pants|leggings|socks?|greaves|sandals|slippers|skates|cuffs?|bracelets?|gloves?|shorts|skirts?)\b/i],
+["Body",/\b(armou?r|vests?|jackets?|shirts?|coats?|dress|sweaters?|cloaks?|capes?|wings?|saddles?|backpacks?|tunics?|robes?|suits?|hoodies?|ponchos?|gowns?|aprons?|sash|shields?|banners?|flags?|staffs?|swords?)\b/i]];
+let slotTab=null;   // each slot number is sorted by the majority of its items' names, so whole slots land in the right tab
+function slotTabs(){if(slotTab)return slotTab;const v={};
+  for(const z of IDX.items){const t=KW.find(([,r])=>r.test(z.n));if(!t)continue;const o=v[z.s]||(v[z.s]={});o[t[0]]=(o[t[0]]||0)+1;}
+  slotTab={};for(const k in v)slotTab[k]=Object.entries(v[k]).sort((a,b)=>b[1]-a[1])[0][0];
+  return Object.assign(slotTab,SLOT_TAB);}
+let ctab="All";const cg=$("o-cg"),cm=$("o-cat"),pm=$("o-pp");
+function catMarks(){for(const b of cg.children)if(b._z)b.classList.toggle("on",worn.some(w=>w.it===b._z));}
+/* sideways strip of what is on: click one to take it off */
+function catStrip(){
+  const h=$("o-cw");if(!h)return;h.innerHTML="";
+  if(!worn.length){h.append(mk("div","onote","Nothing equipped yet."));}
+  worn.forEach(w=>{
+    const b=mk("button","cw"),a=w.a||ajbOf(w.it.n);b.type="button";b.title="Click to take off "+w.it.n;
+    if(a)b.append(spriteThumb(a));else b.append(mk("div","ph"));
+    b.append(mk("span",null,w.it.n));
+    b.onclick=()=>{const i=worn.indexOf(w);if(i<0)return;worn.splice(i,1);renderWorn();paint();$("o-cs").textContent="Removed "+w.it.n+".";};
+    h.append(b);
+  });
+  try{catMarks();}catch(e){}
+}
+let cat=null,catList=[],catN=0;const CHUNK=60;
+function catMore(){   // draw the next batch of tiles
+  const fr=document.createDocumentFragment(),end=Math.min(catN+CHUNK,catList.length);
+  for(;catN<end;catN++){const{it,z}=catList[catN];
+    const b=mk("button","ct");b.type="button";b._z=z;b.title=it.name;if(!(z&&av&&z.l[av.id]))b.style.opacity=.45;
+    b.append(spriteThumb(it));
+    b.append(mk("span",null,it.name));
+    b.onclick=()=>{const i=z?worn.findIndex(w=>w.it===z):-1;
+      if(i>=0){worn.splice(i,1);renderWorn();paint();$("o-cs").textContent="Removed "+it.name+".";}
+      else{equip(it);$("o-cs").textContent=z&&worn.some(w=>w.it===z)?"Added "+it.name+".":$("o-note").textContent;}
+      catMarks();};
+    fr.append(b);
+  }
+  cg.append(fr);catMarks();
+}
+cg.addEventListener("scroll",()=>{if(catN<catList.length&&cg.scrollTop+cg.clientHeight>cg.scrollHeight-400)catMore();});
+function renderCat(){
+  if(!cat||cat.length!==items.length)cat=items.map(it=>({it,n:norm(it.name),z:byName.get(norm(it.name))}));
+  const s=norm($("o-cq").value),m=slotTabs();
+  catList=cat.filter(c=>(!s||c.n.includes(s))&&(ctab==="All"||(c.z&&m[c.z.s]===ctab)));
+  cg.innerHTML="";catN=0;
+  if(!catList.length){cg.append(mk("div","onote","No items found."));return;}
+  catMore();
+  while(catN<catList.length&&cg.scrollHeight<=cg.clientHeight+300)catMore();   // fill tall screens
+  cg.scrollTop=0;
+}
+const ct=$("o-ct");
+TABS.forEach(t=>{const b=mk("button",t===ctab?"on":null,t);b.type="button";b.onclick=()=>{ctab=t;[...ct.children].forEach(x=>x.classList.toggle("on",x===b));renderCat();};ct.append(b);});
+$("o-browse").onclick=()=>{if(!IDX||!av){note("Still loading, try again in a moment.");return;}$("o-cs").textContent="";cm.hidden=false;renderCat();catStrip();paint();};
+let cqT=0;$("o-cq").addEventListener("input",()=>{clearTimeout(cqT);cqT=setTimeout(renderCat,150);});
+$("o-cx").onclick=()=>{cm.hidden=true;};
+cm.addEventListener("click",e=>{if(e.target===cm)cm.hidden=true;});
+/* apply one saved palette to every equipped item, or put them all back */
+$("o-all").onclick=()=>{
+  if(!worn.length){note("Put an item on first.");return;}
+  const h=$("o-pl");h.innerHTML="";let L=[];try{L=JSON.parse(localStorage.getItem("ajp-saved")||"[]");}catch(e){}
+  L=Array.isArray(L)?L.filter(ok4):[];
+  if(!L.length)h.append(mk("div","sn","No saved palettes yet. Save some in the Palette creator tab."));
+  L.forEach(pl=>{const b=mk("button","sp"),sw=mk("div","sw");b.type="button";
+    pl.forEach(v=>{const c=mk("i");if(v===null){c.textContent="-";c.style.color="var(--muted)";}else{c.style.background=colourOf(v);c.style.color=inkFor(v);c.textContent=v;}sw.append(c);});
+    const pk=pack(pl);b.append(sw,mk("div","sc",pk===null?"Not valid":String(pk)));b.title="Apply to all items";
+    b.onclick=()=>{if(pk===null)return;worn.forEach(w=>{w.idx=pl.slice();});renderWorn();paint();pm.hidden=true;note("Palette applied to all items.");};h.append(b);});
+  pm.hidden=false;};
+$("o-allr").onclick=()=>{if(!worn.length){note("Put an item on first.");return;}worn.forEach(w=>{w.idx=unpack(w.it.c)||[0,0,0,0];});renderWorn();paint();note("Items back to their original colours.");};
+$("o-px").onclick=()=>{pm.hidden=true;};
+pm.addEventListener("click",e=>{if(e.target===pm)pm.hidden=true;});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){cm.hidden=true;pm.hidden=true;}});
 /* right panel */
 function panel(){
   const p=$("o-panel");p.innerHTML="";curShow=null;palApply=null;$("o-opg").classList.toggle("clk",tab!=="color");
