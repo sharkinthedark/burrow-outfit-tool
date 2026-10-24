@@ -204,7 +204,7 @@ body>#ajp{width:100%}
 <body data-ajp-page>
 <div id="about" role="dialog" aria-modal="true" aria-labelledby="about-title" hidden>
   <div class="box">
-    <p id="about-title">This website was coded with Claude by a person who knows nothing about code and something about good user-centered design.</p>
+    <p id="about-title">This website was coded entirely using Claude by a person who knows nothing about code and something about better user-centered design.</p>
     <p>This website only exists thanks to the lovely open-source resources listed below:</p>
     <p>The OG Color Picker - <a href="https://aj-color-picker.carrd.co" target="_blank" rel="noopener noreferrer">aj-color-picker.carrd.co</a><br>
     AJB Lookbook - <a href="https://warpedfart.github.io/ajb-lookbook/" target="_blank" rel="noopener noreferrer">warpedfart.github.io/ajb-lookbook/</a><br>
@@ -762,7 +762,9 @@ $("about-ok").onclick=closeAbout;
 about.addEventListener("click",(e)=>{ if(e.target===about) closeAbout(); });
 document.addEventListener("keydown",(e)=>{ if(e.key==="Escape"&&!about.hidden) closeAbout(); });
 about.classList.toggle("dark",dark);
-about.hidden=false; $("about-ok").focus();
+/* the About popup opens by itself on a first visit only; the "i" button still opens it any time */
+let aboutSeen=false;try{aboutSeen=localStorage.getItem("ajp-about-seen")==="1";}catch(e){}
+if(!aboutSeen){about.hidden=false; $("about-ok").focus(); try{localStorage.setItem("ajp-about-seen","1");}catch(e){}}
 
 init();
 </script>
