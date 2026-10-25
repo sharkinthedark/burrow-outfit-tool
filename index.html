@@ -536,7 +536,9 @@ function cuBox(cu, bw, bh) {
   return d;
 }
 /* Sticker: the item disappears and the image is shown inside the item's box.
-   Texture: the image is laid over the item, as strongly as the item is bright (white = all image, black = none). */
+   Texture: the item is drawn as normal (palette applied) and its luminance L = (3R+6G+1B)/10 is read per pixel.
+   L < 60 is left alone (outline kept). Otherwise the colour is replaced by the picture (stretched over the frame box,
+   nearest-neighbour), scaled by k = clamp(L/170, 0.55, 1.15) to keep the item's shading; alpha = min(item, picture). */
 function customPass(px, W, H, f, pal, minX, minY, cu) {
   const bw = f.w, bh = f.h, bx = f.x - minX, by = f.y - minY;
   if (bw < 1 || bh < 1) return;
@@ -550,18 +552,47 @@ function customPass(px, W, H, f, pal, minX, minY, cu) {
     }
     return;
   }
+  // 1. the base layer alone, drawn as normal (palette applied) into a scratch bitmap
   const t = new Uint8ClampedArray(W * H * 4);
   colorPass(t, W, H, f, pal, minX, minY);
   if (f.s) shadowPass(t, W, H, f, minX, minY);
-  for (let y = 0; y < bh; y++) for (let x = 0; x < bw; x++) {
-    const X = bx + x, Y = by + y;
-    if (X < 0 || Y < 0 || X >= W || Y >= H) continue;
-    const o = (Y * W + X) * 4;
-    if (!t[o + 3]) continue;
-    const s2 = (y * bw + x) * 4;
-    const L = (0.299 * t[o] + 0.587 * t[o + 1] + 0.114 * t[o + 2]) / 255 * (d[s2 + 3] / 255);
-    cuOver(px, o, t[o] * (1 - L) + d[s2] * L, t[o + 1] * (1 - L) + d[s2 + 1] * L, t[o + 2] * (1 - L) + d[s2 + 2] * L, 255);
+  // the picture at its own size, read with nearest-neighbour sampling (no smoothing)
+  const pic = cuPixels(cu), pw = pic.w, ph = pic.h, pd = pic.d;
+  // 2. region = frame box clamped to the bitmap (the mapping below is NOT clamped, same as the game)
+  const x0 = Math.max(0, Math.trunc(bx)), y0 = Math.max(0, Math.trunc(by));
+  const x1 = Math.min(W, Math.trunc(bx + bw)), y1 = Math.min(H, Math.trunc(by + bh));
+  const flipped = false;   // this viewer draws frames unflipped
+  const rw = Math.max(1, x1 - x0), rh = Math.max(1, y1 - y0);
+  for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
+    const o = (y * W + x) * 4, ia = t[o + 3];
+    if (ia <= 0) continue;
+    const R = t[o], G = t[o + 1], B = t[o + 2];
+    const L = (3 * R + 6 * G + 1 * B) / 10;
+    if (L < 60) continue;                       // dark pixels (outline) are kept
+    const u = (flipped ? (x1 - 1 - x) : (x - x0)) / rw, v = (y - y0) / rh;
+    const sx = Math.min(pw - 1, Math.trunc(u * pw)), sy = Math.min(ph - 1, Math.trunc(v * ph));
+    const c = (Math.max(0, sy) * pw + Math.max(0, sx)) * 4;
+    const k = Math.min(1.15, Math.max(0.55, L / 170));   // keep the item's shading
+    t[o] = Math.min(255, pd[c] * k);
+    t[o + 1] = Math.min(255, pd[c + 1] * k);
+    t[o + 2] = Math.min(255, pd[c + 2] * k);
+    t[o + 3] = Math.min(ia, pd[c + 3]);
   }
+  // 3. composite the whole scratch bitmap onto the avatar bitmap
+  for (let i = 0; i < W * H; i++) {
+    const o = i * 4;
+    if (t[o + 3]) cuOver(px, o, t[o], t[o + 1], t[o + 2], t[o + 3]);
+  }
+}
+/* the picture drawn once at its natural size, as RGBA (cached) */
+function cuPixels(cu) {
+  if (cu._px) return cu._px;
+  const w = Math.max(1, cu.img.naturalWidth || cu.img.width), h = Math.max(1, cu.img.naturalHeight || cu.img.height);
+  const c = document.createElement("canvas");
+  c.width = w; c.height = h;
+  const x = c.getContext("2d");
+  x.drawImage(cu.img, 0, 0);
+  return (cu._px = { w, h, d: x.getImageData(0, 0, w, h).data });
 }
 
 function renderSprite(canvas, layers, game, frame = 0) {
@@ -1430,7 +1461,7 @@ function openCustom(w){
     const sw=mk("label","cuchk"),cb=mk("input");cb.type="checkbox";cb.checked=showItem;cb.onchange=()=>{showItem=cb.checked;drawEd();};sw.append(cb,mk("span",null,"Show the item over the image"));sec.append(sw);
     const row=mk("div","curow"),st=mk("button",w.cu.mode==="sticker"?"on":null,"Make it a sticker"),tx=mk("button",w.cu.mode==="texture"?"on":null,"Make it a texture");
     st.type=tx.type="button";st.onclick=()=>{w.cu.mode="sticker";paint();draw();};tx.onclick=()=>{w.cu.mode="texture";paint();draw();};row.append(st,tx);
-    sec.append(row,mk("div","onote",w.cu.mode==="sticker"?"Sticker: the base item turns invisible and your image is shown in its place.":"Texture: your image shows on the item as strongly as the item is bright. White shows all of it, black shows none. Once saved, change the item's colours from the Outfit creator."));
+    sec.append(row,mk("div","onote",w.cu.mode==="sticker"?"Sticker: the base item turns invisible and your image is shown in its place.":"Texture: your image is stretched over the item and replaces its colour, while the item's shading (folds, shadows, highlights) is kept. The darkest parts of the item (its outline) stay as they are, so very dark colourways show little of the image. Once saved, change the item's colours from the Outfit creator."));
     const fr=mk("div","curow");[["Fit","fit"],["Fill","fill"],["Stretch","stretch"]].forEach(([t,kk])=>{const b=mk("button",null,t);b.type="button";b.onclick=()=>{fitTo(kk);syncSl();changed();};fr.append(b);});
     sec.append(fr);
     sl.size=slider("Size",10,300,v=>{const p=P();scaleBy(v/100/p.sw);changed();});
