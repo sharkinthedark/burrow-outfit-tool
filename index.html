@@ -253,6 +253,28 @@ body>#ajp{width:100%}
 .omod .mstrip .cw span{font-weight:700;line-height:1.15;width:100%;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .omod .mstrip .onote{flex:1;align-self:center}
 #o-pl .sp .sc{font-size:12px;font-weight:700;color:var(--muted)}
+
+/* ---- Custom item preview ---- */
+#ajp.cm .oall,#ajp.cm .onlyo{display:none}
+#ajp .cmhint{display:none;text-align:left}
+#ajp.cm .cmhint{display:block}
+#ajp .orow canvas{height:44px;width:auto;max-width:72px}
+.omod button.sec{background:var(--sec);color:var(--secfg)}
+#o-nm .mbox.narrow{height:auto;width:min(94vw,420px)}
+#o-nm input{width:100%}
+#o-ov .cubox{display:flex;align-items:center;justify-content:center;height:200px;margin:12px 0 8px;border-radius:10px;border:2px solid var(--slotbd);background:conic-gradient(#ccc 25%,#fff 0 50%,#ccc 0 75%,#fff 0) 0 0/16px 16px}
+#o-ov .cubox img{max-width:100%;max-height:100%;object-fit:contain}
+#o-ov .cusl{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13px;margin:6px 0}
+#o-ov .cusl span:first-child{width:84px}#o-ov .cusl .cuv{width:44px;text-align:right}#o-ov .cusl input{flex:1;min-width:0}
+#o-ov.cu .box>.s{display:none}
+#o-ov .cusec{margin-top:0}
+#o-ov .cued{display:block;max-width:100%;height:auto;margin:8px auto;touch-action:none;cursor:move;border:2px dashed var(--slotbd);border-radius:4px;background:conic-gradient(#ccc 25%,#fff 0 50%,#ccc 0 75%,#fff 0) 0 0/16px 16px}
+#o-ov .cuchk{display:flex;align-items:center;gap:6px;font-weight:700;font-size:13px;margin:4px 0}
+#o-ov .curow{display:flex;gap:8px;margin:10px 0 6px}
+#o-ov .curow button{flex:1;background:var(--sec);color:var(--secfg)}
+#o-ov .curow button.on{background:var(--btn);color:var(--btnfg)}
+#o-ov .r .onote{text-align:left;padding:4px 0}
+#o-ov .r .cubtns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 </style></head>
 <body data-ajp-page>
 <div id="about" role="dialog" aria-modal="true" aria-labelledby="about-title" hidden>
@@ -261,7 +283,6 @@ body>#ajp{width:100%}
     <p>This website only exists thanks to the lovely open-source resources listed below:</p>
     <p>The OG Color Picker - <a href="https://aj-color-picker.carrd.co" target="_blank" rel="noopener noreferrer">aj-color-picker.carrd.co</a><br>
     AJB Lookbook - <a href="https://warpedfart.github.io/ajb-lookbook/" target="_blank" rel="noopener noreferrer">warpedfart.github.io/ajb-lookbook/</a><br>
-    AJ Assets - <a href="https://ajfeetpics.art/" target="_blank" rel="noopener noreferrer">ajfeetpics.art</a><br>
     Backgrounds - <a href="https://www.animaljamarchives.com/" target="_blank" rel="noopener noreferrer">animaljamarchives.com</a></p>
     <button id="about-ok" type="button">I understand</button>
   </div>
@@ -274,7 +295,7 @@ body>#ajp{width:100%}
   <div class="titlewrap"><h1>BURROW OUTFIT TOOL</h1><button id="info" type="button" aria-label="About this website" title="About this website">i</button></div>
   <div class="hbtns"><button id="contact" type="button">Contact</button><button id="theme">Dark mode</button></div>
 </header>
-<nav class="nav"><button id="n-outfit" class="on" type="button">Outfit creator</button><button id="n-color" type="button">Palette creator</button><a id="n-cat" href="https://warpedfart.github.io/ajb-lookbook/clothing.html" target="_blank" rel="noopener noreferrer">Clothing item catalogue</a></nav>
+<nav class="nav"><button id="n-outfit" class="on" type="button">Outfit creator</button><button id="n-custom" type="button">Custom item preview</button><button id="n-color" type="button">Palette creator</button><a id="n-cat" href="https://warpedfart.github.io/ajb-lookbook/clothing.html" target="_blank" rel="noopener noreferrer">Clothing item catalogue</a></nav>
 <div id="pg-color" hidden>
 <div class="top">
   <div class="ctl">
@@ -319,6 +340,7 @@ body>#ajp{width:100%}
   <section class="oc">
     <div class="oall"><button id="o-all" type="button">Select palette to apply to all</button><button id="o-allr" class="sec" type="button" title="Put every item back to its original colours">Reset</button></div>
     <div class="osearch"><input id="o-q" type="text" placeholder="Search for an item" autocomplete="off" aria-label="Clothing item"><button id="o-browse" type="button">Browse</button><ul id="o-res" hidden></ul></div>
+    <div class="onote cmhint">Pick a base item, then use the image button to upload an image as a sticker or a texture. Use the save button to add it to the catalogue.</div>
     <div id="o-worn"></div>
   </section>
   <section class="oc">
@@ -329,7 +351,7 @@ body>#ajp{width:100%}
     <div class="oview"><button id="o-vd" class="on" type="button">Dress Up preview</button><button id="o-vg" type="button">In-game preview</button></div>
     <div class="ostage"><canvas id="o-cv" width="10" height="10"></canvas><div class="onote" id="o-note"></div></div>
     <div class="oact"><button id="o-img" type="button">Save outfit as image</button><button id="o-gif" type="button" hidden>Save as GIF</button><button id="o-reset" class="sec" type="button" title="Back to the animal's own colours, with no items on">Reset animal</button></div>
-    <div class="oact"><input id="o-name" type="text" placeholder="Outfit name" maxlength="30"><button id="o-save" class="sec" type="button">Save outfit</button></div>
+    <div class="oact onlyo"><input id="o-name" type="text" placeholder="Outfit name" maxlength="30"><button id="o-save" class="sec" type="button">Save outfit</button></div>
     <div id="o-saved"></div>
   </section>
   <section class="oc" id="o-right">
@@ -341,6 +363,7 @@ body>#ajp{width:100%}
 <div id="o-ov" hidden><div class="box"><div class="l"><div class="oview"><button id="o-ovd" class="on" type="button">Dress Up preview</button><button id="o-ovg" type="button">In-game preview</button></div><canvas id="o-ovcv" width="10" height="10"></canvas><div class="oname" id="o-ovn" style="font-weight:800;margin-top:6px"></div></div><div class="r" id="o-ovp"></div><div class="s"><div class="st">Saved Palettes</div><div id="o-ovs"></div></div></div></div>
 <div id="o-cat" class="omod" hidden><div class="mbox"><div class="mh"><b>Item catalogue</b><input id="o-cq" type="text" placeholder="Filter items" autocomplete="off" aria-label="Filter items"><button id="o-cx" type="button">Close</button></div><div class="mbody"><div class="mprev"><div class="oview"><button id="o-cvd" class="on" type="button">Dress Up preview</button><button id="o-cvg" type="button">In-game preview</button></div><canvas id="o-ccv" width="10" height="10"></canvas><div class="mstrip" id="o-cw"></div></div><div class="mmain"><div class="mtabs" id="o-ct"></div><div class="mst" id="o-cs"></div><div class="cg" id="o-cg"></div></div></div></div></div>
 <div id="o-pp" class="omod" hidden><div class="mbox narrow"><div class="mh"><b>Select palette to apply to all</b><button id="o-px" type="button">Close</button></div><div id="o-pl"></div></div></div>
+<div id="o-nm" class="omod" hidden><div class="mbox narrow"><div class="mh"><b>Save custom item</b></div><div class="onote" style="text-align:left;padding:0">Give it a name. It will show up in the item catalogue (Browse, then Custom) in the Outfit creator.</div><input id="o-nmi" type="text" maxlength="30" placeholder="Item name" autocomplete="off" aria-label="Custom item name"><div class="mst" id="o-nme"></div><div class="mh" style="justify-content:flex-end"><button id="o-nmc" type="button" class="sec">Cancel</button><button id="o-nms" type="button">Save</button></div></div></div>
 </div>
 <div class="foot">Not affiliated with or endorsed by Wild Works LLC. All Animal Jam copyright is owned by them. Item sprites, data and recolour rendering are from <a href="https://warpedfart.github.io/ajb-lookbook/" target="_blank" rel="noopener noreferrer">AJB Lookbook</a> (MIT licence, &copy; 2026 warpedfart). Colour picker inspired by <a href="https://aj-color-picker.carrd.co" target="_blank" rel="noopener noreferrer">aj-color-picker.carrd.co</a>. Background images from <a href="https://www.animaljamarchives.com/" target="_blank" rel="noopener noreferrer">Animal Jam Archives</a>. Assets from <a href="https://github.com/butterbarned/applejack_gifs" target="_blank" rel="noopener noreferrer">butterbarned/applejack_gifs</a>. For personal use.</div>
 </div>
@@ -475,6 +498,72 @@ function shadowPass(px, W, H, f, minX, minY) {
   });
 }
 
+/* ---- custom image items: a sticker replaces the item, a texture fills its shape ---- */
+function cuOver(px, o, r, g, b, a) {
+  if (a <= 0) return;
+  if (a >= 255) { px[o] = r; px[o + 1] = g; px[o + 2] = b; px[o + 3] = 255; return; }
+  const da = px[o + 3] / 255, sa = a / 255, oa = sa + da * (1 - sa);
+  px[o] = (r * sa + px[o] * da * (1 - sa)) / oa;
+  px[o + 1] = (g * sa + px[o + 1] * da * (1 - sa)) / oa;
+  px[o + 2] = (b * sa + px[o + 2] * da * (1 - sa)) / oa;
+  px[o + 3] = oa * 255;
+}
+/* where the image sits inside the item's box, as fractions of the box (centre x, centre y, width, height).
+   With no placement saved it is simply fitted inside the box. */
+function cuRect(cu, bw, bh) {
+  let p = cu.p;
+  if (!p) {
+    const ia = cu.img.width / cu.img.height, ba = bw / bh;
+    p = ia > ba ? { cx: .5, cy: .5, sw: 1, sh: ba / ia } : { cx: .5, cy: .5, sw: ia / ba, sh: 1 };
+  }
+  return { x: (p.cx - p.sw / 2) * bw, y: (p.cy - p.sh / 2) * bh, w: p.sw * bw, h: p.sh * bh };
+}
+/* the image drawn into a box of bw x bh pixels, as RGBA */
+function cuBox(cu, bw, bh) {
+  const k = bw + "x" + bh + ":" + (cu.p ? [cu.p.cx, cu.p.cy, cu.p.sw, cu.p.sh].join(",") : "auto");
+  const cache = cu._c || (cu._c = new Map());
+  if (cache.has(k)) return cache.get(k);
+  const c = document.createElement("canvas");
+  c.width = bw; c.height = bh;
+  const x = c.getContext("2d");
+  x.imageSmoothingEnabled = true;
+  x.imageSmoothingQuality = "high";
+  const r = cuRect(cu, bw, bh);
+  x.drawImage(cu.img, r.x, r.y, r.w, r.h);
+  const d = x.getImageData(0, 0, bw, bh).data;
+  if (cache.size > 60) cache.clear();
+  cache.set(k, d);
+  return d;
+}
+/* Sticker: the item disappears and the image is shown inside the item's box.
+   Texture: the image is laid over the item, as strongly as the item is bright (white = all image, black = none). */
+function customPass(px, W, H, f, pal, minX, minY, cu) {
+  const bw = f.w, bh = f.h, bx = f.x - minX, by = f.y - minY;
+  if (bw < 1 || bh < 1) return;
+  const d = cuBox(cu, bw, bh);
+  if (cu.mode !== "texture") {
+    for (let y = 0; y < bh; y++) for (let x = 0; x < bw; x++) {
+      const X = bx + x, Y = by + y;
+      if (X < 0 || Y < 0 || X >= W || Y >= H) continue;
+      const s2 = (y * bw + x) * 4;
+      cuOver(px, (Y * W + X) * 4, d[s2], d[s2 + 1], d[s2 + 2], d[s2 + 3]);
+    }
+    return;
+  }
+  const t = new Uint8ClampedArray(W * H * 4);
+  colorPass(t, W, H, f, pal, minX, minY);
+  if (f.s) shadowPass(t, W, H, f, minX, minY);
+  for (let y = 0; y < bh; y++) for (let x = 0; x < bw; x++) {
+    const X = bx + x, Y = by + y;
+    if (X < 0 || Y < 0 || X >= W || Y >= H) continue;
+    const o = (Y * W + X) * 4;
+    if (!t[o + 3]) continue;
+    const s2 = (y * bw + x) * 4;
+    const L = (0.299 * t[o] + 0.587 * t[o + 1] + 0.114 * t[o + 2]) / 255 * (d[s2 + 3] / 255);
+    cuOver(px, o, t[o] * (1 - L) + d[s2] * L, t[o + 1] * (1 - L) + d[s2 + 1] * L, t[o + 2] * (1 - L) + d[s2 + 2] * L, 255);
+  }
+}
+
 function renderSprite(canvas, layers, game, frame = 0) {
   let minX = 1000, minY = 1000, maxX = 0, maxY = 0, any = false;
   for (const layer of layers) {
@@ -497,6 +586,7 @@ function renderSprite(canvas, layers, game, frame = 0) {
   for (const layer of layers) {
     const f = layer?.data?.f?.[frame];
     if (!f) continue;
+    if (layer.cu && layer.cu.img) { customPass(img.data, W, H, f, buildPalette(game, layer.indexes), minX, minY, layer.cu); continue; }
     colorPass(img.data, W, H, f, buildPalette(game, layer.indexes), minX, minY);
     if (f.s) shadowPass(img.data, W, H, f, minX, minY);
   }
@@ -854,22 +944,28 @@ async function gGet(av,rel){
 }
 const mk=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;};
 const norm=v=>String(v).toLowerCase().trim(),cv=$("o-cv"),cache=new Map();
-let IDX=null,byName=new Map(),byId=new Map(),av=null,worn=[],cl=[],pi=-1,ei=-1,tab="color",tok=0,editing=null,curShow=null,nt=0,palApply=null,dragCol=null;
+const SV='<svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-.14em;pointer-events:none">';
+const ICON_IMG=SV+'<rect x="1.8" y="2.8" width="12.4" height="10.4" rx="1.6"/><circle cx="5.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/><path d="M2.5 12l3.6-3.4 2.6 2.4 2-1.9 2.8 2.7"/></svg>';
+const ICON_SAVE=SV+'<path d="M2.6 2.2h8.6l2.2 2.2v8.4a1 1 0 0 1-1 1H3.6a1 1 0 0 1-1-1z"/><path d="M5 2.2v3.6h5V2.2M4.8 13.8V9.4h6.4v4.4"/></svg>';
+const cuOf=w=>{const c=w.cu||w.it.cu;return c&&c.img?c:null;};   // a custom image on this worn item, if it has one
+let IDX=null,byName=new Map(),byId=new Map(),av=null,worn=[],wornAlt=[],cmode=false,customs=[],edHook=null,cl=[],pi=-1,ei=-1,tab="color",tok=0,editing=null,curShow=null,nt=0,palApply=null,dragCol=null;
 const ok4=x=>Array.isArray(x)&&x.length===4&&x.every(v=>v===null||(Number.isInteger(v)&&v>=0&&v<PALETTE.length));
 const u8=t=>Uint8Array.from(atob(t),c=>c.charCodeAt(0));
 function note(t,keep){const n=$("o-note");n.textContent=t;clearTimeout(nt);if(t&&!keep)nt=setTimeout(()=>{if(n.textContent===t)n.textContent="";},3500);}
 /* page switching */
-function show(p){const o=p==="outfit";root.classList.toggle("wide",o);$("pg-color").hidden=o;$("pg-outfit").hidden=!o;$("n-color").classList.toggle("on",!o);$("n-outfit").classList.toggle("on",o);
-  try{history.replaceState(null,"",o?location.pathname+location.search:"#palette");}catch(e){} if(!o)stopAnim();else{ensure();if(av&&mode==="game")paint();}}
-$("n-color").onclick=()=>show("color");$("n-outfit").onclick=()=>show("outfit");
+let showTok=0;
+async function show(p){const o=p!=="color",c=p==="custom",t=++showTok;root.classList.toggle("wide",o);$("pg-color").hidden=o;$("pg-outfit").hidden=!o;$("n-color").classList.toggle("on",!o);$("n-outfit").classList.toggle("on",p==="outfit");$("n-custom").classList.toggle("on",c);
+  try{history.replaceState(null,"",o?location.pathname+location.search:"#palette");}catch(e){} if(!o){stopAnim();return;}
+  await ensure();if(t!==showTok||!IDX)return;setCm(c);if(av&&mode==="game")paint();}
+$("n-color").onclick=()=>show("color");$("n-outfit").onclick=()=>show("outfit");$("n-custom").onclick=()=>show("custom");
 /* art */
 const lay=(l,g)=>{const k=av.id+(g?"/g/":"/")+l;if(!cache.has(k))cache.set(k,(g?gGet(av.id,"a"+av.id+"/g14/l"+l+".json"):xhrJSON(DB+"a"+av.id+"/l"+l+".json")).then(d=>{for(const f of d.f){if(typeof f.b.data==="string")f.b.data=u8(f.b.data);if(f.s&&typeof f.s.data==="string")f.s.data=u8(f.s.data);}return d;}).catch(()=>null));return cache.get(k);};
 async function stack(list,only,g){
   const b=av.box,L=only||g?[]:[{data:{f:[{x:b[0],y:b[1],w:b[2]-b[0],h:b[3]-b[1],b:{data:[]}}]},indexes:[0,0,0,0]}];
-  const add=async(l,ix)=>{const d=l!=null&&await lay(l,g);if(d)L.push({data:d,indexes:ix.map(v=>v==null?0:v)});};
+  const add=async(l,ix,cu)=>{const d=l!=null&&await lay(l,g);if(d)L.push({data:d,indexes:ix.map(v=>v==null?0:v),cu});};
   if(!only){await add(av.body,cl[0]);if(pi>=0)await add(av.pat[pi].l,cl[1]);if(ei>=0)await add(av.eyes[ei].l,cl[2]);}
   const o=list.map((w,i)=>[w.it.s,i,w]).sort((x,y)=>x[0]-y[0]||x[1]-y[1]);   // slot order, then the order they were put on
-  for(const[,,w]of o)await add(w.it.l[av.id],w.idx);
+  for(const[,,w]of o)await add(w.it.l[av.id],w.idx,cuOf(w));
   return L;
 }
 const fitBig=c=>{c.style.width=c.style.height="";};   // size comes from the CSS so the popup never jumps between previews
@@ -912,16 +1008,16 @@ function outfitPal(){
 async function paint(){
   if(!av)return;const t=++tok;saveDraft();outfitPal();
   if(mode==="game"){
-    await gamePaint(t);thumbs();return;
+    await gamePaint(t);thumbs();if(edHook)edHook();return;
   }
   stopAnim();const L=await stack(worn);if(t!==tok)return;
   if(renderSprite(cv,L,GAME,0))fit(cv);
   if(editing){const o=$("o-ovcv");if(renderSprite(o,L,GAME,0))fitBig(o);}
   if(!$("o-cat").hidden){const o=$("o-ccv");if(renderSprite(o,L,GAME,0))fitBig(o);}
-  thumbs();
+  thumbs();if(edHook)edHook();
 }
 function setMode(m){mode=m;for(const[a,b]of[["o-vd","o-vg"],["o-ovd","o-ovg"],["o-cvd","o-cvg"]]){$(a).classList.toggle("on",m==="dress");$(b).classList.toggle("on",m==="game");}
-  $("o-gif").hidden=m!=="game";$("o-ovcv").classList.toggle("game",m==="game");$("o-ccv").classList.toggle("game",m==="game");$("o-img").textContent=m==="game"?"Save as image":"Save outfit as image";stopAnim();note("",true);paint();}
+  $("o-gif").hidden=m!=="game";$("o-ovcv").classList.toggle("game",m==="game");$("o-ccv").classList.toggle("game",m==="game");$("o-img").textContent=m==="game"||cmode?"Save as image":"Save outfit as image";stopAnim();note("",true);paint();}
 $("o-vd").onclick=$("o-ovd").onclick=$("o-cvd").onclick=()=>setMode("dress");$("o-vg").onclick=$("o-ovg").onclick=$("o-cvg").onclick=()=>setMode("game");
 /* GIF writer: one shared 255-colour palette (median cut), colour 0 = transparent, every frame cleared before the next */
 function gifEncode(frames,scale,delayMs){
@@ -979,7 +1075,7 @@ const spr=new Map();let ajbMap=null;
 const ajbSprite=a=>{if(!spr.has(a.id))spr.set(a.id,getJSON("data/sprites/"+a.id+".json").then(d=>d&&Array.isArray(d.f)?d:null).catch(()=>null));return spr.get(a.id);};
 function ajbOf(n){if(!ajbMap||!ajbMap.size){ajbMap=new Map();for(const it of items)ajbMap.set(norm(it.name),it);}return ajbMap.get(norm(n));}
 async function thumbs(){for(const t of document.querySelectorAll("#o-worn .othumb")){const w=worn[t.dataset.i];if(!w)continue;
-  const a=w.a||ajbOf(w.it.n),d=a&&await ajbSprite(a);
+  const a=(w.cu||w.it.cu)?null:(w.a||ajbOf(w.it.n)),d=a&&await ajbSprite(a);
   if(!(d&&renderSprite(t,[{data:d,indexes:w.idx.map(v=>v==null?0:v)}],GAME,0)))renderSprite(t,await stack([w],true),GAME,0);}}   // same preview as the Color picker page
 /* compact one-colour palette (animal colours, pattern, eyes): click a colour to set slot j */
 const PAL_ORDER=[
@@ -1046,11 +1142,13 @@ function mkPicker(host,get,set,reset){
 /* equipped items */
 function renderWorn(){catStrip();
   const h=$("o-worn");h.innerHTML="";
-  if(!worn.length){h.append(mk("div","onote","Search for an item to put it on."));return;}
+  if(!worn.length){h.append(mk("div","onote",cmode?"Search for an item to use as the base of your custom item.":"Search for an item to put it on."));return;}
   worn.forEach((w,i)=>{
     const c=mk("div","ocard"),t=mk("canvas","othumb"),bt=mk("div","obtn");t.dataset.i=i;
     const B=(ic,tt,fn)=>{const b=mk("button","sec",ic);b.type="button";b.title=tt;b.setAttribute("aria-label",tt);b.onclick=fn;return b;};
-    bt.append(B("\u270E","Edit colours",()=>openEdit(w)),
+    const rm=B("\uD83D\uDDD1","Remove item",()=>{worn.splice(i,1);renderWorn();paint();});
+    if(cmode){const bi=B("","Add a custom image",()=>openCustom(w)),bs=B("","Save as custom item",()=>askSave(w));bi.innerHTML=ICON_IMG;bs.innerHTML=ICON_SAVE;bt.append(bi,bs,rm);}
+    else bt.append(B("\u270E","Edit colours",()=>openEdit(w)),
       B("\u29C9","Copy colour code",e=>{const p=pack(w.idx);if(p===null)return;navigator.clipboard.writeText(String(p)).then(()=>{const b=e.currentTarget;b.textContent="\u2713";setTimeout(()=>b.textContent="\u29C9",1200);});}),
       B("\uD83D\uDDD1","Remove item",()=>{worn.splice(i,1);renderWorn();paint();}));
     c.append(t,mk("div","oname",w.it.n),bt);h.append(c);
@@ -1058,12 +1156,12 @@ function renderWorn(){catStrip();
   thumbs();
 }
 function equip(it){
-  const z=byName.get(norm(it.name));
+  const z=it.cu?it:byName.get(norm(it.name));
   if(!z){note("No outfit art for that item.");return;}
   if(!z.l[av.id]){note(z.n+" has no art for "+av.name+".");return;}
   if(worn.some(w=>w.it===z)){note("Already on.");return;}
   const same=worn.filter(w=>w.it.s===z.s);if(same.length>=3)worn.splice(worn.indexOf(same[0]),1);   // 3 per place, oldest comes off
-  worn.push({it:z,idx:unpack(z.c)||[0,0,0,0],a:it});renderWorn();paint();
+  worn.push({it:z,idx:unpack(z.c)||[0,0,0,0],a:it.cu?null:it});renderWorn();paint();
 }
 const q=$("o-q"),res=$("o-res");
 function search(){
@@ -1071,19 +1169,22 @@ function search(){
   const s=norm(q.value),a=[],b=[];
   for(const it of items){const n=norm(it.name);if(!s||n.startsWith(s))a.push(it);else if(n.includes(s))b.push(it);}
   const L=a.concat(b).slice(0,40);res.innerHTML="";
-  if(!L.length)res.append(mk("li","note",items.length?"No items found.":"Item list not loaded."));
+  const cs=cmode?[]:customs.filter(z=>!s||norm(z.n).includes(s)).slice(0,10);
+  cs.forEach(z=>{const li=mk("li");if(!z.l[av.id])li.style.opacity=.45;li.append(entryThumb({it:z,idx:unpack(z.c)||[0,0,0,0]}));
+    li.append(mk("span",null,z.n+" (custom)"));li.onmousedown=e=>{e.preventDefault();res.hidden=true;q.value="";equip(z);};res.append(li);});
+  if(!L.length&&!cs.length)res.append(mk("li","note",items.length?"No items found.":"Item list not loaded."));
   L.forEach(it=>{const li=mk("li"),z=byName.get(norm(it.name));if(!(z&&z.l[av.id]))li.style.opacity=.45;
     li.append(spriteThumb(it));
     li.append(mk("span",null,it.name));li.onmousedown=e=>{e.preventDefault();res.hidden=true;q.value="";equip(it);};res.append(li);});
-  res.hidden=false;L.first=L[0];res.first=L[0];
+  res.hidden=false;L.first=cs[0]||L[0];res.first=cs[0]||L[0];
 }
 q.addEventListener("input",search);q.addEventListener("focus",search);q.addEventListener("click",search);
 q.addEventListener("keydown",e=>{if(e.key==="Enter"&&res.first){e.preventDefault();res.hidden=true;const it=res.first;q.value="";equip(it);}else if(e.key==="Escape")res.hidden=true;});
 document.addEventListener("click",e=>{if(!e.target.closest(".osearch"))res.hidden=true;});
 /* edit overlay */
-function openEdit(w){editing=w;$("o-ovn").textContent=w.it.n;const h=$("o-ovp");h.innerHTML="";
+function openEdit(w,extra,np){$("o-ov").classList.toggle("cu",!!np);edHook=null;editing=w;$("o-ovn").textContent=w.it.n;const h=$("o-ovp");h.innerHTML="";
   const ph=mk("div"),build=()=>mkPicker(ph,()=>w.idx,a=>{w.idx=a;paint();},()=>{w.idx=unpack(w.it.c)||[0,0,0,0];paint();});
-  build();h.append(ph);
+  if(!np){build();h.append(ph);}if(extra)extra(h);
   const d=mk("button",null,"Done");d.type="button";d.style.marginTop="12px";d.onclick=closeEdit;h.append(d);
   /* saved palettes (made on the Palette creator tab): click one to put it on this item */
   const sv=$("o-ovs");sv.innerHTML="";let L=[];try{L=JSON.parse(localStorage.getItem("ajp-saved")||"[]");}catch(e){}
@@ -1094,11 +1195,11 @@ function openEdit(w){editing=w;$("o-ovn").textContent=w.it.n;const h=$("o-ovp");
     const pk=pack(pl);b.append(sw,mk("div","sc",pk===null?"Not valid":String(pk)));b.title="Apply to this item";
     b.onclick=()=>{if(pk===null)return;w.idx=pl.slice();build();paint();};sv.append(b);});
   $("o-ov").hidden=false;paint();}
-const closeEdit=()=>{editing=null;$("o-ov").hidden=true;};
+const closeEdit=()=>{editing=null;edHook=null;$("o-ov").hidden=true;};
 $("o-ov").addEventListener("click",e=>{if(e.target.id==="o-ov")closeEdit();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&editing)closeEdit();});
 /* browse catalogue (tabs sort by body area) */
-const TABS=["All","Head","Neck","Body","Legs","Tail"];
+const TABS=["All","Head","Neck","Body","Legs","Tail","Custom"];
 const SLOT_TAB={};   // optional manual fixes by slot number, e.g. {12:"Head"}
 const KW=[["Tail",/\btails?\b/i],
 ["Neck",/\b(necklaces?|scarf|scarves|collars?|bandanas?|chokers?|pendants?|amulets?|leis?|bow ?ties?|ties?|lockets?|neckerchiefs?|medallions?)\b/i],
@@ -1118,7 +1219,7 @@ function catStrip(){
   if(!worn.length){h.append(mk("div","onote","Nothing equipped yet."));}
   worn.forEach(w=>{
     const b=mk("button","cw"),a=w.a||ajbOf(w.it.n);b.type="button";b.title="Click to take off "+w.it.n;
-    if(a)b.append(spriteThumb(a));else b.append(mk("div","ph"));
+    if(cuOf(w))b.append(entryThumb(w));else if(a)b.append(spriteThumb(a));else b.append(mk("div","ph"));
     b.append(mk("span",null,w.it.n));
     b.onclick=()=>{const i=worn.indexOf(w);if(i<0)return;worn.splice(i,1);renderWorn();paint();$("o-cs").textContent="Removed "+w.it.n+".";};
     h.append(b);
@@ -1128,13 +1229,13 @@ function catStrip(){
 let cat=null,catList=[],catN=0;const CHUNK=60;
 function catMore(){   // draw the next batch of tiles
   const fr=document.createDocumentFragment(),end=Math.min(catN+CHUNK,catList.length);
-  for(;catN<end;catN++){const{it,z}=catList[catN];
-    const b=mk("button","ct");b.type="button";b._z=z;b.title=it.name;if(!(z&&av&&z.l[av.id]))b.style.opacity=.45;
-    b.append(spriteThumb(it));
-    b.append(mk("span",null,it.name));
+  for(;catN<end;catN++){const{z,cu}=catList[catN],it=cu?z:catList[catN].it,nm=cu?z.n:it.name;
+    const b=mk("button","ct");b.type="button";b._z=z;b.title=nm;if(!(z&&av&&z.l[av.id]))b.style.opacity=.45;
+    b.append(cu?entryThumb({it:z,idx:unpack(z.c)||[0,0,0,0]}):spriteThumb(it));
+    b.append(mk("span",null,nm));
     b.onclick=()=>{const i=z?worn.findIndex(w=>w.it===z):-1;
-      if(i>=0){worn.splice(i,1);renderWorn();paint();$("o-cs").textContent="Removed "+it.name+".";}
-      else{equip(it);$("o-cs").textContent=z&&worn.some(w=>w.it===z)?"Added "+it.name+".":$("o-note").textContent;}
+      if(i>=0){worn.splice(i,1);renderWorn();paint();$("o-cs").textContent="Removed "+nm+".";}
+      else{equip(it);$("o-cs").textContent=z&&worn.some(w=>w.it===z)?"Added "+nm+".":$("o-note").textContent;}
       catMarks();};
     fr.append(b);
   }
@@ -1144,9 +1245,10 @@ cg.addEventListener("scroll",()=>{if(catN<catList.length&&cg.scrollTop+cg.client
 function renderCat(){
   if(!cat||cat.length!==items.length)cat=items.map(it=>({it,n:norm(it.name),z:byName.get(norm(it.name))}));
   const s=norm($("o-cq").value),m=slotTabs();
-  catList=cat.filter(c=>(!s||c.n.includes(s))&&(ctab==="All"||(c.z&&m[c.z.s]===ctab)));
+  const cs=(cmode?[]:customs).map(z=>({cu:1,z,n:norm(z.n)})).filter(c=>(!s||c.n.includes(s))&&(ctab==="All"||ctab==="Custom"||m[c.z.s]===ctab));
+  catList=cs.concat(ctab==="Custom"?[]:cat.filter(c=>(!s||c.n.includes(s))&&(ctab==="All"||(c.z&&m[c.z.s]===ctab))));
   cg.innerHTML="";catN=0;
-  if(!catList.length){cg.append(mk("div","onote","No items found."));return;}
+  if(!catList.length){cg.append(mk("div","onote",ctab==="Custom"?"No custom items yet. Make one in the Custom item preview tab.":"No items found."));return;}
   catMore();
   while(catN<catList.length&&cg.scrollHeight<=cg.clientHeight+300)catMore();   // fill tall screens
   cg.scrollTop=0;
@@ -1195,12 +1297,12 @@ document.querySelectorAll("#o-right .otabs button").forEach(b=>b.onclick=()=>{ta
 const fi=(list,id,dflt,must)=>{const i=list.findIndex(x=>x.id===id);if(i>=0)return i;const j=list.findIndex(x=>x.id===dflt);return j>=0?j:must&&list.length?0:-1;};   // must: eyes always have one, patterns can be none
 function setAv(a,keep){
   const prev=av,op=prev&&prev.pat[pi],oe=prev&&prev.eyes[ei];av=a;
-  if(keep&&prev){const gone=[];worn=worn.filter(w=>w.it.l[a.id]||(gone.push(w.it.n),false));if(gone.length)note("No art for "+a.name+": "+gone.join(", "));}
-  else{cl=a.c.map(unpack);worn=[];}
+  if(keep&&prev){const gone=[];worn=worn.filter(w=>w.it.l[a.id]||(gone.push(w.it.n),false));wornAlt=wornAlt.filter(w=>w.it.l[a.id]);if(gone.length)note("No art for "+a.name+": "+gone.join(", "));}
+  else{cl=a.c.map(unpack);worn=[];wornAlt=[];}
   if(keep&&prev){const k=cl;cl=a.c.map(unpack);cl[0][0]=k[0][0];cl[0][1]=k[0][1];cl[1][0]=k[1][0];cl[2][0]=k[2][0];}   // carry over only the colours you can change; the animal's own other slots (e.g. a black nose) stay
   const same=(list,old,id,must)=>{const m=keep&&old?list.findIndex(x=>x.n===old.n):-1;return m>=0?m:fi(list,id,id,must);};
   pi=keep&&prev&&!op?-1:same(a.pat,op,a.dp);ei=same(a.eyes,oe,a.de,true);
-  $("o-av").value=a.name;renderWorn();panel();paint();
+  $("o-av").value=a.name;renderWorn();if(cmode)renderSaved();panel();paint();
 }
 const avi=$("o-av"),avl=$("o-avres");
 function avList(){
@@ -1228,12 +1330,12 @@ function snap(){const t=document.createElement("canvas"),h=96;t.height=h;t.width
 function load(str){
   let d;try{d=JSON.parse(atob(str));}catch(e){note("That saved outfit is damaged.");return;}
   const a=IDX.avatars.find(x=>x.id===d.a);if(!a){note("That animal isn't in the art any more.");return;}
-  av=a;cl=Array.isArray(d.c)&&d.c.length===3&&d.c.every(ok4)?d.c:a.c.map(unpack);pi=d.p==null?-1:fi(a.pat,d.p,a.dp);ei=fi(a.eyes,d.e,a.de,true);worn=[];
+  av=a;cl=Array.isArray(d.c)&&d.c.length===3&&d.c.every(ok4)?d.c:a.c.map(unpack);pi=d.p==null?-1:fi(a.pat,d.p,a.dp);ei=fi(a.eyes,d.e,a.de,true);worn=[];wornAlt=wornAlt.filter(w=>w.it.l[a.id]);
   for(const[id,ix]of Array.isArray(d.w)?d.w:[]){const z=byId.get(String(id));if(z&&z.l[a.id])worn.push({it:z,idx:ok4(ix)?ix:unpack(z.c)||[0,0,0,0]});}
   $("o-av").value=a.name;renderWorn();panel();paint();
 }
 function outfitCode(){return btoa(JSON.stringify({a:av.id,c:cl,p:pi>=0?av.pat[pi].id:null,e:ei>=0?av.eyes[ei].id:null,w:worn.map(w=>[w.it.id,w.idx])}));}
-function saveDraft(){if(!av)return;try{localStorage.setItem("ajp-draft",outfitCode());}catch(e){}}   // outfit in progress, restored after a refresh
+function saveDraft(){if(!av||cmode)return;try{localStorage.setItem("ajp-draft",outfitCode());}catch(e){}}   // outfit in progress, restored after a refresh
 $("o-save").onclick=()=>{if(!av||cv.width<20)return;
   const code=outfitCode();
   saved.unshift({n:$("o-name").value.trim()||av.name,t:snap(),c:code});saved=saved.slice(0,40);persist();renderSaved();$("o-name").value="";note("Outfit saved.");};
@@ -1252,24 +1354,164 @@ async function copyText(t){
 async function copyOutfitCode(code,btn){
   if(!await copyText(code)){note("Couldn't copy. Your browser blocked it.");return;}
   btn.textContent="Copied!";setTimeout(()=>{btn.textContent="Copy code";},1500);
-  let seen=false;try{seen=localStorage.getItem("ajp-codetip")==="1";}catch(e){}
-  if(!seen){try{localStorage.setItem("ajp-codetip","1");}catch(e){}
-    showPop('Hey Jammer! Did you know you can use this code on <a href="https://ajfeetpics.art/" target="_blank" rel="noopener noreferrer">https://ajfeetpics.art/</a> to see different animations of your avatar and save them as gifs? Go check it out :)');}
 }
 function renderSaved(){
-  const h=$("o-saved");h.innerHTML="";if(!saved.length){h.append(mk("div","onote","No saved outfits yet."));return;}
+  const h=$("o-saved");h.innerHTML="";if(cmode){renderCustomSaved(h);return;}if(!saved.length){h.append(mk("div","onote","No saved outfits yet."));return;}
   saved.forEach((s,i)=>{const r=mk("div","orow"),im=mk("img");if(String(s.t).startsWith("data:image/png"))im.src=s.t;im.alt="";
     const l=mk("button",null,"Load"),k=mk("button","sec","Copy code"),d=mk("button","sec","\u2715");l.type=k.type=d.type="button";d.title="Delete";
     l.onclick=()=>load(s.c);k.onclick=()=>copyOutfitCode(s.c,k);d.onclick=()=>{saved.splice(i,1);persist();renderSaved();};r.append(im,mk("span",null,s.n),l,k,d);h.append(r);});
 }
+/* ---------- Custom item preview: a PNG on top of a base item, as a sticker or a texture ---------- */
+function entryThumb(w){const c=mk("canvas");(async()=>{if(!av||!w.it.l[av.id])return;try{renderSprite(c,await stack([w],true),GAME,0);}catch(e){}})();return c;}
+const CU_MAX=1024;   // uploads are shrunk to this many pixels on the long side so they stay light to store
+function toCanvas(src,w,h){const m=Math.min(1,CU_MAX/Math.max(w,h)),c=document.createElement("canvas");c.width=Math.max(1,Math.round(w*m));c.height=Math.max(1,Math.round(h*m));
+  const x=c.getContext("2d");x.imageSmoothingQuality="high";x.drawImage(src,0,0,c.width,c.height);return c;}
+function loadImg(url){return new Promise((res,rej)=>{const im=new Image();
+  im.onload=()=>{const w=im.naturalWidth||im.width,h=im.naturalHeight||im.height;if(!w||!h){rej(new Error("empty"));return;}res(toCanvas(im,w,h));};
+  im.onerror=()=>rej(new Error("bad image"));im.src=url;});}
+/* saved custom items live in this browser (IndexedDB, which has far more room than localStorage) */
+let cdb=null;
+const cOpen=()=>cdb||(cdb=new Promise(r=>{try{const q=indexedDB.open("ajp-custom",1);q.onupgradeneeded=()=>q.result.createObjectStore("items",{keyPath:"id"});q.onsuccess=()=>r(q.result);q.onerror=q.onblocked=()=>r(null);}catch(e){r(null);}}));
+async function cReq(m,f){const d=await cOpen();if(!d)throw new Error("no storage");
+  return new Promise((res,rej)=>{const t=d.transaction("items",m),r=f(t.objectStore("items"));t.oncomplete=()=>res(r&&r.result);t.onerror=t.onabort=()=>rej(t.error);});}
+const cAll=()=>cReq("readonly",s=>s.getAll()),cPut=r=>cReq("readwrite",s=>s.put(r)),cDel=id=>cReq("readwrite",s=>s.delete(id));
+function addCustom(r,base,img,front){
+  const cu={img,mode:r.mode==="texture"?"texture":"sticker",png:r.png,p:r.p||null};let z=customs.find(c=>c.id===r.id);
+  if(z){z.n=r.name;z.cu=cu;return z;}   // same object, so anything wearing it updates
+  z=Object.assign({},base,{id:r.id,n:r.name,base:String(base.id),cu});front?customs.unshift(z):customs.push(z);byId.set(z.id,z);return z;}
+async function loadCustoms(){
+  let R=[];try{R=(await cAll())||[];}catch(e){}
+  R.sort((a,b)=>(b.t||0)-(a.t||0));
+  for(const r of R){const base=byId.get(String(r.base));if(!base||!r.png)continue;try{addCustom(r,base,await loadImg(r.png));}catch(e){}}
+}
+/* switch between the Outfit creator and this tab: same preview, its own list of items */
+function setCm(c){
+  if(c===cmode)return;
+  [worn,wornAlt]=[wornAlt,worn];cmode=c;root.classList.toggle("cm",c);
+  const ctb=ct.lastChild;ctb.hidden=c;if(c&&ctab==="Custom"){ctab="All";[...ct.children].forEach((x,i)=>x.classList.toggle("on",i===0));}
+  $("o-img").textContent=mode==="game"||c?"Save as image":"Save outfit as image";
+  note("",true);renderWorn();renderSaved();paint();
+}
+/* the image window: just the image tools. Colours are changed after saving, from the normal item edit in the Outfit creator */
+function openCustom(w){
+  const sec=mk("div","cusec"),inp=document.createElement("input"),ms=mk("div","onote");
+  inp.type="file";inp.accept="image/png,image/jpeg,image/webp,image/gif,.png,.jpg,.jpeg,.webp,.gif";inp.hidden=true;
+  let bw=0,bh=0,ok=false,ghost=null,gKey="",ed=null,sl={},showItem=true,rq=0;
+  const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+  function fitTo(kind){   // fit = whole image inside the box, fill = box fully covered (edges cropped), stretch = squashed to the box
+    const ia=w.cu.img.width/w.cu.img.height,ba=bw/bh;let sw=1,sh=1;
+    if(kind!=="stretch"){const wide=ia>ba,cont=kind==="fit";if(wide===cont)sh=ba/ia;else sw=ia/ba;}
+    w.cu.p={cx:.5,cy:.5,sw,sh};}
+  const P=()=>{if(!w.cu.p)fitTo("fit");return w.cu.p;};
+  function drawEd(){
+    if(!ed||!w.cu)return;const x=ed.getContext("2d"),W=ed.width,H=ed.height;x.clearRect(0,0,W,H);
+    const r=cuRect(w.cu,bw,bh);x.imageSmoothingEnabled=true;x.imageSmoothingQuality="high";
+    x.drawImage(w.cu.img,r.x*W/bw,r.y*H/bh,r.w*W/bw,r.h*H/bh);
+    if(showItem&&ghost){x.globalAlpha=.45;x.imageSmoothingEnabled=false;x.drawImage(ghost,0,0,bw,bh,0,0,W,H);x.globalAlpha=1;}
+  }
+  async function refreshGhost(){   // the base item in its current colours, so you can line the image up with it
+    const key=av.id+":"+w.idx.join(",");if(key===gKey&&ghost)return;gKey=key;
+    const c=document.createElement("canvas");
+    try{if(renderSprite(c,await stack([{it:w.it,idx:w.idx}],true),GAME,0)){ghost=c;drawEd();}}catch(e){}}
+  function changed(){drawEd();if(!rq)rq=requestAnimationFrame(()=>{rq=0;paint();});}
+  function syncSl(){const p=P();sl.size.set(Math.round(p.sw*100));sl.x.set(Math.round(p.cx*100));sl.y.set(Math.round(p.cy*100));}
+  const slider=(lab,min,max,on)=>{const r=mk("label","cusl"),n=mk("span",null,lab),v=mk("span","cuv"),i=mk("input");
+    i.type="range";i.min=min;i.max=max;i.step=1;i.oninput=()=>{v.textContent=i.value+"%";on(+i.value);};
+    r.append(n,i,v);r.set=x=>{i.value=x;v.textContent=Math.round(x)+"%";};return r;};
+  const scaleBy=f=>{const p=P();p.sw*=f;p.sh*=f;};
+  function draw(){
+    sec.innerHTML="";ms.textContent="";ed=null;
+    const up=mk("button",null,w.cu?"Change image":"Upload image");up.type="button";up.onclick=()=>inp.click();
+    sec.append(mk("div","otitle","Custom image"),up,inp,ms);
+    if(!ok){sec.append(mk("div","onote","This item has no art for "+(av?av.name:"this animal")+"."));return;}
+    if(!w.cu){sec.append(mk("div","onote","Upload a PNG or JPEG. You can then place it inside the item's box and download the positioned image to upload in the game."));return;}
+    const k=420/Math.max(bw,bh);ed=mk("canvas","cued");ed.width=Math.max(8,Math.round(bw*k));ed.height=Math.max(8,Math.round(bh*k));ed.style.width=ed.width+"px";
+    sec.append(mk("div","onote","Item box: "+bw+" \u00D7 "+bh+" px, from "+av.name+". Drag the image to move it, scroll to resize."),ed);
+    const sw=mk("label","cuchk"),cb=mk("input");cb.type="checkbox";cb.checked=showItem;cb.onchange=()=>{showItem=cb.checked;drawEd();};sw.append(cb,mk("span",null,"Show the item over the image"));sec.append(sw);
+    const row=mk("div","curow"),st=mk("button",w.cu.mode==="sticker"?"on":null,"Make it a sticker"),tx=mk("button",w.cu.mode==="texture"?"on":null,"Make it a texture");
+    st.type=tx.type="button";st.onclick=()=>{w.cu.mode="sticker";paint();draw();};tx.onclick=()=>{w.cu.mode="texture";paint();draw();};row.append(st,tx);
+    sec.append(row,mk("div","onote",w.cu.mode==="sticker"?"Sticker: the base item turns invisible and your image is shown in its place.":"Texture: your image shows on the item as strongly as the item is bright. White shows all of it, black shows none. Once saved, change the item's colours from the Outfit creator."));
+    const fr=mk("div","curow");[["Fit","fit"],["Fill","fill"],["Stretch","stretch"]].forEach(([t,kk])=>{const b=mk("button",null,t);b.type="button";b.onclick=()=>{fitTo(kk);syncSl();changed();};fr.append(b);});
+    sec.append(fr);
+    sl.size=slider("Size",10,300,v=>{const p=P();scaleBy(v/100/p.sw);changed();});
+    sl.x=slider("Left / right",0,100,v=>{P().cx=v/100;changed();});
+    sl.y=slider("Up / down",0,100,v=>{P().cy=v/100;changed();});
+    sec.append(sl.size,sl.x,sl.y);syncSl();
+    const bt=mk("div","cubtns"),dl=mk("button",null,"Download positioned image"),rm=mk("button","sec","Remove image");dl.type=rm.type="button";
+    dl.title="A PNG the shape of the item's box, with your image placed as shown. Upload this one in the game.";
+    dl.onclick=()=>{const sc=1024/Math.max(bw,bh),o=document.createElement("canvas");o.width=Math.max(1,Math.round(bw*sc));o.height=Math.max(1,Math.round(bh*sc));
+      const x=o.getContext("2d"),r=cuRect(w.cu,bw,bh);x.imageSmoothingQuality="high";x.drawImage(w.cu.img,r.x*sc,r.y*sc,r.w*sc,r.h*sc);
+      o.toBlob(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=(w.sname||w.it.n)+" custom.png";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000);});};
+    rm.onclick=()=>{w.cu=null;paint();draw();};bt.append(dl,rm);sec.append(bt);
+    /* dragging and scrolling on the box */
+    let dr=null;
+    ed.onpointerdown=e=>{e.preventDefault();const p=P();dr={x:e.clientX,y:e.clientY,cx:p.cx,cy:p.cy};try{ed.setPointerCapture(e.pointerId);}catch(x){}};
+    ed.onpointermove=e=>{if(!dr)return;const r=ed.getBoundingClientRect(),p=P();
+      p.cx=clamp(dr.cx+(e.clientX-dr.x)/r.width,0,1);p.cy=clamp(dr.cy+(e.clientY-dr.y)/r.height,0,1);syncSl();changed();};
+    ed.onpointerup=ed.onpointercancel=()=>{dr=null;};
+    ed.addEventListener("wheel",e=>{e.preventDefault();const p=P(),f=e.deltaY<0?1.06:1/1.06,n=clamp(p.sw*f,.1,3);scaleBy(n/p.sw);syncSl();changed();},{passive:false});
+    refreshGhost();drawEd();
+  }
+  inp.onchange=async()=>{const f=inp.files&&inp.files[0];inp.value="";if(!f)return;
+    const u=URL.createObjectURL(f);
+    try{const img=await loadImg(u);w.cu={img,mode:w.cu?w.cu.mode:"sticker",name:f.name,p:null};paint();draw();}
+    catch(e){ms.textContent="Couldn't read that image. Please upload a PNG or JPEG.";}
+    finally{URL.revokeObjectURL(u);}};
+  openEdit(w,h=>h.append(sec),true);
+  edHook=()=>{if(ok&&ed&&w.cu){refreshGhost();drawEd();}};
+  (async()=>{try{const d=av&&w.it.l[av.id]!=null?await lay(w.it.l[av.id],false):null,f=d&&d.f&&d.f[0];if(f&&f.w>0&&f.h>0){bw=f.w;bh=f.h;ok=true;}}catch(e){}draw();})();
+}
+/* naming and saving */
+const nmBox=$("o-nm"),nmi=$("o-nmi");let nmW=null;
+function askSave(w){
+  if(!(w.cu&&w.cu.img)){note("Upload an image first, with the image button.");return;}
+  nmW=w;nmi.value=w.sname||("Custom "+w.it.n).slice(0,30);$("o-nme").textContent="";nmBox.hidden=false;nmi.focus();nmi.select();}
+async function doSave(){
+  const w=nmW;if(!w||!w.cu)return;const name=nmi.value.trim().slice(0,30);
+  if(!name){$("o-nme").textContent="Give it a name first.";return;}
+  const png=w.cu.png||(w.cu.png=w.cu.img.toDataURL("image/png")),id=w.sid||"cu_"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  const rec={id,name,base:String(w.it.id),mode:w.cu.mode,png,p:w.cu.p||null,t:Date.now()};
+  addCustom(rec,w.it,w.cu.img,true);w.sid=id;w.sname=name;nmBox.hidden=true;nmW=null;renderSaved();
+  try{await cPut(rec);note("Saved \u201C"+name+"\u201D. Find it under Browse, then Custom, in the Outfit creator.");}
+  catch(e){note("Saved for now, but this browser blocked storage, so it will be gone when you close the page.");}
+}
+$("o-nms").onclick=doSave;$("o-nmc").onclick=()=>{nmBox.hidden=true;nmW=null;};
+nmBox.addEventListener("click",e=>{if(e.target===nmBox){nmBox.hidden=true;nmW=null;}});
+nmi.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();doSave();}else if(e.key==="Escape"){nmBox.hidden=true;nmW=null;}});
+function renderCustomSaved(h){
+  h.append(mk("div","otitle","Saved custom items"));
+  if(!customs.length){h.append(mk("div","onote","No saved custom items yet."));return;}
+  customs.forEach(z=>{const r=mk("div","orow"),l=mk("button",null,"Load"),d=mk("button","sec","\u2715");l.type=d.type="button";
+    l.title="Put it back in the preview to change it";d.title="Delete";
+    l.onclick=()=>loadCustom(z);d.onclick=()=>delCustom(z);
+    r.append(entryThumb({it:z,idx:unpack(z.c)||[0,0,0,0]}),mk("span",null,z.n),l,d);h.append(r);});
+}
+function loadCustom(z){
+  const base=byId.get(String(z.base));
+  if(!base||!av||!base.l[av.id]){note((base?base.n:"That item")+" has no art for "+(av?av.name:"this animal")+".");return;}
+  worn=worn.filter(w=>w.it!==base&&w.sid!==z.id);
+  const same=worn.filter(w=>w.it.s===base.s);if(same.length>=3)worn.splice(worn.indexOf(same[0]),1);
+  worn.push({it:base,idx:unpack(base.c)||[0,0,0,0],cu:{img:z.cu.img,mode:z.cu.mode,png:z.cu.png,p:z.cu.p?Object.assign({},z.cu.p):null},sid:z.id,sname:z.n});
+  renderWorn();paint();
+}
+async function delCustom(z){
+  if(!confirm("Delete \u201C"+z.n+"\u201D? It will also come off any outfit it is on."))return;
+  customs=customs.filter(c=>c!==z);byId.delete(z.id);
+  worn=worn.filter(w=>w.it!==z);wornAlt=wornAlt.filter(w=>w.it!==z);
+  for(const w of worn.concat(wornAlt))if(w.sid===z.id)w.sid=null;
+  try{await cDel(z.id);}catch(e){}
+  renderSaved();renderWorn();paint();if(!cm.hidden)renderCat();
+}
 /* start */
-async function ensure(){
+let ens=null;
+function ensure(){if(!ens)ens=_ensure().then(()=>{if(!IDX)ens=null;},()=>{ens=null;});return ens;}
+async function _ensure(){
   if(IDX)return;
   for(const d of (DATA_BASE?[DATA_BASE+"outfit/"]:[]).concat(["data/outfit/","outfit/"])){DB=d;try{IDX=await xhrJSON(d+"index.json");if(IDX.avatars.length)break;}catch(e){}IDX=null;}   // also finds the folder if it sits right next to this page
   if(!IDX){note("Outfit art not found. Check DATA_BASE at the top of the script (it must point at the folder holding outfit/index.json) and that the host allows cross-origin reads. The page must be opened from your website or a local server, not by double-clicking the file.",true);return;}
   note("",true);
   for(const z of IDX.items){byName.set(norm(z.n),z);byId.set(z.id,z);}
-  renderSaved();let dr=null;try{dr=localStorage.getItem("ajp-draft");}catch(e){}
+  await loadCustoms();renderSaved();let dr=null;try{dr=localStorage.getItem("ajp-draft");}catch(e){}
   if(dr)load(dr);if(!av){note("",true);setAv(IDX.avatars[0],false);}
 }
 show(location.hash==="#palette"?"color":"outfit");
