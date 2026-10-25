@@ -276,6 +276,8 @@ body>#ajp{width:100%}
 #o-ov .r .onote{text-align:left;padding:4px 0}
 #ajp .cmtools{display:none;flex-direction:column;gap:8px;margin:6px 0 10px}
 #ajp.cm .cmtools{display:flex}
+#ajp .cmtools .cmrow{display:flex;gap:8px}
+#ajp .cmtools .cmrow button{flex:1;padding:9px 8px;font-weight:800}
 #ajp .cmtools .cmbig{display:flex;gap:8px}
 #ajp .cmtools .cmbig button{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 10px;font-size:15px;font-weight:800;border-radius:10px;box-shadow:0 2px 0 rgba(0,0,0,.18)}
 #ajp .cmtools .cmbig button svg{width:20px;height:20px;flex:none}
@@ -349,7 +351,7 @@ body>#ajp{width:100%}
     <div class="oall"><button id="o-all" type="button">Select palette to apply to all</button><button id="o-allr" class="sec" type="button" title="Put every item back to its original colours">Reset</button></div>
     <div class="osearch"><input id="o-q" type="text" placeholder="Search for an item" autocomplete="off" aria-label="Clothing item"><button id="o-browse" type="button">Browse</button><ul id="o-res" hidden></ul></div>
     <div class="onote cmhint">Pick a base item, then use the image button to upload an image as a sticker or a texture. Use the save button to add it to the catalogue.</div>
-    <div class="cmtools"><label><input type="checkbox" id="o-showfit"> Show my current outfit</label><div class="cmbig"><button id="o-saveall" type="button" title="Save every item below that has an image"></button><button id="o-equipall" type="button" title="Save these items, then swap them into your outfit in the Outfit creator"></button></div><div class="cmbig"><button id="o-texall" class="sec" type="button" title="Upload one image and use it as a texture on every item"></button><input id="o-texin" type="file" hidden accept="image/png,image/jpeg,image/webp,image/gif,.png,.jpg,.jpeg,.webp,.gif"></div></div>
+    <div class="cmtools"><div class="cmrow"><button id="o-custall" type="button" title="Take every item you have on into the list below, so each can be given an image"></button><button id="o-texall" type="button" title="Upload one image and use it as a texture on every item"></button><input id="o-texin" type="file" hidden accept="image/png,image/jpeg,image/webp,image/gif,.png,.jpg,.jpeg,.webp,.gif"></div><div class="cmbig"><button id="o-saveall" type="button" title="Save every item below that has an image"></button><button id="o-equipall" type="button" title="Swap the customised items into your outfit and go back to the Outfit creator"></button></div></div>
     <div id="o-worn"></div>
     <div id="o-fitlist"></div>
   </section>
@@ -989,9 +991,9 @@ const SV='<svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="
 const ICON_IMG=SV+'<rect x="1.8" y="2.8" width="12.4" height="10.4" rx="1.6"/><circle cx="5.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/><path d="M2.5 12l3.6-3.4 2.6 2.4 2-1.9 2.8 2.7"/></svg>';
 const ICON_SAVE=SV+'<path d="M2.6 2.2h8.6l2.2 2.2v8.4a1 1 0 0 1-1 1H3.6a1 1 0 0 1-1-1z"/><path d="M5 2.2v3.6h5V2.2M4.8 13.8V9.4h6.4v4.4"/></svg>';
 /* the list the preview draws: in the custom tab, optionally the Outfit creator's items too (minus any you are customising) */
-const viewList=()=>cmode&&showFit?wornAlt.filter(o=>!worn.some(c=>c.from===o||c.it===o.it)).concat(worn):worn;
+const viewList=()=>cmode?wornAlt.filter(o=>!worn.some(c=>c.from===o||c.it===o.it)).concat(worn):worn;
 const cuOf=w=>{const c=w.cu||w.it.cu;return c&&c.img?c:null;};   // a custom image on this worn item, if it has one
-let IDX=null,byName=new Map(),byId=new Map(),av=null,worn=[],wornAlt=[],cmode=false,customs=[],showFit=false,edHook=null,cl=[],pi=-1,ei=-1,tab="color",tok=0,editing=null,curShow=null,nt=0,palApply=null,dragCol=null;
+let IDX=null,byName=new Map(),byId=new Map(),av=null,worn=[],wornAlt=[],cmode=false,customs=[],edHook=null,cl=[],pi=-1,ei=-1,tab="color",tok=0,editing=null,curShow=null,nt=0,palApply=null,dragCol=null;
 const ok4=x=>Array.isArray(x)&&x.length===4&&x.every(v=>v===null||(Number.isInteger(v)&&v>=0&&v<PALETTE.length));
 const u8=t=>Uint8Array.from(atob(t),c=>c.charCodeAt(0));
 function note(t,keep){const n=$("o-note");n.textContent=t;clearTimeout(nt);if(t&&!keep)nt=setTimeout(()=>{if(n.textContent===t)n.textContent="";},3500);}
@@ -1200,7 +1202,7 @@ function renderWorn(){catStrip();fitList();
 }
 /* custom tab, "Show my current outfit" ticked: the Outfit creator's items, each one can be taken in to customise */
 function fitList(){
-  const h=$("o-fitlist");h.innerHTML="";if(!(cmode&&showFit&&av))return;
+  const h=$("o-fitlist");h.innerHTML="";if(!(cmode&&av))return;
   h.append(mk("div","otitle","Items in your outfit"));
   if(!wornAlt.length){h.append(mk("div","onote","Nothing on in the Outfit creator yet. Dress your animal there first."));return;}
   wornAlt.forEach(o=>{const r=mk("div","orow"),b=mk("button",null,worn.some(w=>w.from===o)?"Open":"Customise");b.type="button";
@@ -1221,10 +1223,14 @@ function customiseOutfit(o){
   if(!w){const z=o.it,base=z.cu?byId.get(String(z.base)):z;note((base?base.n:"That item")+" has no art for "+(av?av.name:"this animal")+".");return;}
   renderWorn();paint();openCustom(w);
 }
+function custAll(){
+  if(!wornAlt.length&&!worn.length){note("Put some items on first (in the Outfit creator, or search for one here).");return;}
+  let n=0;for(const o of wornAlt){const had=worn.length;if(takeIn(o,false)&&worn.length>had)n++;}
+  renderWorn();paint();note(n?"Brought in "+n+" item"+(n===1?"":"s")+" from your outfit. Add an image to each with its image button.":"Everything you have on is already in the list.");
+}
 /* one image as a texture on every equipped item */
 async function texAll(f){
-  if(!worn.length&&wornAlt.length&&!showFit){showFit=true;$("o-showfit").checked=true;}   // nothing in the custom list yet: use the outfit
-  if(showFit)for(const o of wornAlt)takeIn(o,false);
+  for(const o of wornAlt)takeIn(o,false);   // the whole outfit comes in
   if(!worn.length){note("Put some items on first (in the Outfit creator, or search for one here).");return;}
   const u=URL.createObjectURL(f);let img;
   try{img=await loadImg(u);}catch(e){note("Couldn't read that image. Please upload a PNG or JPEG.");return;}finally{URL.revokeObjectURL(u);}
@@ -1579,15 +1585,16 @@ async function equipAll(){
     const same=wornAlt.filter(o=>o.it.s===z.s);if(same.length>=3)wornAlt.splice(wornAlt.indexOf(same[0]),1);
     const e={it:z,idx:w.idx.slice(),a:null};wornAlt.push(e);w.from=e;   // keeps the colours you picked
   }
+  worn=[];closeEdit();   // the custom previewer starts fresh
   await show("outfit");
   note(kept===L.length?"Your outfit now wears "+L.length+" custom item"+(L.length===1?"":"s")+".":"Equipped, but this browser blocked storage, so the custom items will be gone when you close the page.");
 }
 $("o-saveall").innerHTML=ICON_SAVE+"<span>Save all custom items</span>";$("o-equipall").textContent="Equip as new outfit";
-$("o-texall").textContent="Apply same texture to all items";
+$("o-custall").textContent="Customise all";$("o-custall").onclick=custAll;
+$("o-texall").textContent="Apply texture to all";
 $("o-texall").onclick=()=>$("o-texin").click();
 $("o-texin").onchange=e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(f)texAll(f);};
 $("o-saveall").onclick=saveAll;$("o-equipall").onclick=equipAll;
-$("o-showfit").onchange=e=>{showFit=e.target.checked;renderWorn();paint();};
 $("o-nms").onclick=doSave;$("o-nmc").onclick=()=>{nmBox.hidden=true;nmW=null;};
 nmBox.addEventListener("click",e=>{if(e.target===nmBox){nmBox.hidden=true;nmW=null;}});
 nmi.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();doSave();}else if(e.key==="Escape"){nmBox.hidden=true;nmW=null;}});
