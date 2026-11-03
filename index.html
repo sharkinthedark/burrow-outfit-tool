@@ -1,17 +1,69 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AJ Outfit Tool</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>AJ Outfit Tool</title>
+<script>
+/* ===== FONTS (R2 "fonts" folder). If your files have other names, put them first in these lists. ===== */
+(function(){
+  var base="https://pub-3848c7e5a68a4c84a2d87bf03cc80cd7.r2.dev/fonts/";
+  var title=["tikiisland","tiki-island","TikiIsland","Tiki Island","TikiIsland-Regular"];
+  var body=["digital-delivery","digitaldelivery-regular","DigitalDelivery-Regular","digital-delivery-regular","Digital Delivery Regular","digitaldelivery","DigitalDelivery","Digital Delivery","digital_delivery_regular"];
+  var ext=[".otf",".ttf",".woff2",".woff"];
+  function src(names){var o=[];names.forEach(function(n){ext.forEach(function(e){o.push("url('"+base+encodeURI(n)+e+"')");});});return o.join(",");}
+  var st=document.createElement("style");
+  st.textContent="@font-face{font-family:'Tiki Island';src:"+src(title)+";font-display:swap}@font-face{font-family:'Digital Delivery';src:"+src(body)+";font-display:swap}";
+  document.head.appendChild(st);
+})();
+</script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bowlby+One&family=Nunito:wght@600;800&display=swap');
 body{margin:0;padding:8px;min-height:100vh;display:flex;align-items:center;background:#d9d9d9}
 body.ajp-dark{background:#121212}
 body>#ajp{width:100%}
+body{font-family:'Digital Delivery','Nunito',system-ui,sans-serif}
 #ajp{--panel:#fff;--text:#222;--muted:#777;--slotbg:#fafafa;--slotbd:#ccc;--btn:#222;--btnfg:#fff;--sec:#eee;--secfg:#222;--pill:#f0f0f0;--ring:#222;
-  font-family:'Nunito',system-ui,sans-serif;max-width:1000px;margin:0 auto;padding:12px 32px;color:var(--text);background:var(--panel);text-align:center;
+  font-family:'Digital Delivery','Nunito',system-ui,sans-serif;font-synthesis:none;max-width:1000px;margin:0 auto;padding:12px 32px;color:var(--text);background:var(--panel);text-align:center;
   border-radius:16px;border:12px solid rgba(255,255,255,.5);background-clip:padding-box}
 #ajp.dark{--panel:#1e1e1e;--text:#eee;--muted:#999;--slotbg:#262626;--slotbd:#555;--btn:#eee;--btnfg:#111;--sec:#333;--secfg:#eee;--pill:#2a2a2a;--ring:#fff;border-color:rgba(255,255,255,.12)}
+
+/* ---- colour themes (Theme button): each one has a light and a dark version; Black & red is dark in both ---- */
+#ajp[data-theme=pink],#about[data-theme=pink] .box,#pop[data-theme=pink] .box{--panel:#fff5f9;--text:#3a1626;--muted:#a0607c;--slotbg:#ffe8f1;--slotbd:#f2b5cd;--btn:#e0568f;--btnfg:#ffffff;--sec:#fbd3e3;--secfg:#7a2149;--pill:#fde0ec;--ring:#e0568f}
+body[data-theme=pink]{background:#f6c9db}
+#ajp.dark[data-theme=pink],#about.dark[data-theme=pink] .box,#pop.dark[data-theme=pink] .box{--panel:#2b1520;--text:#ffe3ee;--muted:#d9a0b8;--slotbg:#361c29;--slotbd:#7a3d57;--btn:#ff7eb0;--btnfg:#2b0f1c;--sec:#4a2535;--secfg:#ffd5e5;--pill:#3d2030;--ring:#ff7eb0}
+body.ajp-dark[data-theme=pink]{background:#1a0c13}
+#ajp[data-theme=blue],#about[data-theme=blue] .box,#pop[data-theme=blue] .box{--panel:#f2f9ff;--text:#12304a;--muted:#5f86a3;--slotbg:#e4f2fd;--slotbd:#a9d3f2;--btn:#4aa3df;--btnfg:#ffffff;--sec:#d3eafb;--secfg:#17466b;--pill:#dcedfb;--ring:#4aa3df}
+body[data-theme=blue]{background:#bfe0f7}
+#ajp.dark[data-theme=blue],#about.dark[data-theme=blue] .box,#pop.dark[data-theme=blue] .box{--panel:#12222f;--text:#e2f2ff;--muted:#8fb7d4;--slotbg:#172b3b;--slotbd:#3b6584;--btn:#7cc4f2;--btnfg:#0b1a26;--sec:#223b50;--secfg:#d5eeff;--pill:#1b3144;--ring:#7cc4f2}
+body.ajp-dark[data-theme=blue]{background:#0a141c}
+#ajp[data-theme=redblack],#about[data-theme=redblack] .box,#pop[data-theme=redblack] .box{--panel:#0d0d0d;--text:#f2f2f2;--muted:#b08a8a;--slotbg:#171212;--slotbd:#5a1c1c;--btn:#e11d2e;--btnfg:#ffffff;--sec:#2a1515;--secfg:#ffd9d9;--pill:#1f1212;--ring:#ff3b4d;--tab:rgba(255,255,255,.06);--tabon:rgba(255,255,255,.14)}
+body[data-theme=redblack]{background:#000000}
+#ajp.dark[data-theme=redblack],#about.dark[data-theme=redblack] .box,#pop.dark[data-theme=redblack] .box{--panel:#0d0d0d;--text:#f2f2f2;--muted:#b08a8a;--slotbg:#171212;--slotbd:#5a1c1c;--btn:#e11d2e;--btnfg:#ffffff;--sec:#2a1515;--secfg:#ffd9d9;--pill:#1f1212;--ring:#ff3b4d;--tab:rgba(255,255,255,.06);--tabon:rgba(255,255,255,.14)}
+body.ajp-dark[data-theme=redblack]{background:#000000}
+#ajp[data-theme=purple],#about[data-theme=purple] .box,#pop[data-theme=purple] .box{--panel:#f7f2fd;--text:#2a1646;--muted:#8265a8;--slotbg:#ece1fa;--slotbd:#c6aae8;--btn:#8a4fd6;--btnfg:#ffffff;--sec:#e0d0f6;--secfg:#4a2680;--pill:#e6d9f8;--ring:#8a4fd6}
+body[data-theme=purple]{background:#d5c2ee}
+#ajp.dark[data-theme=purple],#about.dark[data-theme=purple] .box,#pop.dark[data-theme=purple] .box{--panel:#1d1430;--text:#efe5ff;--muted:#b49bd8;--slotbg:#251a3d;--slotbd:#5a4286;--btn:#b98cf5;--btnfg:#1a0f2c;--sec:#33264f;--secfg:#e8dbff;--pill:#2b1f45;--ring:#b98cf5}
+body.ajp-dark[data-theme=purple]{background:#120b20}
+#ajp[data-theme=brown],#about[data-theme=brown] .box,#pop[data-theme=brown] .box{--panel:#faf3ec;--text:#3b2415;--muted:#8d6a52;--slotbg:#f1e4d6;--slotbd:#cfae92;--btn:#8a5a3b;--btnfg:#ffffff;--sec:#ead7c4;--secfg:#5a3822;--pill:#efdfcf;--ring:#8a5a3b}
+body[data-theme=brown]{background:#cdb199}
+#ajp.dark[data-theme=brown],#about.dark[data-theme=brown] .box,#pop.dark[data-theme=brown] .box{--panel:#231911;--text:#f3e6d9;--muted:#b99a82;--slotbg:#2c2016;--slotbd:#6b4e38;--btn:#d29a6c;--btnfg:#1f140c;--sec:#3b2b1e;--secfg:#f1dcc8;--pill:#33261b;--ring:#d29a6c}
+body.ajp-dark[data-theme=brown]{background:#140d08}
+#ajp[data-theme=green],#about[data-theme=green] .box,#pop[data-theme=green] .box{--panel:#f3faf3;--text:#16331f;--muted:#5f8a6b;--slotbg:#e3f3e5;--slotbd:#a8d5b0;--btn:#3d9a58;--btnfg:#ffffff;--sec:#d1ecd6;--secfg:#1b4a2b;--pill:#dbeedd;--ring:#3d9a58}
+body[data-theme=green]{background:#bfe3c7}
+#ajp.dark[data-theme=green],#about.dark[data-theme=green] .box,#pop.dark[data-theme=green] .box{--panel:#12241a;--text:#e2f6e8;--muted:#8fbf9d;--slotbg:#182e20;--slotbd:#3b6b4a;--btn:#6fcf8b;--btnfg:#0b1f13;--sec:#223d2c;--secfg:#d3f3dc;--pill:#1b3324;--ring:#6fcf8b}
+body.ajp-dark[data-theme=green]{background:#0a150e}
+#ajp[data-theme] #o-save,#ajp[data-theme] #o-savenew{background:var(--btn);color:var(--btnfg)}
+#ajp[data-theme] .o3 .oact button.wb,#ajp[data-theme] .o3 .okrow button.wb{background:var(--slotbg);color:var(--text);box-shadow:inset 0 0 0 1px var(--slotbd)}
+#ajp .hcol{position:relative;display:flex;flex-direction:column;gap:6px;align-items:stretch}
+#ajp .hbtns{align-items:flex-start}
+#ajp #colortheme{font-family:inherit;font-weight:800;font-size:12px;padding:6px 10px;border:0;border-radius:6px;background:var(--sec);color:var(--secfg);cursor:pointer}
+#ajp #colortheme:hover{opacity:.85}
+#ajp #thememenu{position:absolute;top:100%;right:0;margin-top:6px;z-index:40;min-width:160px;display:flex;flex-direction:column;gap:2px;padding:6px;text-align:left;background:var(--panel);color:var(--text);border:2px solid var(--slotbd);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#ajp #thememenu[hidden]{display:none}
+#ajp #thememenu button{display:flex;align-items:center;gap:10px;width:100%;font-family:inherit;font-weight:800;font-size:13px;padding:7px 8px;border:0;border-radius:6px;background:transparent;color:var(--text);cursor:pointer;text-align:left}
+#ajp #thememenu button:hover{background:var(--pill)}
+#ajp #thememenu button[aria-checked=true]{background:var(--sec);box-shadow:inset 0 0 0 2px var(--ring)}
+#ajp #thememenu .sw{flex:0 0 auto;width:20px;height:20px;border-radius:50%;border:2px solid var(--slotbd);background:linear-gradient(135deg,var(--a) 50%,var(--b) 50%)}
 #ajp *{box-sizing:border-box}
 #ajp header{position:sticky;top:0;z-index:25;background:var(--panel);display:flex;align-items:baseline;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:6px;padding:4px 90px 6px}
-#ajp h1{font-family:'Bowlby One',Impact,sans-serif;text-transform:uppercase;font-weight:400;letter-spacing:1px;font-size:clamp(20px,3vw,28px);margin:0}
+#ajp h1{font-family:'Tiki Island','Bowlby One',Impact,sans-serif;text-transform:uppercase;font-weight:400;letter-spacing:1px;font-size:clamp(20px,3vw,28px);margin:0}
 #ajp .sub{font-weight:600;color:var(--muted);font-size:13px}
 #ajp .hbtns{position:absolute;right:0;top:0;display:flex;gap:8px}
 #ajp #theme,#ajp #contact{font-family:inherit;font-weight:800;font-size:12px;padding:6px 10px;border:0;border-radius:6px;background:var(--sec);color:var(--secfg);cursor:pointer}
@@ -66,9 +118,9 @@ body>#ajp{width:100%}
 #ajp .foot a{color:inherit;text-decoration:underline}
 #ajp .msg{min-height:16px;font-size:12px;color:var(--muted);margin:4px 0}
 #ajp .titlewrap{display:flex;align-items:center;gap:10px}
-#ajp #info{width:26px;height:26px;padding:0;border:0;border-radius:50%;background:var(--sec);color:var(--secfg);font-family:'Bowlby One',Impact,sans-serif;font-size:14px;line-height:1;cursor:pointer;flex:0 0 auto}
+#ajp #info{width:26px;height:26px;padding:0;border:0;border-radius:50%;background:var(--sec);color:var(--secfg);font-family:'Tiki Island','Bowlby One',Impact,sans-serif;font-size:14px;line-height:1;cursor:pointer;flex:0 0 auto}
 #ajp #info:hover{opacity:.85}
-#about,#pop{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);font-family:'Nunito',system-ui,sans-serif}
+#about,#pop{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);font-family:'Digital Delivery','Nunito',system-ui,sans-serif;font-synthesis:none}
 #about[hidden],#pop[hidden]{display:none}
 #about .box,#pop .box{--panel:#fff;--text:#222;--muted:#777;--btn:#222;--btnfg:#fff;background:var(--panel);color:var(--text);max-width:460px;width:100%;max-height:90vh;overflow-y:auto;padding:24px 28px;border-radius:16px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.4)}
 #about.dark .box,#pop.dark .box{--panel:#1e1e1e;--text:#eee;--muted:#999;--btn:#eee;--btnfg:#111}
@@ -83,6 +135,26 @@ body>#ajp{width:100%}
   #ajp .top{flex-direction:column;width:100%}
   #ajp .prev{flex:none;width:100%;max-width:320px}
   #ajp .grid{width:100%}
+}
+
+/* ===== MOBILE/TABLET STEP 1: page shell + header ===== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{-webkit-tap-highlight-color:transparent;min-height:100vh;min-height:100dvh}
+#ajp #theme,#ajp #contact,#ajp #colortheme{touch-action:manipulation}
+@media (max-width:1024px){
+  body{padding:max(6px,env(safe-area-inset-top)) max(6px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-left))}
+  #ajp{padding:10px 18px}
+}
+@media (max-width:800px){
+  body{align-items:flex-start}
+  #ajp{padding:8px 10px;border-width:6px;border-radius:12px}
+  #ajp header{gap:4px 10px;padding:2px 0 6px;flex-direction:column;align-items:center}
+  #ajp .hbtns{justify-content:center;flex-wrap:wrap;align-items:flex-start}
+  #ajp .hcol{flex-direction:row;flex-wrap:wrap;justify-content:center}
+  #ajp #thememenu{right:auto;left:50%;transform:translateX(-50%)}
+}
+@media (pointer:coarse){
+  #ajp #theme,#ajp #contact,#ajp #colortheme{min-height:40px;padding:8px 14px;font-size:13px}
 }
 
 #ajp .nav{display:flex;gap:8px;justify-content:center;margin:0 0 14px}
@@ -140,7 +212,7 @@ body>#ajp{width:100%}
 #ajp .olab{text-align:center;font-weight:800;font-size:13px;margin-bottom:6px}
 #o-ov{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px}
 #o-ov[hidden]{display:none}
-#o-ov .box{background:var(--panel);color:var(--text);width:min(92vw,720px);max-height:92vh;overflow-y:auto;padding:16px;border-radius:14px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Nunito',system-ui,sans-serif}
+#o-ov .box{background:var(--panel);color:var(--text);width:min(92vw,720px);max-height:92vh;overflow-y:auto;padding:16px;border-radius:14px;display:flex;gap:16px;flex-wrap:wrap;font-family:'Digital Delivery','Nunito',system-ui,sans-serif;font-synthesis:none}
 #o-ov .box>.l{flex:1 1 220px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--slotbg);border-radius:8px;padding:8px}
 #o-ov .box>.r{flex:1 1 280px;min-width:0}
 #o-ov .oview{display:flex;gap:6px;margin-bottom:8px;width:100%}
@@ -209,7 +281,7 @@ body>#ajp{width:100%}
 #ajp .osearch button{flex:1 1 0;min-width:0}
 .omod{position:fixed;inset:0;z-index:95;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px}
 .omod[hidden]{display:none}
-.omod .mbox{background:var(--panel);color:var(--text);width:min(96vw,1100px);height:min(90vh,820px);padding:18px;border-radius:14px;display:flex;flex-direction:column;gap:10px;font-family:'Nunito',system-ui,sans-serif;text-align:left}
+.omod .mbox{background:var(--panel);color:var(--text);width:min(96vw,1100px);height:min(90vh,820px);padding:18px;border-radius:14px;display:flex;flex-direction:column;gap:10px;font-family:'Digital Delivery','Nunito',system-ui,sans-serif;font-synthesis:none;text-align:left}
 .omod .mbox.narrow{width:min(94vw,460px);height:auto;max-height:80vh}
 .omod .mh{display:flex;align-items:center;gap:10px}
 .omod .mh b{flex:1;font-size:17px;font-weight:800}
@@ -225,7 +297,16 @@ body>#ajp{width:100%}
 .omod .cg .ct:hover{border-color:var(--ring)}
 .omod .cg .ct{content-visibility:auto;contain-intrinsic-size:112px 135px}
 .omod .cg .ct.on{border-color:var(--ring);box-shadow:inset 0 0 0 1px var(--ring)}
-.omod .cg .ct canvas,.omod .cg .ct img,.omod .cg .ct .ph{width:80px;height:80px;object-fit:contain;background:var(--slotbg);border-radius:6px}
+.omod .cg .ct canvas,.omod .cg .ct img,.omod .cg .ct .ph{width:80px;height:80px;object-fit:contain;background:transparent;border-radius:6px}
+.omod .cg .ct .vb{display:block;margin-top:2px;padding:4px 8px;border-radius:6px;background:#fff;color:#222;border:1px solid rgba(0,0,0,.18);font-size:11px;font-weight:800;cursor:pointer}
+.omod .cg .ct .vb:hover{outline:2px solid var(--ring)}
+.omod .vpop{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);padding:12px}
+.omod .vpop .vbox{background:var(--panel);color:var(--text);border-radius:12px;padding:14px;max-width:min(520px,96%);max-height:90%;overflow:auto;box-shadow:0 8px 28px rgba(0,0,0,.35)}
+.omod .vpop .vh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;font-weight:800}
+.omod .vpop .vg{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.omod .vpop .vg button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px;background:var(--pill);color:var(--text);border:2px solid transparent;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer}
+.omod .vpop .vg button:hover{border-color:var(--ring)}
+.omod .vpop .vg canvas{width:72px;height:72px;object-fit:contain;background:transparent}
 .omod .cg .ct span{font-weight:700;line-height:1.2;word-break:break-word}
 .omod .onote,.omod .sn{color:var(--muted);font-size:13px;font-weight:600;text-align:center;padding:6px}
 #o-pl{overflow-y:auto;display:flex;flex-direction:column;gap:8px}
@@ -249,7 +330,7 @@ body>#ajp{width:100%}
 .omod .mstrip{flex:0 0 112px;display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;align-items:stretch}
 .omod .mstrip .cw{flex:0 0 84px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px;background:var(--pill);color:var(--text);border:2px solid transparent;font-size:11px;overflow:hidden}
 .omod .mstrip .cw:hover{border-color:var(--ring)}
-.omod .mstrip .cw canvas,.omod .mstrip .cw img,.omod .mstrip .cw .ph{width:56px;height:56px;object-fit:contain;background:var(--slotbg);border-radius:6px;flex:0 0 auto}
+.omod .mstrip .cw canvas,.omod .mstrip .cw img,.omod .mstrip .cw .ph{width:56px;height:56px;object-fit:contain;background:transparent;border-radius:6px;flex:0 0 auto}
 .omod .mstrip .cw span{font-weight:700;line-height:1.15;width:100%;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .omod .mstrip .onote{flex:1;align-self:center}
 #o-pl .sp .sc{font-size:12px;font-weight:700;color:var(--muted)}
@@ -285,6 +366,359 @@ body>#ajp{width:100%}
 #ajp .cmtools label{display:flex;align-items:center;gap:6px;font-weight:700;font-size:13px;cursor:pointer}
 #o-fitlist{margin-top:10px}
 #o-ov .r .cubtns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+#pg-avatars{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;text-align:left;align-items:start}
+#pg-avatars[hidden]{display:none}
+#ajp .avl{display:flex;flex-direction:column;gap:10px;min-width:0;background:var(--pill);border:2px solid var(--slotbd);border-radius:14px;padding:14px;box-shadow:0 3px 12px rgba(0,0,0,.12)}   /* the folder panel: tinted, outlined and lifted off the page */
+#ajp .avl button.sec{background:var(--panel);color:var(--text);box-shadow:inset 0 0 0 2px var(--slotbd)}
+#ajp .avl .avtool{display:flex;gap:8px;align-items:center}
+#ajp .avl .avtool b{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px}
+#ajp .avl button,#ajp .avr button,#av-dlg button{font-family:inherit;font-weight:800;font-size:13px;padding:7px 12px;border:0;border-radius:6px;background:var(--btn);color:var(--btnfg);cursor:pointer}
+#ajp .avl button.sec,#ajp .avr button.sec,#av-dlg button.sec{background:var(--sec);color:var(--secfg)}
+#ajp .avlist{display:flex;flex-direction:column;gap:8px;max-height:calc(100vh - 150px);overflow-y:auto;padding-right:4px}
+#ajp .avf{background:var(--panel);border:2px solid var(--slotbd);border-radius:10px;padding:6px 10px}
+#ajp .avf summary{display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:800;font-size:15px;list-style:none;padding:4px 0}
+#ajp .avf summary::-webkit-details-marker{display:none}
+#ajp .avf summary::before{content:"\25B8";display:inline-block;transition:transform .12s}
+#ajp .avf[open] summary::before{transform:rotate(90deg)}
+#ajp .avf summary .fn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#ajp .avf summary .fc{color:var(--muted);font-size:12px;font-weight:600}
+#ajp .avf summary button{padding:3px 8px;font-size:12px}
+#ajp .avg{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px;padding:6px 0 8px}
+#ajp .avt{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;background:var(--panel);color:var(--text);border:2px solid transparent;border-radius:8px;cursor:pointer;font-size:11px;font-weight:800;line-height:1.15}
+#ajp .avl button.avt{background:var(--panel);color:var(--text);padding:6px 4px;font-size:11px}
+#ajp .avt:hover{border-color:var(--ring)}
+#ajp .avt.on{border-color:var(--ring);box-shadow:inset 0 0 0 1px var(--ring)}
+#ajp .avt img{height:72px;width:auto;max-width:100%;object-fit:contain;background:transparent}
+#ajp .avt span{width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#ajp .avr{display:flex;flex-direction:column;gap:8px;align-items:center;min-width:0}
+#ajp .avr .avhead{display:flex;gap:8px;width:100%;align-items:center;justify-content:space-between}
+#ajp .avr .avhead b{flex:1;min-width:0;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px}
+#ajp .avbig{width:100%;min-height:280px;display:flex;align-items:center;justify-content:center;background:var(--slotbg);border-radius:10px;padding:10px}
+#ajp .avbig img{max-width:100%;max-height:calc(100vh - 250px);min-height:200px;object-fit:contain;image-rendering:pixelated}
+#ajp .avr .avsub{display:flex;gap:8px;flex-wrap:wrap;width:min(100%,calc(100vh - 270px));align-items:center}
+#ajp .avr select{font-family:inherit;font-weight:700;font-size:13px;padding:6px 8px;border:2px solid var(--slotbd);border-radius:6px;background:var(--slotbg);color:var(--text)}
+#ajp .avnote{color:var(--muted);font-size:12px;font-weight:600}
+#av-dlg .avd{width:min(94vw,400px);height:auto;max-height:80vh;gap:12px}
+#av-dlg label{display:flex;flex-direction:column;gap:4px;font-weight:800;font-size:13px}
+#av-dlg input,#av-dlg select{width:100%;font-family:inherit;font-weight:700;font-size:14px;padding:8px 10px;border:2px solid var(--slotbd);border-radius:6px;background:var(--slotbg);color:var(--text)}
+#av-dlg .avdb{display:flex;gap:8px;justify-content:flex-end}
+#ajp .o3 .oact button,#ajp .o3 .oact button.sec,#ajp .avr .avsub button,#ajp .avr .avsub button.sec{background:var(--btn);color:var(--btnfg)}
+#ajp .avfg{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+#ajp .avbk{display:flex;gap:6px;flex-wrap:wrap;margin:0;padding-bottom:12px;border-bottom:2px solid var(--slotbd)}
+#ajp .avl button.avfo{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:4px;padding:8px;background:var(--panel);color:var(--text);border:2px solid var(--slotbd);border-radius:12px;font-size:14px;min-width:0}
+#ajp .avl button.avfo:hover{border-color:var(--ring)}
+#ajp .avmo{flex:1;min-height:0;width:100%;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px}
+#ajp .avmo img{width:100%;height:100%;min-height:0;object-fit:contain}
+#ajp .avfo .fn{font-weight:800;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#ajp .avfo .fc{font-size:11px;color:var(--muted);font-weight:600}
+#ajp .avmode{display:flex;gap:6px;width:min(100%,calc(100vh - 270px))}
+#ajp .avmode[hidden]{display:none}
+#ajp .avr .avmode button{flex:1;background:var(--sec);color:var(--secfg)}
+#ajp .avr .avmode button.on{background:var(--btn);color:var(--btnfg)}
+#ajp .avl .avtool button{white-space:nowrap}
+#ajp .avbig{aspect-ratio:1;width:min(100%,calc(100vh - 270px));min-height:0}
+#ajp .avbig img,#ajp .avbig canvas{max-width:100%;max-height:100%;min-height:0;width:auto;height:auto;object-fit:contain;image-rendering:pixelated}
+#ajp .avbig canvas{width:100%;height:100%}
+#ajp .oedit{font-size:12px;font-weight:700;color:var(--muted);margin-top:6px}
+@media (max-width:760px){#pg-avatars{grid-template-columns:1fr}}
+
+/* equipped items: sections, horizontal rows, layer indicator */
+#o-worn{display:flex;flex-direction:column;gap:10px}
+#ajp .osec{background:var(--slotbg);border-radius:10px;padding:6px 8px 8px}
+#ajp .osh{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:13px}
+#ajp .osh b{font-weight:800;min-width:44px}
+#ajp .oind{display:flex;align-items:center;gap:6px;flex:1;min-width:0;font-size:11px;font-weight:800;color:var(--muted)}
+#ajp .oind i{flex:1;height:2px;background:currentColor;opacity:.7;position:relative;margin:0 6px}
+#ajp .oind i::before,#ajp .oind i::after{content:"";position:absolute;top:-4px;border:5px solid transparent}
+#ajp .oind i::before{left:-6px;border-left:0;border-right-color:currentColor}
+#ajp .oind i::after{right:-6px;border-right:0;border-left-color:currentColor}
+#ajp .osr{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;min-height:40px;align-items:stretch}
+#ajp .osr .ocard{flex:0 0 112px;min-width:0;background:var(--pill);cursor:grab}
+#ajp .osr .ocard.dragging{opacity:.4}
+#ajp .osr .ocard.dl{box-shadow:-4px 0 0 var(--ring)}
+#ajp .osr .ocard.dr{box-shadow:4px 0 0 var(--ring)}
+#ajp .osempty{color:var(--muted);font-size:12px;font-weight:600;align-self:center;padding:0 4px}
+/* Dress Up preview fills its window edge to edge */
+#ajp .ostage{position:relative;overflow:hidden}
+#ajp #o-note{position:absolute;left:0;right:0;bottom:0;z-index:2}
+
+/* frame + colours */
+#ajp{--frame:#b9b9b9}#ajp.dark{--frame:#5c5c5c}
+.frm{border:0;border-radius:12px;background:var(--slotbg);image-rendering:pixelated;object-fit:contain;box-sizing:border-box}
+#o-ovcv.game{padding:2% 6%}
+#ajp .avbig img.frm{min-height:0;max-width:100%;max-height:100%;object-fit:contain}
+#ajp .avt img{border:0;border-radius:6px;background:var(--slotbg)}
+#ajp .avmo img{justify-self:center;align-self:center;width:auto;height:auto;max-width:100%;max-height:100%;border:0;border-radius:4px;background:var(--slotbg)}
+/* item cards: thumbnail, name and buttons sit in the same place for every item */
+#ajp .osr .ocard{flex:0 0 120px;display:flex;flex-direction:column}
+#ajp .othw{height:100px;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
+#ajp .othw .othumb{margin:0 auto;max-width:100%;max-height:100px}
+#ajp .oname{height:3.9em;overflow:hidden;display:flex;align-items:center;justify-content:center;line-height:1.3;word-break:break-word;margin-bottom:6px}
+#ajp .osr .obtn{margin-top:auto}
+#ajp .osr .obtn button{flex:1 1 0;min-width:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0}
+/* avatars header */
+#ajp .avr .avhead{justify-content:flex-start;flex-wrap:wrap;width:min(100%,calc(100vh - 270px))}   /* same width as the preview below, so the name and buttons start at its left edge */
+#ajp .avr .avhead b{flex:0 1 auto}
+#ajp .avctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#ajp .avr .avctl button,#ajp .avr .avctl button.sec{background:var(--btn);color:var(--btnfg)}
+/* outfit creator buttons */
+#ajp .ohist{margin:0 0 8px}
+#ajp .o3 .oact button:disabled{opacity:.45;cursor:default}
+#ajp .o3 .oact button.wb{background:#fff;color:#222;box-shadow:inset 0 0 0 1px rgba(0,0,0,.22)}
+#ajp #o-reset{background:#d93025;color:#fff}
+#ajp #o-save,#ajp #o-savenew{background:#1a6dff;color:#fff}
+/* buttons under the preview are centred; undo/redo sit in line with the keep option */
+#ajp .oc .ostage ~ .oact{justify-content:center}
+#ajp .okrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+#ajp .okrow label{display:flex;gap:6px;align-items:center}
+#ajp .o3 .okrow button.wb{background:#fff;color:#222;box-shadow:inset 0 0 0 1px rgba(0,0,0,.22)}
+#ajp .o3 .okrow button:disabled{opacity:.45;cursor:default}
+#ajp #o-cv{position:relative;z-index:1}
+#ajp #o-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;image-rendering:auto;pointer-events:none}
+#ajp #o-bg[hidden]{display:none}
+#o-bgm .bgcv{display:block;max-width:100%;margin:0 auto;border-radius:6px;touch-action:none;cursor:move;background:conic-gradient(#ccc 25%,#fff 0 50%,#ccc 0 75%,#fff 0) 0 0/16px 16px}
+#o-bgm .bgz{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13px}
+#o-bgm .bgz input{flex:1;width:auto}
+
+/* ===== MOBILE/TABLET STEP 2: nav tabs + Outfit creator layout ===== */
+#ajp .o3>section{min-width:0}
+@media (max-width:1100px){
+  #ajp .nav{flex-wrap:wrap}
+  #ajp .nav button,#ajp .nav a{touch-action:manipulation}
+}
+/* tablet: preview on the left, item list + colours stacked on the right */
+@media (min-width:901px) and (max-width:1100px){
+  #ajp .o3{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:12px}
+  #ajp .o3>section:nth-child(2){grid-column:1;grid-row:1 / span 2;position:sticky;top:60px;align-self:start}
+  #ajp .o3>section:nth-child(1){grid-column:2;grid-row:1}
+  #ajp .o3>section:nth-child(3){grid-column:2;grid-row:2}
+}
+/* phone / small tablet: one column, preview first so you always see what you are changing */
+@media (max-width:900px){
+  #ajp .o3{grid-template-columns:minmax(0,1fr);gap:14px}
+  #ajp .o3>section:nth-child(2){order:-1}
+}
+@media (max-width:560px){
+  #ajp .nav{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  #ajp .nav button,#ajp .nav a{padding:10px 6px;font-size:13px;text-align:center}
+}
+@media (pointer:coarse){
+  #ajp .nav button,#ajp .nav a{min-height:42px}
+}
+
+/* ===== MOBILE/TABLET STEP 3: controls (search, dropdowns, buttons, tabs) ===== */
+@media (max-width:900px){
+  #ajp #o-res{left:0;right:0;width:auto;max-width:none;max-height:50vh;max-height:50dvh}
+  #ajp #o-avres{max-height:50vh;max-height:50dvh}
+  #ajp #item-results{left:0;right:0;width:auto;max-width:none;max-height:50vh;max-height:50dvh}
+}
+@media (max-width:480px){
+  #ajp .oavsel{flex-direction:column;align-items:stretch;gap:4px;white-space:normal}
+  #ajp .oall{flex-wrap:wrap}
+  #ajp .oall button:first-child{flex:1 1 100%}
+  #ajp .oall button:not(:first-child){flex:1 1 100%}
+}
+/* touch screens: 16px inputs stop iOS zooming in on focus; bigger tap targets */
+@media (pointer:coarse){
+  #ajp input[type=text],#ajp input:not([type]),#ajp .o3 .osearch input[type=text],#ajp .add input,#o-cq,#o-nm input{font-size:16px}
+  #ajp .o3 button,#o-ov button,.omod button{min-height:40px;touch-action:manipulation}
+  #ajp .o3 .pslots button,#o-ov .pslots button{height:38px;min-height:38px}
+  #ajp .otabs button{min-height:44px}
+  #ajp #o-res li,#ajp #o-avres li,#ajp #item-results li{padding-top:10px;padding-bottom:10px}
+  #ajp .orow{padding:6px 8px}
+  #ajp .o3 input[type=checkbox],#ajp .okrow input[type=checkbox]{width:22px;height:22px;flex:0 0 auto}
+  #ajp .okrow label{min-height:40px}
+}
+
+/* ===== MOBILE/TABLET STEP 4: colour grids, outfit palette, tap-to-apply ===== */
+#ajp .otgt{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;margin-top:10px;padding:8px;border-radius:8px;background:var(--pill);font-size:13px;font-weight:800}
+#ajp .otgt span{flex:1 1 100%;text-align:center}
+#ajp .otgt button{flex:1 1 0}
+@media (max-width:900px){
+  #ajp .pgrid{width:100%;min-width:0}
+  #o-opg i{width:40px;height:40px}
+}
+@media (max-width:560px){
+  #o-panel{padding:8px 6px}
+  #ajp .pgrid{border-width:2px;border-radius:8px}
+  #o-opg{gap:5px}
+}
+@media (pointer:coarse){
+  #o-opg i{width:44px;height:44px}
+  #ajp .pgrid button:hover,#ajp .grid button:hover{outline:0}
+}
+
+/* ===== MOBILE/TABLET STEP 5: reorder items without dragging ===== */
+#ajp .omv{display:none}
+@media (max-width:900px),(pointer:coarse){
+  #ajp .omv{display:flex;gap:6px;margin:0 0 6px}
+  #ajp .omv button{flex:1 1 0;min-width:0;height:32px;padding:0;display:flex;align-items:center;justify-content:center;font-size:13px}
+  #ajp .omv button:disabled{opacity:.35}
+  #ajp .osr{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scroll-snap-type:x proximity}
+  #ajp .osr .ocard{scroll-snap-align:start}
+}
+
+/* ===== MOBILE/TABLET STEP 6: Palette creator page ===== */
+#ajp .slot.sel{outline:3px solid var(--ring);outline-offset:2px}
+#ajp .slotx{position:absolute;top:3px;right:3px;width:26px;height:26px;padding:0;border:0;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;font-size:13px;line-height:1;cursor:pointer;touch-action:manipulation}
+#ajp .gscroll{width:100%}
+@media (max-width:800px){
+  #ajp .ctl{width:100%}
+  #ajp .slots{width:100%;gap:8px}
+  #ajp .slot{flex:1 1 0;width:auto;max-width:84px;height:auto;aspect-ratio:1}
+  #ajp .act .r{flex-wrap:wrap}
+  #ajp #result{min-width:0;flex:1 1 90px;text-align:center;word-break:break-all}
+  #ajp .prev{max-width:none}
+  #ajp #item-results{left:0;right:0;width:auto;max-width:none;max-height:50vh;max-height:50dvh}
+  #ajp .msg{text-align:center}
+  /* 20 colour columns are too small to tap on a phone: bigger cells, and the grid scrolls sideways */
+  #ajp .gscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:6px}
+  #ajp .gscroll .grid{width:max(100%,600px);font-size:9px}
+  #ajp .saved{margin-top:20px}
+  #ajp .add input{flex:1 1 150px;width:auto;min-width:0}
+  #ajp .srow{gap:8px}
+  #ajp .srow .scode{flex:1 1 100%;min-width:0}
+  #ajp .strip div{width:44px}
+}
+@media (max-width:420px){
+  #ajp .slot .num{font-size:15px;bottom:3px}
+  #ajp .slot .idx{left:5px;top:3px}
+  #ajp .slotx{width:22px;height:22px;font-size:11px}
+  #ajp .act button,#ajp .add button{padding:9px 12px;font-size:14px}
+}
+@media (pointer:coarse){
+  #ajp .act button,#ajp .add button,#ajp .srow button{min-height:42px;touch-action:manipulation}
+  #ajp #code-input{font-size:16px}
+  #ajp .srow button{padding:8px 14px}
+  #ajp #savedList{max-height:none}
+}
+
+/* ===== MOBILE/TABLET STEP 7: pop-up windows (edit item, catalogue, palettes, background, save) ===== */
+@media (max-width:900px){
+  #o-ov,.omod{padding:8px}
+  #o-ov .box{width:100%;max-height:96vh;max-height:96dvh;padding:14px;gap:14px;-webkit-overflow-scrolling:touch}
+  #o-ov .box>.l,#o-ov .box>.r{flex:1 1 100%;min-width:0}
+  #o-ov .box>.s{flex:1 1 100%;min-width:0;align-self:auto}
+  #o-ovcv{height:min(42vh,420px);height:min(42dvh,420px)}
+  #o-ov .slots{gap:8px;width:100%}
+  #o-ov .slot{flex:1 1 0;width:auto;height:auto;max-width:84px;aspect-ratio:1}
+  #o-ov .act .r{flex-wrap:wrap}
+  #o-ov .grid{width:100%}
+  #o-ovs{max-height:40vh}
+  .omod .mbox{width:100%;height:96vh;height:96dvh;padding:12px}
+  .omod .mbox.narrow{width:100%;height:auto;max-height:92vh;max-height:92dvh}
+  .omod .mh{flex-wrap:wrap}
+  .omod .mh input{flex:1 1 140px;width:auto;min-width:0}
+  .omod .cg{grid-template-columns:repeat(auto-fill,minmax(96px,1fr))}
+  .omod .vpop .vg{grid-template-columns:repeat(auto-fill,minmax(84px,1fr))}
+  #o-bgm .bgcv{width:100%;height:auto}
+}
+@media (max-width:480px){
+  #o-ov .box{padding:10px}
+  #o-ov .cusl span:first-child{width:70px}
+  .omod .cg .ct canvas,.omod .cg .ct img,.omod .cg .ct .ph{width:68px;height:68px}
+}
+@media (pointer:coarse){
+  .omod input,#o-ov input[type=text]{font-size:16px}
+  #o-ov .cusl input[type=range],#o-bgm .bgz input{min-height:32px}
+  .omod .cg .ct .vb{padding:8px 10px;min-height:34px}
+  #o-ov .box button,.omod .mbox button{touch-action:manipulation}
+}
+
+/* ===== MOBILE/TABLET STEP 8: Avatars page ===== */
+#pg-avatars>section{min-width:0}
+@media (max-width:900px){
+  /* one column; preview on top so you see the avatar you just picked without scrolling past the folder list */
+  #pg-avatars{grid-template-columns:minmax(0,1fr);gap:14px}
+  #pg-avatars>.avr{order:-1}
+  #ajp .avl{padding:10px}
+  #ajp .avlist{max-height:60vh;max-height:60dvh;-webkit-overflow-scrolling:touch}
+  #ajp .avl .avtool{flex-wrap:wrap}
+  #ajp .avl .avtool b{flex:1 1 100%}
+  #ajp .avbk{display:flex;flex-wrap:wrap;gap:8px}
+  #ajp .avbk button{flex:1 1 120px}
+  /* preview, mode buttons and header share one width that no longer depends on screen height */
+  #ajp .avbig,#ajp .avmode,#ajp .avr .avhead,#ajp .avr .avsub{width:min(100%,560px)}
+  #ajp .avr .avsub button{flex:1 1 140px}
+  #ajp .avr .avctl{width:100%}
+  #ajp .avr .avctl select{flex:1 1 140px;min-width:0}
+  #ajp .avg{grid-template-columns:repeat(auto-fill,minmax(76px,1fr))}
+  #av-dlg .avd{width:min(96vw,400px)}
+}
+@media (max-width:480px){
+  #ajp .avl{padding:8px;border-radius:10px}
+  #ajp .avg{gap:6px}
+  #ajp .avr .avhead b{flex:1 1 100%}
+}
+@media (pointer:coarse){
+  #ajp .avl button,#ajp .avr button,#av-dlg button{min-height:40px;touch-action:manipulation}
+  #ajp .avf summary{min-height:44px}
+  #ajp .avf summary button{min-height:34px;padding:4px 10px}
+  #ajp .avt{min-height:44px}
+  #ajp .avr select,#av-dlg input,#av-dlg select{font-size:16px;min-height:40px}
+}
+
+/* ===== MOBILE/TABLET STEP 9: item catalogue - bigger preview, no squashed / cut-off tiles ===== */
+@media (max-width:800px){
+  /* the whole window body scrolls as one, instead of three tiny boxes fighting for 96% of the screen */
+  #o-cat .mbody{display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;gap:10px;min-height:0}
+  #o-cat .mprev{flex:0 0 auto;padding:8px}
+  /* !important: the script sets an inline size (flex:1 1 0) that collapses to 0 height in this stacked layout */
+  #o-cat #o-ccv,#o-cat #o-ccv.frm{flex:0 0 auto!important;width:100%!important;max-width:none!important;aspect-ratio:auto!important;align-self:stretch!important;height:min(44vh,360px)!important;height:min(44dvh,360px)!important;min-height:200px!important;object-fit:contain}
+  #o-cat .mstrip{flex:0 0 auto;min-height:104px;padding-bottom:2px}
+  #o-cat .mstrip .cw{flex:0 0 84px;min-height:96px;overflow:visible}
+  #o-cat .mstrip .cw canvas,#o-cat .mstrip .cw img,#o-cat .mstrip .cw .ph{width:56px;height:56px}
+  #o-cat .mmain{flex:0 0 auto;overflow:visible}
+  #o-cat .cg{flex:0 0 auto;overflow:visible;padding-right:0;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
+  #o-cat .cg .ct{content-visibility:visible;contain:none;min-height:0;height:auto;overflow:visible;justify-content:flex-start;padding:8px 6px}
+  #o-cat .cg .ct canvas,#o-cat .cg .ct img,#o-cat .cg .ct .ph{width:100%;max-width:92px;height:auto;aspect-ratio:1;flex:0 0 auto;object-fit:contain}
+  #o-cat .cg .ct span{display:block;width:100%;overflow:visible;font-size:12px;line-height:1.2}
+  #o-cat .mtabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+  #o-cat .mtabs button{flex:0 0 auto;white-space:nowrap}
+}
+@media (max-width:480px){
+  #o-cat .cg{grid-template-columns:repeat(auto-fill,minmax(96px,1fr))}
+  #o-cat .cg .ct canvas,#o-cat .cg .ct img,#o-cat .cg .ct .ph{max-width:84px}
+}
+/* tablet side-by-side: keep the preview from being squeezed too */
+@media (min-width:801px) and (max-width:1100px){
+  #o-cat #o-ccv{min-height:240px}
+  #o-cat .mstrip{flex:0 0 112px}
+}
+
+/* ===== MOBILE/TABLET STEP 10: Main / Secondary colour palettes fit the screen ===== */
+/* the 40px tap-target rule gave every colour cell a 40px minimum, so 20 columns were 800px wide and got cut off */
+#ajp .pgrid{grid-template-columns:repeat(20,minmax(0,1fr))}
+#ajp .pgrid button,#ajp .o3 .pgrid button,#o-ov .pgrid button,#o-ov .box .pgrid button{min-height:0!important;min-width:0!important;height:auto;width:auto;aspect-ratio:1;padding:0}
+#ajp .pgrid,#o-ov .pgrid{max-width:100%;box-sizing:border-box}
+
+/* ---- Random outfit pop-up ---- */
+#o-rnd .mbox.narrow{width:min(94vw,440px);height:auto;max-height:92vh;max-height:92dvh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#o-rnd .rnrow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+#o-rnd .rnlab{font-weight:800;font-size:14px}
+#o-rnd .rnstep{display:flex;align-items:center;gap:6px}
+#o-rnd .rnstep button{width:40px;height:40px;padding:0;font-size:20px;line-height:1}
+#o-rnd .rnstep input{width:64px;text-align:center;-moz-appearance:textfield}
+#o-rnd .rnstep input::-webkit-outer-spin-button,#o-rnd .rnstep input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+#o-rnd .rnadv{background:var(--pill);border-radius:8px;padding:8px 10px}
+#o-rnd .rnadv summary{cursor:pointer;font-weight:800;font-size:14px;min-height:32px;display:flex;align-items:center}
+#o-rnd .rnnote{font-size:12px;font-weight:600;color:var(--muted);margin:6px 0 8px}
+#o-rnd .rnall{display:flex;gap:6px;margin-bottom:8px}
+#o-rnd .rnall button{flex:1 1 0}
+#o-rnd .rngrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+#o-rnd .rnchk,#o-rnd .rngrid label{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14px;padding:8px 10px;background:var(--panel);border-radius:6px;min-height:40px;cursor:pointer}
+#o-rnd .rnchk{margin-top:8px}
+#o-rnd .rngrid input,#o-rnd .rnchk input{width:20px;height:20px;flex:0 0 auto;margin:0;padding:0}
+#o-rnd .rnfoot{display:flex;justify-content:flex-end}
+#o-rnd .rnfoot button{flex:1 1 auto;padding:10px 18px;font-size:15px}
+@media (pointer:coarse){#o-rnd .rngrid input,#o-rnd .rnchk input{width:24px;height:24px}}
+@media (max-width:360px){#o-rnd .rngrid{grid-template-columns:minmax(0,1fr)}}
+
+/* search row now holds Search + Browse + Random: give the search box more room on phones */
+@media (max-width:560px){
+  #ajp .o3 .osearch input[type=text]{flex:1.7 1 0}
+  #ajp .osearch button{padding-left:6px;padding-right:6px;font-size:13px}
+}
 </style></head>
 <body data-ajp-page>
 <div id="about" role="dialog" aria-modal="true" aria-labelledby="about-title" hidden>
@@ -302,10 +736,10 @@ body>#ajp{width:100%}
 </div>
 <div id="ajp">
 <header>
-  <div class="titlewrap"><h1>BURROW OUTFIT TOOL</h1><button id="info" type="button" aria-label="About this website" title="About this website">i</button></div>
-  <div class="hbtns"><button id="contact" type="button">Contact</button><button id="theme">Dark mode</button></div>
+  <div class="titlewrap"><h1>AJ OUTFIT TOOL</h1><button id="info" type="button" aria-label="About this website" title="About this website">i</button></div>
+  <div class="hbtns"><button id="contact" type="button">Contact</button><div class="hcol"><button id="theme">Dark mode</button><button id="colortheme" type="button" aria-haspopup="true" aria-expanded="false">Theme</button><div id="thememenu" role="menu" hidden></div></div></div>
 </header>
-<nav class="nav"><button id="n-outfit" class="on" type="button">Outfit creator</button><button id="n-custom" type="button">Custom item preview</button><button id="n-color" type="button">Palette creator</button><a id="n-cat" href="https://warpedfart.github.io/ajb-lookbook/clothing.html" target="_blank" rel="noopener noreferrer">Clothing item catalogue</a></nav>
+<nav class="nav"><button id="n-outfit" class="on" type="button">Outfit creator</button><button id="n-custom" type="button">Custom item preview</button><button id="n-color" type="button">Palette creator</button><button id="n-avatars" type="button">Avatars</button></nav>
 <div id="pg-color" hidden>
 <div class="top">
   <div class="ctl">
@@ -317,6 +751,7 @@ body>#ajp{width:100%}
         <button id="copy" class="sec">Copy</button>
       </div>
       <div class="r">
+        <button id="random" class="sec" title="Fill the four slots with random colours">Random</button>
         <button id="clear" class="sec">Clear all</button>
         <button id="reset" class="sec" title="Set the item back to its original colours">Reset</button>
         <button id="save" class="sec">Save palette</button>
@@ -334,8 +769,8 @@ body>#ajp{width:100%}
   </div>
 </div>
 <div class="msg" id="msg"></div>
-<div class="hint">Click a colour to add it, or drag it onto a slot to replace it. Drag a slot onto another to swap. Click a slot to remove it.</div>
-<div class="grid" id="grid"></div>
+<div class="hint" id="p-hint">Click a colour to add it, or drag it onto a slot to replace it. Drag a slot onto another to swap. Click a slot to remove it.</div>
+<div class="gscroll"><div class="grid" id="grid"></div></div>
 <div class="saved">
   <h3>Saved palettes</h3>
   <div class="add">
@@ -345,11 +780,24 @@ body>#ajp{width:100%}
   <div id="savedList"></div>
 </div>
 </div>
+<div id="pg-avatars" hidden>
+  <section class="avl"><div class="avtool" id="av-tool"></div><div class="avbk"><button id="av-exp" class="sec" type="button" title="Download every folder, outfit, saved custom item and saved palette as one file">Export all</button><button id="av-imp" class="sec" type="button" title="Add the contents of an exported file back in">Import</button><input id="av-impf" type="file" accept=".json,application/json" hidden></div><div class="avlist" id="av-list"></div></section>
+  <section class="avr"><div class="avhead"><b id="av-name">No avatar selected</b><span class="avctl" id="av-ctl" hidden><button id="av-ren" class="sec" type="button">Rename</button><button id="av-del" class="sec" type="button">Delete</button><span class="avnote">Folder</span><select id="av-move" aria-label="Move to folder"></select></span></div>
+    <div class="avmode" id="av-mode" hidden><button id="av-vd" class="on" type="button">Dress Up preview</button><button id="av-vg" type="button">In-game preview</button></div>
+    <div class="avbig" id="av-big"><span class="avnote">Pick an avatar to preview it.</span></div>
+    <div class="avsub" id="av-sub" hidden><button id="av-edit" type="button">Edit in Outfit creator</button><button id="av-copy" class="sec" type="button">Copy outfit code</button></div>
+    <div class="avnote" id="av-hint"></div></section>
+</div>
+<div id="av-dlg" class="omod" hidden><div class="mbox avd"><div class="mh"><b id="avd-t"></b></div>
+  <label>Name<input id="avd-n" type="text" maxlength="30" autocomplete="off"></label>
+  <label id="avd-fw">Folder<select id="avd-f"></select></label>
+  <input id="avd-nf" type="text" maxlength="30" placeholder="New folder name" autocomplete="off" hidden>
+  <div class="avdb"><button id="avd-x" class="sec" type="button">Cancel</button><button id="avd-ok" type="button">Save</button></div></div></div>
 <div id="pg-outfit">
 <div class="o3">
   <section class="oc">
     <div class="oall"><button id="o-all" type="button">Select palette to apply to all</button><button id="o-allr" class="sec" type="button" title="Put every item back to its original colours">Reset</button></div>
-    <div class="osearch"><input id="o-q" type="text" placeholder="Search for an item" autocomplete="off" aria-label="Clothing item"><button id="o-browse" type="button">Browse</button><ul id="o-res" hidden></ul></div>
+    <div class="osearch"><input id="o-q" type="text" placeholder="Search for an item" autocomplete="off" aria-label="Clothing item"><button id="o-browse" type="button">Browse</button><button id="o-rand" class="onlyo" type="button" title="Put on a random outfit">Random</button><ul id="o-res" hidden></ul></div>
     <div class="onote cmhint">Pick a base item, then use the image button to upload an image as a sticker or a texture. Use the save button to add it to the catalogue.</div>
     <div class="cmtools"><div class="cmrow"><button id="o-custall" type="button" title="Take every item you have on into the list below, so each can be given an image"></button><button id="o-texall" type="button" title="Upload one image and use it as a texture on every item"></button><input id="o-texin" type="file" hidden accept="image/png,image/jpeg,image/webp,image/gif,.png,.jpg,.jpeg,.webp,.gif"></div><div class="cmbig"><button id="o-saveall" type="button" title="Save every item below that has an image"></button><button id="o-equipall" type="button" title="Swap the customised items into your outfit and go back to the Outfit creator"></button></div></div>
     <div id="o-worn"></div>
@@ -358,23 +806,38 @@ body>#ajp{width:100%}
   <section class="oc">
     <div class="oavrow">
       <div class="oavsel"><span>Animal Selector</span><div class="oavwrap"><input id="o-av" type="text" placeholder="Type to search, or pick" autocomplete="off" aria-label="Animal"><ul id="o-avres" hidden></ul></div></div>
-      <label><input type="checkbox" id="o-keep"> Keep outfit and colors across avatars</label>
+      <div class="okrow"><button id="o-undo" class="wb onlyo" type="button" disabled>Undo</button><button id="o-redo" class="wb onlyo" type="button" disabled>Redo</button><label><input type="checkbox" id="o-keep"> Keep outfit and colors across avatars</label></div>
     </div>
     <div class="oview"><button id="o-vd" class="on" type="button">Dress Up preview</button><button id="o-vg" type="button">In-game preview</button></div>
-    <div class="ostage"><canvas id="o-cv" width="10" height="10"></canvas><div class="onote" id="o-note"></div></div>
-    <div class="oact"><button id="o-img" type="button">Save outfit as image</button><button id="o-gif" type="button" hidden>Save as GIF</button><button id="o-reset" class="sec" type="button" title="Back to the animal's own colours, with no items on">Reset animal</button></div>
-    <div class="oact onlyo"><input id="o-name" type="text" placeholder="Outfit name" maxlength="30"><button id="o-save" class="sec" type="button">Save outfit</button></div>
+    <div class="ostage"><canvas id="o-bg" hidden></canvas><canvas id="o-cv" width="10" height="10"></canvas><div class="onote" id="o-note"></div></div>
+    <div class="oact"><button id="o-bgup" class="wb" type="button" title="Use your own picture behind the preview">Upload background</button><button id="o-bged" class="wb" type="button" hidden>Edit background</button><input id="o-bgin" type="file" hidden accept="image/png,image/jpeg,image/gif,.png,.jpg,.jpeg,.gif"><button id="o-img" class="wb" type="button">Save outfit as image</button><button id="o-gif" class="wb" type="button" hidden>Save as GIF</button><button id="o-reset" class="sec" type="button" title="Back to the animal's own colours, with no items on">Reset animal</button></div>
+    <div class="oact onlyo"><button id="o-browseav" class="sec wb" type="button">Browse avatars</button><button id="o-save" type="button">Save</button><button id="o-savenew" class="sec" type="button">Save as new</button><button id="o-copy" class="wb" type="button">Copy outfit code</button></div>
+    <div class="oedit onlyo" id="o-editing" hidden></div>
     <div id="o-saved"></div>
   </section>
   <section class="oc" id="o-right">
     <div class="otabs"><button data-t="color" type="button">Color</button><button data-t="pattern" type="button">Pattern</button><button data-t="eyes" type="button">Eyes</button></div>
     <div id="o-panel"></div>
-    <div id="o-opal"><div class="otitle">Outfit palette</div><div class="onote" style="padding:0 0 8px">Drag a colour onto Main or Secondary Color. On the Pattern and Eyes tabs you can just click it.</div><div id="o-opg"></div></div>
+    <div id="o-opal"><div class="otitle">Outfit palette</div><div class="onote" style="padding:0 0 8px">Drag a colour onto Main or Secondary Color, or tap it and choose which. On the Pattern and Eyes tabs you can just click it.</div><div id="o-opg"></div></div>
   </section>
 </div>
 <div id="o-ov" hidden><div class="box"><div class="l"><div class="oview"><button id="o-ovd" class="on" type="button">Dress Up preview</button><button id="o-ovg" type="button">In-game preview</button></div><canvas id="o-ovcv" width="10" height="10"></canvas><div class="oname" id="o-ovn" style="font-weight:800;margin-top:6px"></div></div><div class="r" id="o-ovp"></div><div class="s"><div class="st">Saved Palettes</div><div id="o-ovs"></div></div></div></div>
 <div id="o-cat" class="omod" hidden><div class="mbox"><div class="mh"><b>Item catalogue</b><input id="o-cq" type="text" placeholder="Filter items" autocomplete="off" aria-label="Filter items"><button id="o-cx" type="button">Close</button></div><div class="mbody"><div class="mprev"><div class="oview"><button id="o-cvd" class="on" type="button">Dress Up preview</button><button id="o-cvg" type="button">In-game preview</button></div><canvas id="o-ccv" width="10" height="10"></canvas><div class="mstrip" id="o-cw"></div></div><div class="mmain"><div class="mtabs" id="o-ct"></div><div class="mst" id="o-cs"></div><div class="cg" id="o-cg"></div></div></div></div></div>
 <div id="o-pp" class="omod" hidden><div class="mbox narrow"><div class="mh"><b>Select palette to apply to all</b><button id="o-px" type="button">Close</button></div><div id="o-pl"></div></div></div>
+<div id="o-bgm" class="omod" hidden><div class="mbox narrow" style="height:auto;max-height:92vh;overflow:auto"><div class="mh"><b>Position background</b></div><div class="onote" style="padding:0">Drag the picture to move it. Use the slider or mouse wheel to zoom.</div><canvas id="o-bgcv" class="bgcv"></canvas><div class="bgz"><span>Zoom</span><input id="o-bgz" type="range" min="1" max="4" step="0.01" value="1"></div><div class="mh" style="justify-content:flex-end"><button id="o-bgrm" type="button" class="sec" hidden>Remove</button><button id="o-bgc" type="button" class="sec">Cancel</button><button id="o-bgok" type="button">Apply</button></div></div></div>
+<div id="o-rnd" class="omod" hidden><div class="mbox narrow" role="dialog" aria-modal="true" aria-labelledby="o-rt">
+  <div class="mh"><b id="o-rt">Random outfit</b><button id="o-rx" class="sec" type="button">Close</button></div>
+  <div class="rnrow"><span class="rnlab">How many items?</span>
+    <div class="rnstep"><button id="o-rminus" class="sec" type="button" aria-label="Fewer items">-</button><input id="o-rn" type="number" inputmode="numeric" min="1" max="12" value="4" aria-label="Number of items"><button id="o-rplus" class="sec" type="button" aria-label="More items">+</button></div></div>
+  <details id="o-radv" class="rnadv"><summary>Advanced</summary>
+    <div class="rnnote">Tick the body parts you want items for. Untick a part to leave it out.</div>
+    <div class="rnall"><button id="o-rall" class="sec" type="button">Select all</button><button id="o-rnone" class="sec" type="button">Select none</button></div>
+    <div class="rngrid" id="o-rcats"></div>
+    <label class="rnchk"><input type="checkbox" id="o-rrep" checked> Replace what I'm wearing</label>
+  </details>
+  <div class="onote" id="o-rerr" style="min-height:18px;padding:0"></div>
+  <div class="rnfoot"><button id="o-rgo" type="button">Generate</button></div>
+</div></div>
 <div id="o-nm" class="omod" hidden><div class="mbox narrow"><div class="mh"><b>Save custom item</b></div><div class="onote" style="text-align:left;padding:0">Give it a name. It will show up in the item catalogue (Browse, then Custom) in the Outfit creator.</div><input id="o-nmi" type="text" maxlength="30" placeholder="Item name" autocomplete="off" aria-label="Custom item name"><div class="mst" id="o-nme"></div><div class="mh" style="justify-content:flex-end"><button id="o-nmc" type="button" class="sec">Cancel</button><button id="o-nms" type="button">Save</button></div></div></div>
 </div>
 <div class="foot">Not affiliated with or endorsed by Wild Works LLC. All Animal Jam copyright is owned by them. Item sprites, data and recolour rendering are from <a href="https://warpedfart.github.io/ajb-lookbook/" target="_blank" rel="noopener noreferrer">AJB Lookbook</a> (MIT licence, &copy; 2026 warpedfart). Colour picker inspired by <a href="https://aj-color-picker.carrd.co" target="_blank" rel="noopener noreferrer">aj-color-picker.carrd.co</a>. Background images from <a href="https://www.animaljamarchives.com/" target="_blank" rel="noopener noreferrer">Animal Jam Archives</a>. Assets from <a href="https://github.com/butterbarned/applejack_gifs" target="_blank" rel="noopener noreferrer">butterbarned/applejack_gifs</a>. For personal use.</div>
@@ -607,7 +1070,7 @@ function cuPixels(cu) {
   return (cu.img._px = { w, h, d: x.getImageData(0, 0, w, h).data });
 }
 
-function renderSprite(canvas, layers, game, frame = 0) {
+function renderSprite(canvas, layers, game, frame = 0, center = false, clip = null) {
   let minX = 1000, minY = 1000, maxX = 0, maxY = 0, any = false;
   for (const layer of layers) {
     for (const f of layer?.data?.f ?? []) {
@@ -620,6 +1083,16 @@ function renderSprite(canvas, layers, game, frame = 0) {
     }
   }
   if (!any) return false;
+  if (center) {   // square canvas with the body (first layer) in the middle, so big items never push the animal sideways
+    let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+    for (const f of layers[0]?.data?.f ?? []) { if (!f) continue; x0 = Math.min(x0, f.x); y0 = Math.min(y0, f.y); x1 = Math.max(x1, f.x + f.w); y1 = Math.max(y1, f.y + f.h); }
+    if (x1 > x0 && y1 > y0) {
+      const cx = Math.round((x0 + x1) / 2), cy = Math.round((y0 + y1) / 2);
+      const half = Math.max(cx - minX, maxX - cx, cy - minY, maxY - cy);
+      minX = cx - half; maxX = cx + half; minY = cy - half; maxY = cy + half;
+    }
+  }
+  if (clip) { minX = clip[0]; minY = clip[1]; maxX = clip[2] - 1; maxY = clip[3] - 1; }   // fixed window: anything outside is cut at the edge
   const W = 1 + maxX - minX;
   const H = 1 + maxY - minY;
   canvas.width = W;
@@ -642,7 +1115,7 @@ const EMBEDDED_PALETTE = ["#793647", "#762626", "#8b4c2b", "#9c8726", "#426b31",
 
 /* ===================== WHERE THE DATA LIVES =====================
    DATA_BASE   = web address of the folder that used to be "data/" (must end in a slash).
-                 It holds: outfit/  sprites/  clothing.json
+                 It holds: outfit/  sprites/  icons/  clothing.json
                  e.g. "https://assets.yourdomain.com/"
                  Leave as "" to keep loading from this site's own data/ folder.
    The in-game animation art lives inside outfit/ too (outfit/a<id>/g14/).
@@ -652,20 +1125,48 @@ const dataURL=p=>DATA_BASE?DATA_BASE+p.replace(/^data\//,""):p;   // "data/x.jso
 
 // XMLHttpRequest (not fetch) so it also works when opened straight from a folder in a browser started with file access allowed
 let folderMap=null;   // filled when the person picks the AJB Lookbook folder by hand
-async function getJSON(url){
+async function getJSON(url,tries){
   if(folderMap){
     const f=folderMap.get(url);
     if(!f) throw new Error("missing");
     return JSON.parse(await f.text());
   }
-  return xhrJSON(dataURL(url));
+  let last;   // tries > 1 retries a slow or failed request (used for the item list, so one hiccup doesn't leave the search stuck)
+  for(let a=0;a<(tries||1);a++){
+    try{ return await xhrJSON(dataURL(url)); }
+    catch(e){ last=e; if(e&&e.status===404) break; if(a<(tries||1)-1) await new Promise(r=>setTimeout(r,700*(a+1))); }
+  }
+  throw last;
 }
+/* Saved copy of every data file in the browser (IndexedDB), so a refresh does not download it all again:
+   a saved file is used straight away and, if it is an index or older than a day, checked again in the background (a newer one is used from the next refresh). */
+const _col=new Intl.Collator(), byNameCmp=(a,b)=>_col.compare(a.name,b.name);   // same order as localeCompare, much faster on long lists
+let _db=null;
+const _idbP=(()=>{try{return new Promise(res=>{const r=indexedDB.open("ajp-data-v1",1);r.onupgradeneeded=()=>r.result.createObjectStore("j");r.onsuccess=()=>{_db=r.result;res(_db);};r.onerror=r.onblocked=()=>res(null);});}catch(e){return Promise.resolve(null);}})();
+const idbGet=async k=>{const d=await _idbP;if(!d)return null;return new Promise(res=>{try{const q=d.transaction("j").objectStore("j").get(k);q.onsuccess=()=>res(q.result||null);q.onerror=()=>res(null);}catch(e){res(null);}});};
+const idbPut=(k,v)=>{if(!_db)return;try{_db.transaction("j","readwrite").objectStore("j").put({t:Date.now(),d:v},k);}catch(e){}};   // copies the data at this moment, before anything edits it
+/* the big index files are asked for by two parts of the page at once; share one download between them (a failed one is forgotten so retries still work) */
+const _xc=new Map();
 function xhrJSON(url){
+  const idx=/index\.json$/.test(url);
+  if(idx&&_xc.has(url)) return _xc.get(url);
+  const p=(async()=>{
+    const hit=await idbGet(url);
+    if(hit&&hit.d!==undefined&&hit.d!==null){
+      if(idx||Date.now()-hit.t>864e5) xhrJSON1(url).then(d=>idbPut(url,d)).catch(()=>{});
+      return hit.d;
+    }
+    const d=await xhrJSON1(url); idbPut(url,d); return d;
+  })();
+  if(idx){ _xc.set(url,p); p.catch(()=>_xc.delete(url)); }
+  return p;
+}
+function xhrJSON1(url){
   return new Promise((resolve,reject)=>{
     const x=new XMLHttpRequest();
-    x.open("GET",url); x.responseType="json";
-    x.onload=()=>{ if((x.status===200||x.status===0)&&x.response!==null) resolve(x.response); else reject(new Error("bad response")); };
-    x.onerror=()=>reject(new Error("network")); x.send();
+    x.open("GET",url); x.responseType="json"; x.timeout=20000;
+    x.onload=()=>{ if((x.status===200||x.status===0)&&x.response!==null) resolve(x.response); else reject(Object.assign(new Error("bad response"),{status:x.status})); };
+    x.onerror=()=>reject(new Error("network")); x.ontimeout=()=>reject(new Error("timeout")); x.onabort=()=>reject(new Error("aborted")); x.send();
   });
 }
 const root = document.getElementById("ajp");
@@ -704,6 +1205,35 @@ function applyTheme(){
 }
 themeBtn.onclick=()=>{ dark=!dark; applyTheme(); try{localStorage.setItem("ajp-theme",dark?"dark":"light")}catch(e){} };
 applyTheme();
+/* ---------- colour themes ---------- */
+const THEMES=[["","Default","#222222","#ffffff"],
+  ["pink","Pink","#e0568f","#fff5f9"],
+  ["blue","Baby blue","#4aa3df","#f2f9ff"],
+  ["redblack","Black & red","#e11d2e","#0d0d0d"],
+  ["purple","Purple","#8a4fd6","#f7f2fd"],
+  ["brown","Brown","#8a5a3b","#faf3ec"],
+  ["green","Green","#3d9a58","#f3faf3"]];
+let colorTheme=""; try{ colorTheme=localStorage.getItem("ajp-colortheme")||""; }catch(e){}
+if(!THEMES.some(t=>t[0]===colorTheme)) colorTheme="";
+const themeMenu=$("thememenu"), colorBtn=$("colortheme");
+function applyColorTheme(){
+  for(const el of [root,document.body,document.getElementById("about"),document.getElementById("pop")]){
+    if(!el) continue; if(colorTheme) el.setAttribute("data-theme",colorTheme); else el.removeAttribute("data-theme");
+  }
+  [...themeMenu.children].forEach(b=>b.setAttribute("aria-checked",b.dataset.t===colorTheme?"true":"false"));
+}
+THEMES.forEach(([k,name,a,b])=>{
+  const o=document.createElement("button"); o.type="button"; o.dataset.t=k; o.setAttribute("role","menuitemradio");
+  const sw=document.createElement("span"); sw.className="sw"; sw.style.setProperty("--a",a); sw.style.setProperty("--b",b);
+  o.append(sw,document.createTextNode(name));
+  o.onclick=()=>{ colorTheme=k; applyColorTheme(); try{ k?localStorage.setItem("ajp-colortheme",k):localStorage.removeItem("ajp-colortheme"); }catch(e){} closeThemeMenu(); };
+  themeMenu.append(o);
+});
+function closeThemeMenu(){ themeMenu.hidden=true; colorBtn.setAttribute("aria-expanded","false"); }
+colorBtn.onclick=(e)=>{ e.stopPropagation(); const open=themeMenu.hidden; themeMenu.hidden=!open; colorBtn.setAttribute("aria-expanded",open?"true":"false"); };
+document.addEventListener("click",(e)=>{ if(!e.target.closest("#thememenu")) closeThemeMenu(); });
+document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeThemeMenu(); });
+applyColorTheme();
 
 /* ---------- state ---------- */
 let slots=[null,null,null,null];
@@ -713,6 +1243,14 @@ let custom=false;   // true once the person has picked their own colours; stays 
 const slotsEl=$("slots"), gridEl=$("grid"), result=$("result"), copyBtn=$("copy"), msg=$("msg");
 const say=(t)=>{ msg.textContent=t; if(t) setTimeout(()=>{ if(msg.textContent===t) msg.textContent=""; },3500); };
 
+const TOUCH=window.matchMedia&&matchMedia("(pointer:coarse)").matches;   // touch screens cannot drag: tap a slot to pick it, then tap another slot to swap or a colour to replace
+let selSlot=null;
+if(TOUCH){const h=$("p-hint");if(h)h.textContent="Tap a colour to add it. Tap a slot to pick it, then tap another slot to swap, or a colour to replace it. Tap the \u2715 on a slot to remove it.";}
+function tapSlot(idx){
+  if(selSlot===null){selSlot=idx;render();}
+  else if(selSlot===idx){selSlot=null;render();}
+  else{const f=selSlot;selSlot=null;move(f,idx);}
+}
 function move(from,to){
   if(to<0||to>3||from===to) return;
   const t=slots[from]; slots[from]=slots[to]; slots[to]=t; custom=true; render();
@@ -734,13 +1272,17 @@ function render(){
     const d=document.createElement("div");
     d.className="slot"+(v!==null?" filled":"");
     d.draggable=v!==null;
+    if(TOUCH&&selSlot===idx)d.classList.add("sel");
     if(v!==null){
       d.style.background=colourOf(v);
       d.innerHTML='<div class="idx" style="color:'+inkFor(v)+'">'+(idx+1)+'</div><div class="num" style="color:'+inkFor(v)+'">'+v+'</div>';
       d.title="Click to remove";
-      d.onclick=()=>{ slots[idx]=null; custom=true; render(); };
+      d.onclick=TOUCH?()=>tapSlot(idx):()=>{ slots[idx]=null; custom=true; render(); };
+      if(TOUCH){const x=document.createElement("button");x.type="button";x.className="slotx";x.textContent="\u2715";x.setAttribute("aria-label","Remove slot "+(idx+1));
+        x.onclick=(e)=>{e.stopPropagation();if(selSlot===idx)selSlot=null;slots[idx]=null;custom=true;render();};d.appendChild(x);}
     } else {
       d.innerHTML='<div class="label">Slot '+(idx+1)+'</div>';
+      if(TOUCH)d.onclick=()=>tapSlot(idx);
     }
     d.ondragstart=(e)=>{ dragFrom=idx; dragColour=null; e.dataTransfer.effectAllowed="move"; try{e.dataTransfer.setData("text/plain",idx)}catch(x){} };
     d.ondragover=(e)=>{ e.preventDefault(); d.classList.add("over"); };
@@ -765,6 +1307,7 @@ function buildGrid(){
     b.ondragstart=(e)=>{ dragColour=n; dragFrom=null; e.dataTransfer.effectAllowed="copy"; try{e.dataTransfer.setData("text/plain",n)}catch(x){} };
     b.ondragend=()=>{ dragColour=null; };
     b.onclick=()=>{
+      if(TOUCH&&selSlot!==null){slots[selSlot]=n;selSlot=null;custom=true;render();return;}
       const free=slots.indexOf(null);
       if(free===-1){ say("All 4 slots are full. Click a slot to remove one, or drag a colour onto it."); return; }
       slots[free]=n; custom=true; render();
@@ -784,6 +1327,15 @@ copyBtn.onclick=()=>{
   const t=result.textContent;
   if(t==="-"||t==="Not valid") return;
   navigator.clipboard.writeText(t).then(()=>{ copyBtn.textContent="Copied!"; setTimeout(()=>copyBtn.textContent="Copy",2000); });
+};
+$("random").onclick=()=>{   // four different random colours (colour 253 can't go in slot 1)
+  const pool=PALETTE.map((_,i)=>i), pick=[];
+  while(pick.length<4&&pool.length){
+    const k=Math.floor(Math.random()*pool.length), c=pool.splice(k,1)[0];
+    if(pick.length===0&&c===253) continue;
+    pick.push(c);
+  }
+  slots=pick; custom=true; result.textContent="-"; copyBtn.textContent="Copy"; render();
 };
 $("clear").onclick=()=>{ slots=[null,null,null,null]; custom=false; result.textContent="-"; render(); };
 function itemDefault(it){ return it && typeof it.code==="string" ? unpack(Number(it.code)) : null; }
@@ -843,25 +1395,125 @@ $("code-input").addEventListener("keydown",(e)=>{ if(e.key==="Enter") saveCode()
 /* ---------- item picker (type to search, with picture previews) ---------- */
 const items=[];
 let itemsFailed=false;
+
+/* ---------- the OUTFIT database is the master list of items ----------
+   data/outfit/index.json is the full in-game catalogue: every item that has art, each with its own id.
+   data/sprites/index.json is a smaller lookbook list that names things differently ("Skeleton Suit (Land)" there,
+   "Skeleton Suit" in-game), so the two lists are never matched by name alone any more. */
+const _nz=v=>String(v).toLowerCase().trim();
+const OCEAN_AV=new Set(["10","11","18","19","20","21","22","24"]);   // otter, polar bear, seal, dolphin, shark, octopus, sea turtle, penguin
+let OUT_COUNT=null, OUT_KEY=null, OUT_LABEL=null, OUT_MAP=null, _spName=null, _oiP=null;
+/* OPTIONAL data/sprites/outfit-map.json: {"<outfit item id>":"<sprite id>"} links an in-game item to a lookbook preview sprite you have added for it */
+function noteOutfit(list){
+  if(OUT_LABEL||!Array.isArray(list)) return;
+  OUT_COUNT=new Map(); OUT_KEY=new Map(); OUT_LABEL=new Map();
+  const g=new Map();
+  for(const z of list){
+    const k=_nz(z.n); (g.get(k)||g.set(k,[]).get(k)).push(z);
+    OUT_KEY.set(k+"|"+z.c,(OUT_KEY.get(k+"|"+z.c)||0)+1);
+  }
+  const isOc=z=>{const a=Object.keys(z.l||{});return a.length>0&&a.length<=OCEAN_AV.size&&a.every(x=>OCEAN_AV.has(x));};
+  for(const [k,v] of g){
+    OUT_COUNT.set(k,v.length);
+    if(v.length<2) continue;   // several items can share one name: tell them apart with (Land)/(Ocean), and #id when that is not enough
+    const oc=v.filter(isOc).length, land=v.length-oc, tag=new Map(), seen=new Map();
+    for(const z of v){ const s=isOc(z)?" (Ocean)":(oc&&land?" (Land)":""); tag.set(z.id,s); const l=z.n+s; seen.set(l,(seen.get(l)||0)+1); }
+    for(const z of v){ const l=z.n+tag.get(z.id); OUT_LABEL.set(z.id,seen.get(l)>1?l+" #"+z.id:l); }
+  }
+}
+const outLabel=z=>z.cu?z.n:((OUT_LABEL&&OUT_LABEL.get(z.id))||z.n);
+/* the lookbook sprite that is certainly the same item as an outfit item (same name + same default colours, or the only item of that name); else null */
+function spriteFor(z){
+  if(!z||z.cu||!items.length||!OUT_KEY) return null;
+  if(!_spName||_spName._n!==items.length){
+    const m=new Map(); for(const it of items){ if(it.oz) continue; const k=_nz(it.name); (m.get(k)||m.set(k,[]).get(k)).push(it); }
+    m._id=new Map(); for(const it of items) if(!it.oz) m._id.set(it.id,it);
+    m._n=items.length; _spName=m;
+  }
+  if(OUT_MAP&&typeof OUT_MAP[z.id]==="string"){ const sp=_spName._id.get(OUT_MAP[z.id]); if(sp) return sp; }
+  const k=_nz(z.n), c=_spName.get(k); if(!c) return null;
+  const same=c.find(it=>String(it.code)===String(z.c));
+  if(same&&OUT_KEY.get(k+"|"+z.c)===1) return same;
+  return c.length===1&&OUT_COUNT.get(k)===1?c[0]:null;
+}
+let OUTFIT_BASE=null;   // where the outfit folder was found (the same places the Outfit creator looks)
+function outfitIndex(){
+  if(!_oiP) _oiP=(async()=>{
+    const cands=folderMap?[null]:[...(DATA_BASE?[DATA_BASE+"outfit/"]:[]),"data/outfit/","outfit/"];
+    for(const b of cands){
+      try{ const d=b===null?await getJSON("data/outfit/index.json"):await xhrJSON(b+"index.json");
+        if(d&&Array.isArray(d.items)&&d.items.length){ OUTFIT_BASE=b; return d; } }catch(e){}
+    }
+    return null;
+  })();
+  return _oiP;
+}
+const _u8=t=>Uint8Array.from(atob(t),c=>c.charCodeAt(0));
+/* an outfit layer file is the same kind of picture as a lookbook sprite (only the pixel data is packed differently) */
+async function outfitSprite(z){
+  const ks=Object.keys(z.l||{}); if(!ks.length) return null;
+  const a=ks.includes("1")?"1":ks.sort((x,y)=>x-y)[0];
+  const path="a"+a+"/l"+z.l[a]+".json";
+  const d=OUTFIT_BASE?await xhrJSON(OUTFIT_BASE+path):await getJSON("data/outfit/"+path);
+  for(const f of (d&&d.f)||[]){ if(typeof f.b.data==="string") f.b.data=_u8(f.b.data); if(f.s&&typeof f.s.data==="string") f.s.data=_u8(f.s.data); }
+  return d;
+}
+const _sdp=new Map();
+function spriteData(it){
+  if(!_sdp.has(it.id)) _sdp.set(it.id,(it.oz?outfitSprite(it.oz):getJSON("data/sprites/"+it.id+".json")).then(d=>{
+    if(d&&Array.isArray(d.f)) return d; _sdp.delete(it.id); return null;}).catch(()=>{_sdp.delete(it.id);return null;}));
+  return _sdp.get(it.id);
+}
+/* add every outfit item that has no lookbook sprite, so the picker lists everything */
+async function addOutfitOnly(){
+  const oi=await outfitIndex(); if(!oi) return;
+  noteOutfit(oi.items);
+  const extra=[], have=new Set(items.filter(i=>!i.oz).map(i=>_nz(i.name)));   // lookbook names already in the list
+  for(const z of oi.items){
+    if(!z||!z.l||!Object.keys(z.l).length||spriteFor(z)||have.has(_nz(outLabel(z)))) continue;
+    extra.push({id:"o"+z.id,name:outLabel(z),code:String(z.c),image:"",oz:z});
+  }
+  if(extra.length){ for(const e of extra) items.push(e); items.sort(byNameCmp); }
+}
 const input=$("item-input"), results=$("item-results");
 let shown=[], active=-1;
 
+let itemsErr="",loadingItems=false;
+const whyFailed=e=>e&&e.status===404?"file not found (404)":e&&e.message==="timeout"?"timed out":e&&e.message==="network"?"blocked or unreachable, usually the host being down or missing CORS":"unexpected response";
+function retryItems(){ if(loadingItems) return; items.length=0; itemsFailed=false; note("Loading items..."); loadItems(); }
 async function loadItems(){
+  _oiP=null; _spName=null; loadingItems=true; itemsErr="";
+  let lookbook=false;
+  outfitIndex().catch(()=>{});   // start the outfit list downloading now, alongside the lookbook list, instead of after it
+  const mapP=getJSON("data/sprites/outfit-map.json").catch(()=>null);
   try{
-    const [idx,clothing]=await Promise.all([getJSON("data/sprites/index.json"),getJSON("data/clothing.json").catch(()=>[])]);
-    const images=new Map();
-    for(const e of (Array.isArray(clothing)?clothing:[])){ if(e&&typeof e.id==="string"&&typeof e.image==="string"&&e.image.startsWith("https://")) images.set(e.id,e.image); }
-    for(const it of idx){ if(typeof it.id==="string"&&typeof it.name==="string") items.push({...it,image:images.get(it.id)||""}); }
-    items.sort((a,b)=>a.name.localeCompare(b.name));
-  }catch(e){ itemsFailed=true; }
+    const idx=await getJSON("data/sprites/index.json",3);
+    for(const it of idx){ if(typeof it.id==="string"&&typeof it.name==="string") items.push({...it,image:""}); }
+    items.sort(byNameCmp);
+    lookbook=items.length>0;
+    refreshResults();
+    getJSON("data/clothing.json",2).catch(()=>[]).then(clothing=>{
+      const images=new Map();
+      for(const e of (Array.isArray(clothing)?clothing:[])){ if(e&&typeof e.id==="string"&&typeof e.image==="string"&&e.image.startsWith("https://")) images.set(e.id,e.image); }
+      for(const it of items) if(!it.image&&images.has(it.id)) it.image=images.get(it.id);
+    });
+  }catch(e){ itemsErr=whyFailed(e); }   // no lookbook list: the outfit folder (the one the other tabs use) supplies the items instead
+  if(lookbook){
+    try{ const m=await mapP; OUT_MAP=m&&typeof m==="object"&&!Array.isArray(m)?m:null; }catch(e){ OUT_MAP=null; }
+  }
+  try{ await addOutfitOnly(); }catch(e){}
   if(!items.length) itemsFailed=true;
+  loadingItems=false;
+  refreshResults();
 }
 function closeResults(){ results.hidden=true; active=-1; }
 function note(text){
   results.innerHTML=""; const li=document.createElement("li"); li.className="note"; li.textContent=text; results.append(li); results.hidden=false;
 }
+function refreshResults(){ if(!results.hidden&&results.querySelector(".note")) showResults(); }   // an open "Loading items..." box fills in by itself once the list arrives
 function showResults(){
-  if(itemsFailed){ note("Item list not loaded. Use the Choose AJB Lookbook folder button in the preview box."); return; }
+  if(itemsFailed){ note("Item list not loaded"+(itemsErr?" ("+itemsErr+")":"")+". Tried "+dataURL("data/sprites/index.json")+" and the outfit folder. Click here to try again, or use the Choose AJB Lookbook folder button in the preview box.");
+    const li=results.firstChild; li.style.cursor="pointer"; li.onmousedown=e=>{ e.preventDefault(); retryItems(); }; return; }
   if(!items.length){ note("Loading items..."); return; }
   const q=input.value.trim().toLowerCase();
   const starts=[],contains=[];
@@ -888,7 +1540,7 @@ function highlight(p){
 async function choose(it){
   input.value=it.name; closeResults();
   try{
-    const d=await getJSON("data/sprites/"+it.id+".json");
+    const d=await spriteData(it);
     if(!d||!Array.isArray(d.f)) throw 0;
     sprite=d; currentItem=it;
   }catch(e){ say("Couldn't load that item's sprite."); return; }
@@ -941,12 +1593,18 @@ async function init(){
   PALETTE=EMBEDDED_PALETTE;
   GAME=hexToGame(PALETTE);
   buildGrid(); render(); renderSaved();
+  try{ iconIndex(); }catch(e){}   // defined in a later script block that has not run yet at this point; it loads itself when first needed
   const fit=()=>{ const w=gridEl.clientWidth/20; gridEl.style.fontSize=Math.max(7,Math.floor(w*0.38))+"px"; };
   if(window.ResizeObserver) new ResizeObserver(fit).observe(gridEl);
   fit();
-  await loadItems();
-  updatePlaceholder();
-  if(itemsFailed) input.placeholder="Item list not loaded";
+  /* the Palette creator's item list is not needed to open the Outfit creator, so it loads once that is on screen
+     (straight away on the Palette tab, or when the search box is used) */
+  let started=false;
+  window.ajpLoadItems=()=>{ if(started) return; started=true;
+    loadItems().then(()=>{ updatePlaceholder(); if(itemsFailed) input.placeholder="Item list not loaded"; }); };
+  input.addEventListener("focus",()=>window.ajpLoadItems());
+  if(location.hash==="#palette") window.ajpLoadItems();
+  else{ window.addEventListener("ajp-ready",()=>setTimeout(window.ajpLoadItems,400),{once:true}); setTimeout(window.ajpLoadItems,8000); }
 }
 /* ---------- about popup ---------- */
 const about=$("about");
@@ -965,13 +1623,40 @@ init();
 </script>
 <script>
 /* item thumbnails: the item's own sprite in its regular colours (loaded only when it scrolls into view) */
-const _sd=new Map();
-async function _fill(c){const it=c._it;try{
-  if(!_sd.has(it.id))_sd.set(it.id,getJSON("data/sprites/"+it.id+".json").then(d=>d&&Array.isArray(d.f)?d:null).catch(()=>null));
-  const d=await _sd.get(it.id);if(!d)return;
+/* ---- item icons: icons/items.json (id -> {l:layer, v:[colour codes], ...}) and icons/layers/<layer>.json (same palette-indexed art as the sprites) ---- */
+let ICONS=null,_icP=null;
+function iconIndex(){ if(!_icP) _icP=getJSON("data/icons/items.json").then(d=>d&&typeof d==="object"&&!Array.isArray(d)?d:null).catch(()=>null).then(d=>(ICONS=d)); return _icP; }
+const _icL=new Map();
+function iconLayer(id){
+  const e=ICONS&&ICONS[id]; if(!e) return Promise.resolve(null);
+  if(!_icL.has(e.l)) _icL.set(e.l,getJSON("data/icons/layers/"+e.l+".json").then(L=>{
+    const d=L&&(L.s||L.l); if(!d||!Array.isArray(d.f)) return null;   // "s" is the small icon, used for tiles
+    for(const f of d.f){ if(!f) continue; if(typeof f.b.data==="string") f.b.data=_u8(f.b.data); if(f.s&&typeof f.s.data==="string") f.s.data=_u8(f.s.data); }
+    return d;}).catch(()=>null));
+  return _icL.get(e.l);
+}
+/* the colours an icon starts in: the item's own code, else the icon's first variant */
+function iconStart(z){ const e=ICONS&&ICONS[z.id]; return unpack(Number(z.c))||(e&&e.v&&unpack(e.v[0]))||[0,0,0,0]; }
+async function iconPaint(c,id,idx){
+  await iconIndex(); if(!ICONS||!ICONS[id]) return false;
+  const d=await iconLayer(id); if(!d) return false;
+  return renderSprite(c,[{data:d,indexes:idx.map(v=>v==null?0:v)}],GAME,0);
+}
+/* eye / pattern icon for the animal customiser: {data,indexes} ready for renderSprite, or null. The colour you picked replaces slot 0 (eyes always; patterns when the icon is a plain one-colour shape). */
+async function iconEP(id,pat,cc){
+  await iconIndex(); const e=ICONS&&ICONS[id]; if(!e) return null;
+  const d=await iconLayer(id); if(!d) return null;
+  const idx=(unpack(e.v&&e.v[0])||[0,0,0,0]).slice();
+  if((!pat||idx.every(v=>!v))&&cc&&cc[0]!=null) idx[0]=cc[0];
+  return {data:d,indexes:idx.map(v=>v==null?0:v)};
+}
+async function _fill(c){
+  if(c._z){ try{ if(await iconPaint(c,c._z.id,c._idx||(await iconIndex(),iconStart(c._z)))) return; }catch(e){} }
+  const it=c._it;try{
+  const d=await spriteData(it);if(!d)return;
   renderSprite(c,[{data:d,indexes:(itemDefault(it)||[0,0,0,0]).map(v=>v==null?0:v)}],GAME,0);}catch(e){}}
 const _io="IntersectionObserver" in window?new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting){_io.unobserve(e.target);_fill(e.target);}},{rootMargin:"300px"}):null;
-function spriteThumb(it){const c=document.createElement("canvas");c._it=it;if(_io)_io.observe(c);else _fill(c);return c;}
+function spriteThumb(it,z){const c=document.createElement("canvas");c._it=it;if(z)c._z=z;if(_io)_io.observe(c);else _fill(c);return c;}
 </script>
 <script>
 /* ---------- nav + Outfit creator (art comes from data/outfit/, made by export_outfit_assets.py) ---------- */
@@ -999,47 +1684,160 @@ const u8=t=>Uint8Array.from(atob(t),c=>c.charCodeAt(0));
 function note(t,keep){const n=$("o-note");n.textContent=t;clearTimeout(nt);if(t&&!keep)nt=setTimeout(()=>{if(n.textContent===t)n.textContent="";},3500);}
 /* page switching */
 let showTok=0;
-async function show(p){const o=p!=="color",c=p==="custom",t=++showTok;root.classList.toggle("wide",o);$("pg-color").hidden=o;$("pg-outfit").hidden=!o;$("n-color").classList.toggle("on",!o);$("n-outfit").classList.toggle("on",p==="outfit");$("n-custom").classList.toggle("on",c);
-  try{history.replaceState(null,"",o?location.pathname+location.search:"#palette");}catch(e){} if(!o){stopAnim();return;}
+async function show(p){if(p==="color"&&window.ajpLoadItems)window.ajpLoadItems();const A=p==="avatars",o=p!=="color",c=p==="custom",t=++showTok;root.classList.toggle("wide",o);$("pg-color").hidden=o;$("pg-outfit").hidden=!o||A;$("pg-avatars").hidden=!A;
+  $("n-color").classList.toggle("on",p==="color");$("n-outfit").classList.toggle("on",p==="outfit");$("n-custom").classList.toggle("on",c);$("n-avatars").classList.toggle("on",A);
+  try{history.replaceState(null,"",p==="color"?"#palette":location.pathname+location.search);}catch(e){} if(!o||A){stopAnim();stopAv();if(A)renderAvatars();return;}
+  stopAv();
   await ensure();if(t!==showTok||!IDX)return;setCm(c);if(av&&mode==="game")paint();}
+$("n-avatars").onclick=()=>show("avatars");
 $("n-color").onclick=()=>show("color");$("n-outfit").onclick=()=>show("outfit");$("n-custom").onclick=()=>show("custom");
 /* art */
-const lay=(l,g)=>{const k=av.id+(g?"/g/":"/")+l;if(!cache.has(k))cache.set(k,(g?gGet(av.id,"a"+av.id+"/g14/l"+l+".json"):xhrJSON(DB+"a"+av.id+"/l"+l+".json")).then(d=>{for(const f of d.f){if(typeof f.b.data==="string")f.b.data=u8(f.b.data);if(f.s&&typeof f.s.data==="string")f.s.data=u8(f.s.data);}return d;}).catch(()=>null));return cache.get(k);};
-async function stack(list,only,g){
-  const b=av.box,L=only||g?[]:[{data:{f:[{x:b[0],y:b[1],w:b[2]-b[0],h:b[3]-b[1],b:{data:[]}}]},indexes:[0,0,0,0]}];
-  const add=async(l,ix,cu)=>{const d=l!=null&&await lay(l,g);if(d)L.push({data:d,indexes:ix.map(v=>v==null?0:v),cu});};
-  if(!only){await add(av.body,cl[0]);if(pi>=0)await add(av.pat[pi].l,cl[1]);if(ei>=0)await add(av.eyes[ei].l,cl[2]);}
-  const o=list.map((w,i)=>[w.it.s,i,w]).sort((x,y)=>x[0]-y[0]||x[1]-y[1]);   // slot order, then the order they were put on
-  for(const[,,w]of o)await add(w.it.l[av.id],w.idx,cuOf(w));
+const lay=(l,g,a=av)=>{const k=a.id+(g?"/g/":"/")+l;if(!cache.has(k))cache.set(k,(g?gGet(a.id,"a"+a.id+"/g14/l"+l+".json"):xhrJSON(DB+"a"+a.id+"/l"+l+".json")).then(d=>{for(const f of d.f){if(typeof f.b.data==="string")f.b.data=u8(f.b.data);if(f.s&&typeof f.s.data==="string")f.s.data=u8(f.s.data);}return d;}).catch(()=>null));return cache.get(k);};
+async function stack(list,only,g,S){   // S: optional {av,cl,pi,ei} to draw an animal other than the one being edited
+  S=S||{av,cl,pi,ei};const A=S.av,C=S.cl,P=S.pi,E=S.ei;
+  const b=A.box,L=only||g?[]:[{data:{f:[{x:b[0],y:b[1],w:b[2]-b[0],h:b[3]-b[1],b:{data:[]}}]},indexes:[0,0,0,0]}];
+  const add=async(l,ix,cu)=>{const d=l!=null&&await lay(l,g,A);if(d)L.push({data:d,indexes:ix.map(v=>v==null?0:v),cu});};
+  if(!only){await add(A.body,C[0]);if(P>=0)await add(A.pat[P].l,C[1]);if(E>=0)await add(A.eyes[E].l,C[2]);}
+  for(const w of drawOrder(list))await add(w.it.l[A.id],w.idx,cuOf(w));
   return L;
 }
-const fitBig=c=>{c.style.width=c.style.height="";};   // size comes from the CSS so the popup never jumps between previews
-const fit=c=>{c.style.width=c.width*2+"px";c.style.height=c.height*2+"px";};
+/* animated GIF backgrounds: the browser only ever draws the first frame of a GIF onto a canvas, so decode every frame ourselves and play them back */
+function gifDecode(buf){
+  const d=new Uint8Array(buf);let p=0;
+  if(String.fromCharCode(d[0],d[1],d[2])!=="GIF")throw new Error("not a gif");
+  const W=d[6]|d[7]<<8,H=d[8]|d[9]<<8,fl=d[10];p=13;
+  let gct=null;if(fl&128){const n=3<<((fl&7)+1);gct=d.subarray(p,p+n);p+=n;}
+  const raw=[];let gc=null;
+  while(p<d.length){
+    const b=d[p++];
+    if(b===0x3B)break;
+    if(b===0x21){const lab=d[p++];let first=true;
+      for(;;){const sz=d[p++];if(!sz)break;if(lab===0xF9&&first){gc={disp:(d[p]>>2)&7,tr:(d[p]&1)?d[p+3]:-1,delay:(d[p+1]|d[p+2]<<8)*10};}first=false;p+=sz;}
+    }else if(b===0x2C){
+      const fx=d[p]|d[p+1]<<8,fy=d[p+2]|d[p+3]<<8,fw=d[p+4]|d[p+5]<<8,fh=d[p+6]|d[p+7]<<8,pk=d[p+8];p+=9;
+      let pal=gct;if(pk&128){const n=3<<((pk&7)+1);pal=d.subarray(p,p+n);p+=n;}
+      const min=d[p++],data=[];
+      for(;;){const sz=d[p++];if(!sz)break;for(let k=0;k<sz;k++)data.push(d[p+k]);p+=sz;}
+      const idx=gifLzw(min,data,fw*fh);
+      let px=idx;
+      if(pk&64){px=new Uint8Array(fw*fh);let r=0;
+        for(const [st,step] of [[0,8],[4,8],[2,4],[1,2]])for(let y=st;y<fh;y+=step,r++)px.set(idx.subarray(r*fw,r*fw+fw),y*fw);}
+      raw.push({x:fx,y:fy,w:fw,h:fh,px,pal,gc});gc=null;
+    }else if(b!==0)break;
+  }
+  const cur=new Uint8ClampedArray(W*H*4),frames=[];let prev=null,saved=null;
+  for(const f of raw){
+    if(prev){
+      if(prev.disp===2){for(let y=prev.y;y<prev.y+prev.h&&y<H;y++)cur.fill(0,(y*W+prev.x)*4,(y*W+Math.min(W,prev.x+prev.w))*4);}
+      else if(prev.disp===3&&saved)cur.set(saved);
+    }
+    const disp=f.gc?f.gc.disp:0,tr=f.gc?f.gc.tr:-1;
+    saved=disp===3?cur.slice():null;
+    for(let y=0;y<f.h;y++){const yy=f.y+y;if(yy>=H)break;
+      for(let x=0;x<f.w;x++){const xx=f.x+x;if(xx>=W)break;
+        const i=f.px[y*f.w+x];if(i===tr||!f.pal)continue;
+        const o=(yy*W+xx)*4;cur[o]=f.pal[i*3];cur[o+1]=f.pal[i*3+1];cur[o+2]=f.pal[i*3+2];cur[o+3]=255;}}
+    const dl=f.gc?f.gc.delay:0;
+    frames.push({rgba:cur.slice(),delay:dl<=10?100:dl});
+    prev={disp,x:f.x,y:f.y,w:f.w,h:f.h};
+  }
+  return {w:W,h:H,frames};
+}
+function gifLzw(min,data,n){
+  const out=new Uint8Array(n),clr=1<<min,eoi=clr+1;
+  const pre=new Uint16Array(4096),suf=new Uint8Array(4096),stk=new Uint8Array(4097);
+  for(let k=0;k<clr;k++)suf[k]=k;
+  let size=min+1,next=eoi+1,mask=(1<<size)-1,bits=0,acc=0,i=0,o=0,prev=-1,first=0;
+  while(o<n){
+    while(bits<size){if(i>=data.length)return out;acc|=data[i++]<<bits;bits+=8;}
+    const code=acc&mask;acc>>=size;bits-=size;
+    if(code===clr){size=min+1;next=eoi+1;mask=(1<<size)-1;prev=-1;continue;}
+    if(code===eoi)break;
+    if(prev===-1){out[o++]=suf[code];prev=code;first=code;continue;}
+    let sp=0,c=code;
+    if(c>=next){stk[sp++]=first;c=prev;}
+    while(c>=clr){stk[sp++]=suf[c];c=pre[c];}
+    first=c;stk[sp++]=c;
+    while(sp&&o<n)out[o++]=stk[--sp];
+    if(next<4096){pre[next]=prev;suf[next]=first;next++;if(next>mask&&size<12){size++;mask=(1<<size)-1;}}
+    prev=code;
+  }
+  return out;
+}
+/* turn a decoded GIF into canvases (long side capped so many-frame GIFs stay light); null = single frame or too heavy, so it is used as a still picture */
+function gifAnim(buf){
+  const g=gifDecode(buf);if(g.frames.length<2||!g.w||!g.h)return null;
+  const k=Math.min(1,800/Math.max(g.w,g.h)),w=Math.max(1,Math.round(g.w*k)),h=Math.max(1,Math.round(g.h*k));
+  if(w*h*g.frames.length>90e6)return null;
+  const wk=document.createElement("canvas");wk.width=g.w;wk.height=g.h;const wx=wk.getContext("2d");
+  const frames=g.frames.map(f=>{wx.putImageData(new ImageData(f.rgba,g.w,g.h),0,0);
+    const c=document.createElement("canvas");c.width=w;c.height=h;const x=c.getContext("2d");x.imageSmoothingQuality="high";x.drawImage(wk,0,0,w,h);return {c,d:f.delay};});
+  return {anim:true,frames,naturalWidth:w,naturalHeight:h,total:frames.reduce((s,f)=>s+f.d,0),t0:performance.now()};
+}
+const bgFi=(im,at)=>{if(!im||!im.anim)return 0;let t=(at==null?performance.now()-im.t0:at)%im.total;for(let i=0;i<im.frames.length;i++){t-=im.frames[i].d;if(t<0)return i;}return 0;};
+/* custom background behind the preview: picture + zoom + centre (0..1 of the picture), cropped to whatever shape the preview is */
+const bg={img:null,url:"",zoom:1,cx:.5,cy:.5,ver:0,key:""};
+function bgRender(c,w,h,side,st,at){
+  const k=side/Math.max(w,h);c.width=Math.max(1,Math.round(w*k));c.height=Math.max(1,Math.round(h*k));
+  const x=c.getContext("2d"),im=bg.img,iw=im.naturalWidth,ih=im.naturalHeight;
+  const sc=Math.max(c.width/iw,c.height/ih)*st.zoom,vw=c.width/sc,vh=c.height/sc;
+  const sx=Math.min(Math.max(0,st.cx*iw-vw/2),iw-vw),sy=Math.min(Math.max(0,st.cy*ih-vh/2),ih-vh);
+  x.clearRect(0,0,c.width,c.height);x.imageSmoothingEnabled=true;x.imageSmoothingQuality="high";x.drawImage(im.anim?im.frames[bgFi(im,at)].c:im,sx,sy,vw,vh,0,0,c.width,c.height);
+}
+function bgDraw(force){const c=$("o-bg");if(!c)return;
+  if(!bg.img||!av||cv.width<20){c.hidden=true;bg.key="";return;}
+  const key=cv.width+"x"+cv.height+"|"+bg.ver+"|"+bgFi(bg.img);if(!force&&key===bg.key&&!c.hidden)return;
+  bg.key=key;c.hidden=false;bgRender(c,cv.width,cv.height,1000,bg);}
+let bgEdTick=null,bgLastFi=-1;
+(function bgLoop(){const im=bg.img;
+  if(im&&im.anim){const i=bgFi(im);if(i!==bgLastFi){bgLastFi=i;bgDraw(true);}}else bgLastFi=-1;
+  if(bgEdTick)bgEdTick();
+  requestAnimationFrame(bgLoop);})();
+const fitBig=c=>{c.style.cssText="";c.classList.remove("frm");};   // size comes from the CSS so the popup never jumps between previews
+const fit=c=>{c.style.width=c.style.height="100%";c.style.maxHeight=c.style.maxWidth="none";};   // in-game: fill the preview window
+const frameCv=(o,kind)=>{const r=o.width/o.height;o.classList.add("frm");
+  o.style.cssText=kind==="cat"?"flex:1 1 0;min-height:0;align-self:center;width:auto;max-width:100%;aspect-ratio:"+r
+    :"width:100%;height:auto;max-width:calc(min(62vh,640px) * "+r+");max-height:min(62vh,640px);aspect-ratio:"+r;};
 /* In-game preview: animation 14, played from data/outfit/a<avatar>/g14/ (made by export_ingame_anim.py) */
 const FRAME_MS=80;let mode="dress";const gm={frames:[],timer:0};
 const gseqC=new Map();
-const gseq=()=>{if(!gseqC.has(av.id))gseqC.set(av.id,gGet(av.id,"a"+av.id+"/g14/seq.json").then(d=>Array.isArray(d)?d:Array.isArray(d&&d.seq)?d.seq:null).catch(()=>null));return gseqC.get(av.id);};
+const gseq=(a=av)=>{if(!gseqC.has(a.id))gseqC.set(a.id,gGet(a.id,"a"+a.id+"/g14/seq.json").then(d=>Array.isArray(d)?d:Array.isArray(d&&d.seq)?d.seq:null).catch(()=>null));return gseqC.get(a.id);};
 function drawTo(o,on,s){if(!on||!o)return;const x=o.getContext("2d");
   if(o.width!==s.width||o.height!==s.height){o.width=s.width;o.height=s.height;}else x.clearRect(0,0,o.width,o.height);
   x.drawImage(s,0,0);fitBig(o);}
+const clipB=()=>Array.isArray(av&&av.box)&&av.box.length>=4?av.box:null;
+function stageFit(on){const st=cv.parentElement,ov=$("o-vd").parentElement;
+  if(on){const r=cv.width/cv.height,w="min(100%,calc(max(280px,100vh - 375px) * "+r+"))";
+    st.style.cssText="padding:0;min-height:0;margin:0 auto;border:0;aspect-ratio:"+r+";width:"+w;ov.style.width=w;ov.style.margin="0 auto 8px";
+    cv.style.width=cv.style.height="100%";cv.style.maxHeight="none";}
+  else{st.style.cssText="padding:0;height:max(280px,calc(100vh - 375px))";ov.style.width=ov.style.margin="";cv.style.maxHeight="";}}
 function ovDraw(s){drawTo($("o-ovcv"),editing,s);drawTo($("o-ccv"),!$("o-cat").hidden,s);}
 function stopAnim(){clearInterval(gm.timer);gm.timer=0;}
 function play(){
   stopAnim();const f=gm.frames;if(!f.length)return;let i=0;
   const draw=()=>{const s=f[i++%f.length],x=cv.getContext("2d");
     if(cv.width!==s.width||cv.height!==s.height){cv.width=s.width;cv.height=s.height;}else x.clearRect(0,0,cv.width,cv.height);
-    x.drawImage(s,0,0);fit(cv);ovDraw(s);};
+    x.drawImage(s,0,0);fit(cv);bgDraw();ovDraw(s);};
   draw();if(f.length>1)gm.timer=setInterval(draw,FRAME_MS);
 }
 async function gamePaint(t){
+  stageFit(false);
   const[L,seq]=await Promise.all([stack(viewList(),false,true),gseq()]);if(t!==tok)return;
   stopAnim();gm.frames=[];
   const n=L.reduce((m,l)=>Math.max(m,l.data.f.length),0);
   if(!L.length||!n){cv.width=cv.width;note("No in-game art found for "+av.name+" yet. Run export_ingame_anim.py to add it.",true);return;}
   note("",true);
   const order=(seq&&seq.length?seq:Array.from({length:n},(_,i)=>i)).map(i=>Number.isInteger(i)?i:0);
-  for(const i of order){const c=document.createElement("canvas");if(renderSprite(c,L,GAME,i))gm.frames.push(c);}
+  for(const i of order){const c=document.createElement("canvas");if(renderSprite(c,L,GAME,i,true))gm.frames.push(c);}
   play();
+}
+let colApply=[];   // the Main / Secondary colour pickers on the Color tab, so a tapped colour can be sent to either (touch screens cannot drag)
+function askTarget(v){
+  let t=$("o-tgt");if(t)t.remove();
+  t=mk("div","otgt");t.id="o-tgt";t.append(mk("span",null,"Use this colour for:"));
+  [["Main",0],["Secondary",1]].forEach(([n,k])=>{const b=mk("button",null,n);b.type="button";b.onclick=()=>{if(colApply[k])colApply[k](v);t.remove();};t.append(b);});
+  const x=mk("button","sec","Cancel");x.type="button";x.onclick=()=>t.remove();t.append(x);
+  $("o-opal").append(t);
 }
 function outfitPal(){
   const h=$("o-opg");h.innerHTML="";const seen=new Set();
@@ -1047,30 +1845,73 @@ function outfitPal(){
     const c=mk("i");c.style.background=colourOf(v);c.draggable=true;c.title="Drag onto a colour palette, or click on the Pattern and Eyes tabs";
     c.ondragstart=e=>{dragCol=v;e.dataTransfer.effectAllowed="copy";try{e.dataTransfer.setData("text/plain",String(v));}catch(x){}};
     c.ondragend=()=>{dragCol=null;};
-    c.onclick=()=>{if(palApply)palApply(v);};h.append(c);}
+    c.onclick=()=>{if(palApply)palApply(v);else if(tab==="color"&&colApply.length)askTarget(v);};h.append(c);}
   if(!seen.size)h.append(mk("div","onote","Put on some items to see their colours here."));
 }
 async function paint(){
-  if(!av)return;const t=++tok;saveDraft();outfitPal();
+  if(!av)return;const t=++tok;saveDraft();record();outfitPal();
   if(mode==="game"){
     await gamePaint(t);thumbs();if(edHook)edHook();return;
   }
   stopAnim();const L=await stack(viewList());if(t!==tok)return;
-  if(renderSprite(cv,L,GAME,0))fit(cv);
-  if(editing){const o=$("o-ovcv");if(renderSprite(o,L,GAME,0))fitBig(o);}
-  if(!$("o-cat").hidden){const o=$("o-ccv");if(renderSprite(o,L,GAME,0))fitBig(o);}
+  if(renderSprite(cv,L,GAME,0,false,clipB())){stageFit(true);bgDraw();}
+  if(editing){const o=$("o-ovcv");if(renderSprite(o,L,GAME,0,false,clipB()))frameCv(o);}
+  if(!$("o-cat").hidden){const o=$("o-ccv");if(renderSprite(o,L,GAME,0,false,clipB()))frameCv(o,"cat");}
   thumbs();if(edHook)edHook();
 }
-function setMode(m){mode=m;for(const[a,b]of[["o-vd","o-vg"],["o-ovd","o-ovg"],["o-cvd","o-cvg"]]){$(a).classList.toggle("on",m==="dress");$(b).classList.toggle("on",m==="game");}
+/* In-game preview: drag the animal to move it, scroll wheel or two-finger pinch to resize it (double-click or double-tap resets). Applied as a CSS transform, so the background stays put. */
+const gv={s:1,x:0,y:0};
+/* draw a source canvas into a W x H output the way the preview window currently shows it (same drag and zoom, as fractions of the window) */
+function gvDraw(x,src,W,H){
+  if(mode!=="game"||(gv.s===1&&!gv.x&&!gv.y)){x.drawImage(src,0,0,W,H);return;}
+  const r=cv.parentElement.getBoundingClientRect(),fx=r.width?gv.x/r.width:0,fy=r.height?gv.y/r.height:0;
+  x.save();x.translate(W/2+fx*W,H/2+fy*H);x.scale(gv.s,gv.s);x.translate(-W/2,-H/2);x.drawImage(src,0,0,W,H);x.restore();
+}
+function applyGV(){cv.style.transform=mode==="game"&&(gv.s!==1||gv.x||gv.y)?"translate("+gv.x+"px,"+gv.y+"px) scale("+gv.s+")":"";
+  cv.parentElement.style.cursor=mode==="game"?(gv.drag?"grabbing":"grab"):"";cv.parentElement.style.touchAction=mode==="game"?"none":"";}
+(function(){
+  const st=cv.parentElement;
+  const ptr=new Map();let pinch=null,lastTap=0;   // touch: two fingers pinch to zoom, double-tap resets
+  const mid=()=>{const a=[...ptr.values()];return{x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2,d:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)||1};};
+  st.addEventListener("pointerdown",e=>{if(mode!=="game"||e.button>0)return;e.preventDefault();
+    ptr.set(e.pointerId,{x:e.clientX,y:e.clientY});try{st.setPointerCapture(e.pointerId);}catch(x){}
+    if(ptr.size===2){gv.drag=null;const m=mid();pinch={d:m.d,s:gv.s,x:gv.x,y:gv.y,mx:m.x,my:m.y};}
+    else if(ptr.size===1){gv.drag={px:e.clientX,py:e.clientY,x:gv.x,y:gv.y};}
+    applyGV();});
+  st.addEventListener("pointermove",e=>{
+    if(ptr.has(e.pointerId))ptr.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pinch&&ptr.size>=2){const m=mid(),r=st.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+      const n=Math.min(8,Math.max(.25,pinch.s*m.d/pinch.d)),k=n/pinch.s,px=pinch.mx-cx,py=pinch.my-cy;
+      gv.s=n;gv.x=(m.x-cx)-k*(px-pinch.x);gv.y=(m.y-cy)-k*(py-pinch.y);applyGV();return;}
+    if(!gv.drag)return;gv.x=gv.drag.x+e.clientX-gv.drag.px;gv.y=gv.drag.y+e.clientY-gv.drag.py;applyGV();});
+  const end=e=>{
+    const wasOne=ptr.size===1&&!pinch;ptr.delete(e.pointerId);
+    if(pinch){if(ptr.size<2)pinch=null;
+      if(ptr.size===1){const q=[...ptr.values()][0];gv.drag={px:q.x,py:q.y,x:gv.x,y:gv.y};}   // carry on dragging with the finger left
+      if(!ptr.size)gv.drag=null;applyGV();return;}
+    if(gv.drag){
+      const moved=Math.abs(e.clientX-gv.drag.px)+Math.abs(e.clientY-gv.drag.py)>8;
+      if(wasOne&&e.pointerType==="touch"&&e.type==="pointerup"&&!moved){const t=Date.now();if(t-lastTap<350){gv.s=1;gv.x=gv.y=0;lastTap=0;}else lastTap=t;}
+      gv.drag=null;applyGV();}};
+  st.addEventListener("pointerup",end);st.addEventListener("pointercancel",end);
+  st.addEventListener("wheel",e=>{if(mode!=="game")return;e.preventDefault();
+    const r=st.getBoundingClientRect(),px=e.clientX-(r.left+r.width/2),py=e.clientY-(r.top+r.height/2);
+    const n=Math.min(8,Math.max(.25,gv.s*(e.deltaY<0?1.1:1/1.1))),k=n/gv.s;
+    gv.x=px-k*(px-gv.x);gv.y=py-k*(py-gv.y);gv.s=n;applyGV();},{passive:false});   // zooms towards the mouse pointer
+  st.addEventListener("dblclick",()=>{if(mode!=="game")return;gv.s=1;gv.x=gv.y=0;applyGV();});
+})();
+function setMode(m){mode=m;applyGV();for(const[a,b]of[["o-vd","o-vg"],["o-ovd","o-ovg"],["o-cvd","o-cvg"]]){$(a).classList.toggle("on",m==="dress");$(b).classList.toggle("on",m==="game");}
   $("o-gif").hidden=m!=="game";$("o-ovcv").classList.toggle("game",m==="game");$("o-ccv").classList.toggle("game",m==="game");$("o-img").textContent=m==="game"||cmode?"Save as image":"Save outfit as image";stopAnim();note("",true);paint();}
 $("o-vd").onclick=$("o-ovd").onclick=$("o-cvd").onclick=()=>setMode("dress");$("o-vg").onclick=$("o-ovg").onclick=$("o-cvg").onclick=()=>setMode("game");
 /* GIF writer: one shared 255-colour palette (median cut), colour 0 = transparent, every frame cleared before the next */
-function gifEncode(frames,scale,delayMs){
+function gifEncode(frames,scale,delayMs,quant){
   const w=frames[0].width,h=frames[0].height,W=w*scale,H=h*scale;
   const imgs=frames.map(f=>{const c=document.createElement("canvas");c.width=w;c.height=h;const x=c.getContext("2d");x.drawImage(f,0,0);return x.getImageData(0,0,w,h).data;});
+  const kf=quant?(d,i)=>((d[i]>>3)<<10)|((d[i+1]>>3)<<5)|(d[i+2]>>3):(d,i)=>(d[i]<<16)|(d[i+1]<<8)|d[i+2];   // quant: 5 bits per channel (used with a background picture)
+  const kc=quant?k=>[((k>>10)<<3)|4,(((k>>5)&31)<<3)|4,((k&31)<<3)|4]:k=>[k>>16,(k>>8)&255,k&255];
   const cnt=new Map();
-  for(const d of imgs)for(let i=0;i<d.length;i+=4){if(d[i+3]<128)continue;const k=(d[i]<<16)|(d[i+1]<<8)|d[i+2];cnt.set(k,(cnt.get(k)||0)+1);}
-  let boxes=[[...cnt.entries()].map(([k,n])=>({k,n,c:[k>>16,(k>>8)&255,k&255]}))];
+  for(const d of imgs)for(let i=0;i<d.length;i+=4){if(d[i+3]<128)continue;const k=kf(d,i);cnt.set(k,(cnt.get(k)||0)+1);}
+  let boxes=[[...cnt.entries()].map(([k,n])=>({k,n,c:kc(k)}))];
   while(boxes.length<255){
     let bi=-1,bc=0,bs=0;
     boxes.forEach((b,i)=>{if(b.length<2)return;for(let c=0;c<3;c++){let lo=255,hi=0;for(const e of b){if(e.c[c]<lo)lo=e.c[c];if(e.c[c]>hi)hi=e.c[c];}if(hi-lo>bs){bs=hi-lo;bi=i;bc=c;}}});
@@ -1088,7 +1929,7 @@ function gifEncode(frames,scale,delayMs){
   const delay=Math.max(2,Math.round(delayMs/10));
   for(const d of imgs){
     const small=new Uint8Array(w*h);
-    for(let i=0,p=0;i<d.length;i+=4,p++)small[p]=d[i+3]<128?0:map.get((d[i]<<16)|(d[i+1]<<8)|d[i+2]);
+    for(let i=0,p=0;i<d.length;i+=4,p++)small[p]=d[i+3]<128?0:map.get(kf(d,i));
     const px=new Uint8Array(W*H);
     for(let y=0;y<H;y++){const sy=((y/scale)|0)*w;for(let x=0;x<W;x++)px[y*W+x]=small[sy+((x/scale)|0)];}
     out.push(0x21,0xF9,4,0x09,delay&255,(delay>>8)&255,0,0);   // disposal 2 (clear), transparent colour 0
@@ -1113,14 +1954,23 @@ function lzw(idx){
 }
 
 $("o-gif").onclick=()=>{if(mode!=="game"||!gm.frames.length)return;note("Making the GIF...",true);
-  setTimeout(()=>{try{const b=new Blob([gifEncode(gm.frames,3,FRAME_MS)],{type:"image/gif"}),a=document.createElement("a");
+  setTimeout(()=>{try{
+    const S=3,F=gm.frames,withBg=!!bg.img;let list;
+    if(withBg){   // background goes under every frame; an animated one keeps playing, so the sprite cycle repeats until it has covered the background's length
+      const reps=bg.img.anim?Math.min(Math.ceil(bg.img.total/(F.length*FRAME_MS)),Math.max(1,Math.floor(120/F.length))):1;
+      list=[];for(let r=0;r<reps;r++)F.forEach((f,i)=>{const t=document.createElement("canvas");t.width=f.width*S;t.height=f.height*S;const x=t.getContext("2d");
+        const b=document.createElement("canvas");bgRender(b,t.width,t.height,Math.max(t.width,t.height),bg,(r*F.length+i)*FRAME_MS);x.drawImage(b,0,0);
+        x.imageSmoothingEnabled=false;gvDraw(x,f,t.width,t.height);list.push(t);});
+    }else list=F.map(f=>{const t=document.createElement("canvas");t.width=f.width;t.height=f.height;const x=t.getContext("2d");x.imageSmoothingEnabled=false;gvDraw(x,f,t.width,t.height);return t;});
+    const b=new Blob([gifEncode(list,withBg?1:S,FRAME_MS,withBg)],{type:"image/gif"}),a=document.createElement("a");
     a.href=URL.createObjectURL(b);a.download=(av.name||"outfit")+" in-game.gif";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000);note("GIF saved.");}
     catch(e){note("Couldn't make the GIF.");}},30);};
 const spr=new Map();let ajbMap=null;
 const ajbSprite=a=>{if(!spr.has(a.id))spr.set(a.id,getJSON("data/sprites/"+a.id+".json").then(d=>d&&Array.isArray(d.f)?d:null).catch(()=>null));return spr.get(a.id);};
 function ajbOf(n){if(!ajbMap||!ajbMap.size){ajbMap=new Map();for(const it of items)ajbMap.set(norm(it.name),it);}return ajbMap.get(norm(n));}
 async function thumbs(){for(const t of document.querySelectorAll("#o-worn .othumb")){const w=worn[t.dataset.i];if(!w)continue;
-  const a=(w.cu||w.it.cu)?null:(w.a||ajbOf(w.it.n)),d=a&&await ajbSprite(a);
+  if(cuOf(w)?await iconCuPaint(t,w):await iconPaint(t,w.it.id,w.idx))continue;   // same icon as the catalogue (a custom image goes over its base item's icon)
+  const a=(w.cu||w.it.cu)?null:(w.a||spriteFor(w.it)),d=a&&await ajbSprite(a);
   if(!(d&&renderSprite(t,[{data:d,indexes:w.idx.map(v=>v==null?0:v)}],GAME,0)))renderSprite(t,await stack([w],true),GAME,0);}}   // same preview as the Color picker page
 /* compact one-colour palette (animal colours, pattern, eyes): click a colour to set slot j */
 const PAL_ORDER=[
@@ -1184,19 +2034,59 @@ function mkPicker(host,get,set,reset){
   clr.onclick=()=>put([null,null,null,null]);rs.onclick=()=>{reset();pr.textContent="-";draw();};
   host.append(sl,act,gr);draw();
 }
+/* sections and layer order. Inside a section the order of the array is bottom -> top; the screen shows it top -> bottom, left to right.
+   Sections still layer against each other by the item's slot number; items inside a section take the layer places of that section in the order you dragged them. */
+const SECS=["Head","Neck","Back","Legs","Tail"],SECMAP={Head:"Head",Neck:"Neck",Body:"Back",Legs:"Legs",Tail:"Tail"};
+const secOf=it=>SECMAP[slotTabs()[it.s]]||"Back";
+function drawOrder(list){
+  const base=list.map((w,i)=>[w.it.s,i,w]).sort((x,y)=>x[0]-y[0]||x[1]-y[1]).map(x=>x[2]),by={},n={};
+  list.forEach(w=>{const s=secOf(w.it);(by[s]||(by[s]=[])).push(w);});
+  return base.map(w=>{const s=secOf(w.it);n[s]=n[s]||0;return by[s][n[s]++];});
+}
+function addWorn(arr,w){const s=secOf(w.it),at=arr.findIndex(o=>secOf(o.it)===s&&o.it.s>w.it.s);if(at<0)arr.push(w);else arr.splice(at,0,w);}
+let dragW=null;
+function moveInSec(w,target,after){
+  const s=secOf(w.it),pos=[];worn.forEach((o,i)=>{if(secOf(o.it)===s)pos.push(i);});
+  const D=pos.map(i=>worn[i]).reverse().filter(o=>o!==w);   // top first
+  let at=D.indexOf(target);if(at<0)at=D.length;D.splice(after?at+1:at,0,w);
+  const A=D.reverse();pos.forEach((p,k)=>{worn[p]=A[k];});
+}
 /* equipped items */
 function renderWorn(){catStrip();fitList();
   const h=$("o-worn");h.innerHTML="";
-  if(!worn.length){h.append(mk("div","onote",cmode?"Search for an item to use as the base of your custom item.":"Search for an item to put it on."));return;}
-  worn.forEach((w,i)=>{
-    const c=mk("div","ocard"),t=mk("canvas","othumb"),bt=mk("div","obtn");t.dataset.i=i;
-    const B=(ic,tt,fn)=>{const b=mk("button","sec",ic);b.type="button";b.title=tt;b.setAttribute("aria-label",tt);b.onclick=fn;return b;};
-    const rm=B("\uD83D\uDDD1","Remove item",()=>{worn.splice(i,1);renderWorn();paint();});
-    if(cmode){const bi=B("","Add a custom image",()=>openCustom(w)),bs=B("","Save as custom item",()=>askSave(w));bi.innerHTML=ICON_IMG;bs.innerHTML=ICON_SAVE;bt.append(bi,bs,rm);}
-    else bt.append(B("\u270E","Edit colours",()=>openEdit(w)),
-      B("\u29C9","Copy colour code",e=>{const p=pack(w.idx);if(p===null)return;navigator.clipboard.writeText(String(p)).then(()=>{const b=e.currentTarget;b.textContent="\u2713";setTimeout(()=>b.textContent="\u29C9",1200);});}),
-      B("\uD83D\uDDD1","Remove item",()=>{worn.splice(i,1);renderWorn();paint();}));
-    c.append(t,mk("div","oname",w.it.n),bt);h.append(c);
+  if(!worn.length)h.append(mk("div","onote",cmode?"Search for an item to use as the base of your custom item.":"Search for an item to put it on."));
+  SECS.forEach(sec=>{
+    const mine=worn.filter(w=>secOf(w.it)===sec).reverse(),box=mk("div","osec"),hd=mk("div","osh"),row=mk("div","osr");
+    hd.append(mk("b",null,sec));
+    if(mine.length){const ind=mk("div","oind");ind.append(mk("span",null,"Top"),mk("i"),mk("span",null,"Bottom"));hd.append(ind);}
+    else row.append(mk("div","osempty","Nothing equipped"));
+    row.ondragover=e=>{if(dragW&&secOf(dragW.it)===sec)e.preventDefault();};
+    row.ondrop=e=>{if(!dragW||secOf(dragW.it)!==sec)return;e.preventDefault();moveInSec(dragW,null,true);dragW=null;renderWorn();paint();};
+    mine.forEach(w=>{
+      const c=mk("div","ocard"),t=mk("canvas","othumb"),bt=mk("div","obtn"),ix=()=>worn.indexOf(w);t.dataset.i=ix();
+      const B=(ic,tt,fn)=>{const b=mk("button","sec",ic);b.type="button";b.title=tt;b.setAttribute("aria-label",tt);b.onclick=fn;return b;};
+      const rm=()=>B("🗑","Remove item",()=>{worn.splice(ix(),1);renderWorn();paint();});
+      if(cmode){const bi=B("","Add a custom image",()=>openCustom(w)),bs=B("","Save as custom item",()=>askSave(w));bi.innerHTML=ICON_IMG;bs.innerHTML=ICON_SAVE;bt.append(bi,bs,rm());}
+      else bt.append(B("✎","Edit colours",()=>openEdit(w)),
+        B("⧉","Copy colour code",e=>{const p=pack(w.idx);if(p===null)return;navigator.clipboard.writeText(String(p)).then(()=>{const b=e.currentTarget;b.textContent="✓";setTimeout(()=>b.textContent="⧉",1200);});}),
+        rm());
+      c.draggable=true;c.title="Drag left to move up the layers, right to move down";
+      c.ondragstart=e=>{dragW=w;e.dataTransfer.effectAllowed="move";try{e.dataTransfer.setData("text/plain","item");}catch(x){}setTimeout(()=>c.classList.add("dragging"),0);};
+      c.ondragend=()=>{dragW=null;c.classList.remove("dragging");row.querySelectorAll(".dl,.dr").forEach(x=>x.classList.remove("dl","dr"));};
+      c.ondragover=e=>{if(!dragW||dragW===w||secOf(dragW.it)!==sec)return;e.preventDefault();const r=c.getBoundingClientRect(),right=e.clientX>=r.left+r.width/2;c.classList.toggle("dr",right);c.classList.toggle("dl",!right);};
+      c.ondragleave=()=>c.classList.remove("dl","dr");
+      c.ondrop=e=>{if(!dragW||dragW===w||secOf(dragW.it)!==sec)return;e.preventDefault();e.stopPropagation();const r=c.getBoundingClientRect();moveInSec(dragW,w,e.clientX>=r.left+r.width/2);dragW=null;renderWorn();paint();};
+      const tw=mk("div","othw"),nm=mk("div","oname",outLabel(w.it));tw.append(t);nm.title=outLabel(w.it);
+      const k=mine.indexOf(w),mv=mk("div","omv");   // move arrows: touch screens cannot drag cards to reorder them
+      if(mine.length>1){
+        const M=(ic,tt,ok,fn)=>{const b=mk("button","sec",ic);b.type="button";b.title=tt;b.setAttribute("aria-label",tt);b.disabled=!ok;b.onclick=fn;return b;};
+        mv.append(M("\u25C0\uFE0E","Move up the layers",k>0,()=>{moveInSec(w,mine[k-1],false);renderWorn();paint();}),
+                  M("\u25B6\uFE0E","Move down the layers",k<mine.length-1,()=>{moveInSec(w,mine[k+1],true);renderWorn();paint();}));
+        c.append(tw,nm,mv,bt);
+      }else c.append(tw,nm,bt);
+      row.append(c);
+    });
+    box.append(hd,row);h.append(box);
   });
   thumbs();
 }
@@ -1207,7 +2097,7 @@ function fitList(){
   if(!wornAlt.length){h.append(mk("div","onote","Nothing on in the Outfit creator yet. Dress your animal there first."));return;}
   wornAlt.forEach(o=>{const r=mk("div","orow"),b=mk("button",null,worn.some(w=>w.from===o)?"Open":"Customise");b.type="button";
     b.title="Take this item into the custom list and add an image to it";b.onclick=()=>customiseOutfit(o);
-    r.append(entryThumb(o),mk("span",null,o.it.n),b);h.append(r);});
+    r.append(entryThumb(o),mk("span",null,outLabel(o.it)),b);h.append(r);});
 }
 function takeIn(o,lim){   // copy one of the outfit's items into the custom list (or find the copy already there)
   const z=o.it,base=z.cu?byId.get(String(z.base)):z;
@@ -1216,7 +2106,7 @@ function takeIn(o,lim){   // copy one of the outfit's items into the custom list
   if(lim){const same=worn.filter(w=>w.it.s===base.s);if(same.length>=3)worn.splice(worn.indexOf(same[0]),1);}
   const w={it:base,idx:o.idx.slice(),from:o};
   if(z.cu){w.cu={img:z.cu.img,mode:z.cu.mode,png:z.cu.png,p:z.cu.p?Object.assign({},z.cu.p):null};w.sid=z.id;w.sname=z.n;}
-  worn.push(w);return w;
+  addWorn(worn,w);return w;
 }
 function customiseOutfit(o){
   const w=takeIn(o,true);
@@ -1239,31 +2129,81 @@ async function texAll(f){
   note("Texture applied to "+worn.length+" item"+(worn.length===1?"":"s")+". Use Save all custom items to keep them.");
 }
 function equip(it){
-  const z=it.cu?it:byName.get(norm(it.name));
+  const z=(it.cu||it.l)?it:byName.get(norm(it.name));   // outfit items (and custom items) are used as they are
   if(!z){note("No outfit art for that item.");return;}
-  if(!z.l[av.id]){note(z.n+" has no art for "+av.name+".");return;}
+  if(!z.l[av.id]){note(outLabel(z)+" has no art for "+av.name+".");return;}
   if(worn.some(w=>w.it===z)){note("Already on.");return;}
   const same=worn.filter(w=>w.it.s===z.s);if(same.length>=3)worn.splice(worn.indexOf(same[0]),1);   // 3 per place, oldest comes off
-  worn.push({it:z,idx:unpack(z.c)||[0,0,0,0],a:it.cu?null:it});renderWorn();paint();
+  addWorn(worn,{it:z,idx:unpack(z.c)||[0,0,0,0],a:z.cu?null:spriteFor(z)});renderWorn();paint();
 }
+/* every item in the outfit database, A-Z; same-named items sit together, the ones with art for the most animals first */
+let OL=null;
+function oList(){
+  if(OL&&OL._n===IDX.items.length)return OL;
+  noteOutfit(IDX.items);
+  OL=IDX.items.map(z=>{const label=outLabel(z);return{z,label,n:norm(label),na:Object.keys(z.l).length};})
+    .sort((x,y)=>{const a=norm(x.z.n),b=norm(y.z.n);return a<b?-1:a>b?1:y.na-x.na||(+x.z.id)-(+y.z.id);});
+  OL._n=IDX.items.length;return OL;
+}
+const oThumb=(z,sp)=>{sp=sp===undefined?spriteFor(z):sp;return spriteThumb(sp||{id:"o"+z.id,name:z.n,code:String(z.c),oz:z},z);};   // icon from data/icons when there is one, else lookbook picture / outfit art   // lookbook picture when it is certainly the same item, else the item's own outfit art (loaded when scrolled into view)
 const q=$("o-q"),res=$("o-res");
 function search(){
-  if(!av)return;
+  if(!av||!IDX)return;
   const s=norm(q.value),a=[],b=[];
-  for(const it of items){const n=norm(it.name);if(!s||n.startsWith(s))a.push(it);else if(n.includes(s))b.push(it);}
+  for(const e of oList()){if(!s||e.n.startsWith(s)||e.z.id===s)a.push(e);else if(e.n.includes(s))b.push(e);}
   const L=a.concat(b).slice(0,40);res.innerHTML="";
   const cs=cmode?[]:customs.filter(z=>!s||norm(z.n).includes(s)).slice(0,10);
   cs.forEach(z=>{const li=mk("li");if(!z.l[av.id])li.style.opacity=.45;li.append(entryThumb({it:z,idx:unpack(z.c)||[0,0,0,0]}));
     li.append(mk("span",null,z.n+" (custom)"));li.onmousedown=e=>{e.preventDefault();res.hidden=true;q.value="";equip(z);};res.append(li);});
-  if(!L.length&&!cs.length)res.append(mk("li","note",items.length?"No items found.":"Item list not loaded."));
-  L.forEach(it=>{const li=mk("li"),z=byName.get(norm(it.name));if(!(z&&z.l[av.id]))li.style.opacity=.45;
-    li.append(spriteThumb(it));
-    li.append(mk("span",null,it.name));li.onmousedown=e=>{e.preventDefault();res.hidden=true;q.value="";equip(it);};res.append(li);});
-  res.hidden=false;L.first=cs[0]||L[0];res.first=cs[0]||L[0];
+  if(!L.length&&!cs.length)res.append(mk("li","note","No items found."));
+  L.forEach(e=>{const z=e.z,li=mk("li");if(!z.l[av.id])li.style.opacity=.45;
+    li.append(oThumb(z));
+    li.append(mk("span",null,e.label));li.onmousedown=ev=>{ev.preventDefault();res.hidden=true;q.value="";equip(z);};res.append(li);});
+  const pick=(L.find(e=>e.z.l[av.id])||L[0]||{}).z;   // Enter takes the first one this animal can actually wear
+  res.hidden=false;res.first=cs[0]||pick;
 }
 q.addEventListener("input",search);q.addEventListener("focus",search);q.addEventListener("click",search);
 q.addEventListener("keydown",e=>{if(e.key==="Enter"&&res.first){e.preventDefault();res.hidden=true;const it=res.first;q.value="";equip(it);}else if(e.key==="Escape")res.hidden=true;});
 document.addEventListener("click",e=>{if(!e.target.closest(".osearch"))res.hidden=true;});
+/* ---- Random outfit: pick N random items for this animal, spread across the body parts that are ticked ---- */
+const RND_CATS=["Head","Neck","Body","Legs","Tail","Other"],rnd=$("o-rnd"),rn=$("o-rn"),rerr=$("o-rerr");
+RND_CATS.forEach(c=>{const l=mk("label"),i=mk("input");i.type="checkbox";i.id="o-rc-"+c;i.checked=true;l.append(i,document.createTextNode(c));$("o-rcats").append(l);});
+const rnClamp=()=>{let v=parseInt(rn.value,10);if(!(v>=1))v=1;if(v>12)v=12;rn.value=v;return v;};
+const rnShuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+$("o-rand").onclick=()=>{if(!IDX||!av){note("Still loading, try again in a moment.");return;}rerr.textContent="";rnd.hidden=false;};
+$("o-rx").onclick=()=>{rnd.hidden=true;};
+rnd.addEventListener("click",e=>{if(e.target===rnd)rnd.hidden=true;});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!rnd.hidden)rnd.hidden=true;});
+$("o-rminus").onclick=()=>{rn.value=rnClamp()-1;rnClamp();};
+$("o-rplus").onclick=()=>{rn.value=rnClamp()+1;rnClamp();};
+rn.addEventListener("change",rnClamp);
+$("o-rall").onclick=()=>RND_CATS.forEach(c=>{$("o-rc-"+c).checked=true;});
+$("o-rnone").onclick=()=>RND_CATS.forEach(c=>{$("o-rc-"+c).checked=false;});
+$("o-rgo").onclick=()=>{
+  if(!IDX||!av)return;
+  const n=rnClamp(),on=new Set(RND_CATS.filter(c=>$("o-rc-"+c).checked));
+  if(!on.size){rerr.textContent="Pick at least one body part in Advanced.";$("o-radv").open=true;return;}
+  const st=slotTabs(),by={};
+  for(const e of oList()){const z=e.z;if(z.cu||!z.l[av.id])continue;const c=st[z.s]||"Other";if(on.has(c))(by[c]||(by[c]=[])).push(z);}
+  const cats=Object.keys(by);
+  if(!cats.length){rerr.textContent="No items for "+av.name+" in those body parts.";return;}
+  const pick=[],names=new Set();
+  const fill=strict=>{   // strict: one item per slot first, so the outfit does not stack layers; then relax to the 3-per-slot limit
+    const pools=cats.map(c=>rnShuffle(by[c].slice()));let moved=true;
+    while(pick.length<n&&moved){moved=false;
+      for(const pl of rnShuffle(pools.slice())){if(pick.length>=n)break;
+        while(pl.length){const z=pl.pop(),nm=norm(z.n);if(names.has(nm))continue;
+          const cnt=pick.filter(x=>x.s===z.s).length;if(strict?cnt>0:cnt>=3)continue;
+          pick.push(z);names.add(nm);moved=true;break;}}}
+  };
+  fill(true);if(pick.length<n)fill(false);
+  if($("o-rrep").checked)worn.splice(0);
+  for(const z of pick){if(worn.some(w=>w.it===z))continue;
+    const same=worn.filter(w=>w.it.s===z.s);if(same.length>=3)worn.splice(worn.indexOf(same[0]),1);
+    addWorn(worn,{it:z,idx:unpack(z.c)||[0,0,0,0],a:spriteFor(z)});}
+  renderWorn();paint();rnd.hidden=true;rerr.textContent="";
+  note(pick.length<n?"Only found "+pick.length+" item"+(pick.length===1?"":"s")+" that fit.":"Put on "+pick.length+" random item"+(pick.length===1?"":"s")+".");
+};
 /* edit overlay */
 function openEdit(w,extra,np){$("o-ov").classList.toggle("cu",!!np);edHook=null;editing=w;$("o-ovn").textContent=w.it.n;const h=$("o-ovp");h.innerHTML="";
   const ph=mk("div"),build=()=>mkPicker(ph,()=>w.idx,a=>{w.idx=a;paint();},()=>{w.idx=unpack(w.it.c)||[0,0,0,0];paint();});
@@ -1301,24 +2241,44 @@ function catStrip(){
   const h=$("o-cw");if(!h)return;h.innerHTML="";
   if(!worn.length){h.append(mk("div","onote","Nothing equipped yet."));}
   worn.forEach(w=>{
-    const b=mk("button","cw"),a=w.a||ajbOf(w.it.n);b.type="button";b.title="Click to take off "+w.it.n;
-    if(cuOf(w))b.append(entryThumb(w));else if(a)b.append(spriteThumb(a));else b.append(mk("div","ph"));
-    b.append(mk("span",null,w.it.n));
+    const b=mk("button","cw"),a=w.a||spriteFor(w.it);b.type="button";b.title="Click to take off "+w.it.n;
+    if(cuOf(w))b.append(entryThumb(w));else{const th=oThumb(w.it,a||null);th._idx=w.idx;b.append(th);}
+    b.append(mk("span",null,outLabel(w.it)));
     b.onclick=()=>{const i=worn.indexOf(w);if(i<0)return;worn.splice(i,1);renderWorn();paint();$("o-cs").textContent="Removed "+w.it.n+".";};
     h.append(b);
   });
   try{catMarks();}catch(e){}
 }
+/* the item's existing colour variants (from data/icons): click a dot to preview it on the tile; the tile then puts the item on in that colour */
+function variantBtn(z,ic){
+  const v=mk("span","vb","Change variant");v.setAttribute("role","button");v.tabIndex=0;
+  const open=e=>{e.stopPropagation();e.preventDefault();variantPop(z,ic);};
+  v.onclick=open;v.onkeydown=e=>{if(e.key==="Enter"||e.key===" ")open(e);};
+  return v;
+}
+function variantPop(z,ic){
+  const old=cm.querySelector(".vpop");if(old)old.remove();
+  const o=mk("div","vpop"),bx=mk("div","vbox"),h=mk("div","vh"),g=mk("div","vg"),x=mk("button","sec","Close");x.type="button";
+  h.append(mk("span",null,outLabel(z)+": choose a variant"),x);
+  const close=()=>o.remove();x.onclick=close;o.addEventListener("click",e=>{if(e.target===o)close();});
+  ic.v.slice(0,8).forEach((v,i)=>{const idx=unpack(v)||[0,0,0,0],b=mk("button");b.type="button";
+    const c=document.createElement("canvas");b.append(c,mk("span",null,"Variant "+(i+1)));iconPaint(c,z.id,idx);
+    b.onclick=()=>{let nw=worn.find(w=>w.it===z);if(!nw){equip(z);nw=worn.find(w=>w.it===z);}
+      if(nw){nw.idx=idx.slice();renderWorn();paint();catMarks();$("o-cs").textContent="Added "+outLabel(z)+" (variant "+(i+1)+").";close();}};
+    g.append(b);});
+  bx.append(h,g);o.append(bx);cm.append(o);
+}
 let cat=null,catList=[],catN=0;const CHUNK=60;
 function catMore(){   // draw the next batch of tiles
   const fr=document.createDocumentFragment(),end=Math.min(catN+CHUNK,catList.length);
-  for(;catN<end;catN++){const{z,cu}=catList[catN],it=cu?z:catList[catN].it,nm=cu?z.n:it.name;
+  for(;catN<end;catN++){const e=catList[catN],z=e.z,cu=e.cu,nm=cu?z.n:e.label;
     const b=mk("button","ct");b.type="button";b._z=z;b.title=nm;if(!(z&&av&&z.l[av.id]))b.style.opacity=.45;
-    b.append(cu?entryThumb({it:z,idx:unpack(z.c)||[0,0,0,0]}):spriteThumb(it));
+    b.append(cu?entryThumb({it:z,idx:unpack(z.c)||[0,0,0,0]}):oThumb(z));
     b.append(mk("span",null,nm));
+    if(!cu){const ic=ICONS&&ICONS[z.id];if(ic&&ic.v&&ic.v.length>1)b.append(variantBtn(z,ic));}
     b.onclick=()=>{const i=z?worn.findIndex(w=>w.it===z):-1;
       if(i>=0){worn.splice(i,1);renderWorn();paint();$("o-cs").textContent="Removed "+nm+".";}
-      else{equip(it);$("o-cs").textContent=z&&worn.some(w=>w.it===z)?"Added "+nm+".":$("o-note").textContent;}
+      else{equip(z);$("o-cs").textContent=z&&worn.some(w=>w.it===z)?"Added "+nm+".":$("o-note").textContent;}
       catMarks();};
     fr.append(b);
   }
@@ -1326,10 +2286,10 @@ function catMore(){   // draw the next batch of tiles
 }
 cg.addEventListener("scroll",()=>{if(catN<catList.length&&cg.scrollTop+cg.clientHeight>cg.scrollHeight-400)catMore();});
 function renderCat(){
-  if(!cat||cat.length!==items.length)cat=items.map(it=>({it,n:norm(it.name),z:byName.get(norm(it.name))}));
+  cat=oList();
   const s=norm($("o-cq").value),m=slotTabs();
   const cs=(cmode?[]:customs).map(z=>({cu:1,z,n:norm(z.n)})).filter(c=>(!s||c.n.includes(s))&&(ctab==="All"||ctab==="Custom"||m[c.z.s]===ctab));
-  catList=cs.concat(ctab==="Custom"?[]:cat.filter(c=>(!s||c.n.includes(s))&&(ctab==="All"||(c.z&&m[c.z.s]===ctab))));
+  catList=cs.concat(ctab==="Custom"?[]:cat.filter(c=>(!s||c.n.includes(s)||c.z.id===s)&&(ctab==="All"||m[c.z.s]===ctab)));
   cg.innerHTML="";catN=0;
   if(!catList.length){cg.append(mk("div","onote",ctab==="Custom"?"No custom items yet. Make one in the Custom item preview tab.":"No items found."));return;}
   catMore();
@@ -1338,7 +2298,7 @@ function renderCat(){
 }
 const ct=$("o-ct");
 TABS.forEach(t=>{const b=mk("button",t===ctab?"on":null,t);b.type="button";b.onclick=()=>{ctab=t;[...ct.children].forEach(x=>x.classList.toggle("on",x===b));renderCat();};ct.append(b);});
-$("o-browse").onclick=()=>{if(!IDX||!av){note("Still loading, try again in a moment.");return;}$("o-cs").textContent="";cm.hidden=false;renderCat();catStrip();paint();};
+$("o-browse").onclick=()=>{if(!IDX||!av){note("Still loading, try again in a moment.");return;}$("o-cs").textContent="";cm.hidden=false;const had=!!ICONS;renderCat();catStrip();paint();if(!had)iconIndex().then(()=>{if(ICONS&&!cm.hidden)renderCat();});};
 let cqT=0;$("o-cq").addEventListener("input",()=>{clearTimeout(cqT);cqT=setTimeout(renderCat,150);});
 $("o-cx").onclick=()=>{cm.hidden=true;};
 cm.addEventListener("click",e=>{if(e.target===cm)cm.hidden=true;});
@@ -1359,18 +2319,20 @@ pm.addEventListener("click",e=>{if(e.target===pm)pm.hidden=true;});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){cm.hidden=true;pm.hidden=true;}});
 /* right panel */
 function panel(){
-  const p=$("o-panel");p.innerHTML="";curShow=null;palApply=null;$("o-opg").classList.toggle("clk",tab!=="color");
+  const p=$("o-panel");p.innerHTML="";curShow=null;palApply=null;colApply=[];{const o=$("o-tgt");if(o)o.remove();}$("o-opg").classList.toggle("clk",tab!=="color");
   document.querySelectorAll("#o-right .otabs button").forEach(b=>b.classList.toggle("on",b.dataset.t===tab));
   if(!av)return;
-  const pal=(k,title,j)=>{const d=mk("div");d.append(mk("div","otitle",title));palApply=mkPal(d,()=>cl[k],a=>{cl[k]=a;paint();if(curShow)curShow();},j);p.append(d);};
+  const pal=(k,title,j)=>{const d=mk("div");d.append(mk("div","otitle",title));palApply=mkPal(d,()=>cl[k],a=>{cl[k]=a;paint();if(curShow)curShow();},j);colApply.push(palApply);p.append(d);};
   p.style.setProperty("--n",tab==="color"?2:1);p.style.setProperty("--rsv",tab==="color"?"130px":"260px");
   if(tab==="color"){pal(0,"Main Color",0);pal(0,"Secondary Color",1);palApply=null;return;}   // two targets here, so colours are dragged rather than clicked
   const pat=tab==="pattern",list=pat?av.pat:av.eyes;
   const L=mk("button","sec","\u25C0\uFE0E"),R=mk("button","sec","\u25B6\uFE0E"),c=mk("canvas","opv"),lab=mk("div","olab"),pick=mk("div","opick");
   L.type=R.type="button";L.setAttribute("aria-label","Previous");R.setAttribute("aria-label","Next");
-  curShow=async()=>{const i=pat?pi:ei;lab.textContent=!list.length?"No art found":i<0?"None":"("+(i+1)+"/"+list.length+")";
+  let shTok=0;curShow=async()=>{const i=pat?pi:ei;lab.textContent=!list.length?"No art found":i<0?"None":"("+(i+1)+"/"+list.length+")";
     if(i<0){c.width=c.width;return;}
-    const d=await lay(list[i].l);if(d)renderSprite(c,[{data:d,indexes:cl[pat?1:2]}],GAME,0);};
+    const my=++shTok,cc=cl[pat?1:2],r=await iconEP(list[i].id,pat,cc);if(my!==shTok)return;
+    if(r){renderSprite(c,[r],GAME,0);return;}   // icon from data/icons; falls back to the animal's own layer art
+    const d=await lay(list[i].l);if(my===shTok&&d)renderSprite(c,[{data:d,indexes:cc}],GAME,0);};
   const step=d=>{if(!list.length)return;const lo=pat?-1:0,n=list.length-lo,i=((pat?pi:ei)-lo+d+n)%n+lo;if(pat)pi=i;else ei=i;curShow();paint();};   // patterns have a "None" stop before the first one
   L.onclick=()=>step(-1);R.onclick=()=>step(1);pick.append(L,c,R);p.append(pick,lab);curShow();
   pal(pat?1:2,pat?"Pattern colour":"Eye colour",0);   // only the first slot; the rest stay as the animal's defaults
@@ -1405,8 +2367,45 @@ avi.addEventListener("keydown",e=>{if(e.key==="Enter"&&avl.first){e.preventDefau
 $("o-reset").onclick=()=>{if(av){setAv(av,false);note("Animal reset.");}};
 /* save as image, save and load outfits (the code stays hidden; it is kept in this browser) */
 $("o-img").onclick=()=>{if(!av||cv.width<20)return;const s=3,o=document.createElement("canvas");o.width=cv.width*s;o.height=cv.height*s;
-  const x=o.getContext("2d");x.imageSmoothingEnabled=false;x.drawImage(cv,0,0,o.width,o.height);
+  const x=o.getContext("2d");
+  if(bg.img){const t=document.createElement("canvas");bgRender(t,o.width,o.height,Math.max(o.width,o.height),bg);x.drawImage(t,0,0,o.width,o.height);}
+  x.imageSmoothingEnabled=false;gvDraw(x,cv,o.width,o.height);
   o.toBlob(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=(av.name||"outfit")+(mode==="game"?" in-game":"")+".png";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000);});};
+/* upload background: choose a picture, then move/zoom it into place */
+(function(){
+  const m=$("o-bgm"),c=$("o-bgcv"),z=$("o-bgz"),ed=$("o-bged");let t=null,pend=null,drag=null;
+  const open=()=>{c.width=0;m.hidden=false;sync();};
+  function sync(){if(!pend)return;const r=cv.width>=20?cv.width/cv.height:1,W=Math.min(520,Math.round(innerWidth*.8)),H=Math.round(W/r);
+    const side=Math.max(W,H);const tmp={img:pend.img};
+    const keep=bg.img;bg.img=pend.img;bgRender(c,W,H,side,t);bg.img=keep;
+    if(cv.width>=20){const x=c.getContext("2d");x.imageSmoothingEnabled=false;gvDraw(x,cv,c.width,c.height);}
+    c.style.aspectRatio=r;z.value=t.zoom;}
+  const scale=()=>Math.max(c.width/pend.img.naturalWidth,c.height/pend.img.naturalHeight)*t.zoom;
+  const clampC=()=>{const iw=pend.img.naturalWidth,ih=pend.img.naturalHeight,sc=scale(),vw=c.width/sc/iw,vh=c.height/sc/ih;
+    t.cx=Math.min(Math.max(vw/2,t.cx),1-vw/2);t.cy=Math.min(Math.max(vh/2,t.cy),1-vh/2);};
+  c.onpointerdown=e=>{drag={x:e.clientX,y:e.clientY};try{c.setPointerCapture(e.pointerId);}catch(x){}};
+  c.onpointermove=e=>{if(!drag||!pend)return;const k=c.width/c.getBoundingClientRect().width,sc=scale();
+    t.cx-=(e.clientX-drag.x)*k/sc/pend.img.naturalWidth;t.cy-=(e.clientY-drag.y)*k/sc/pend.img.naturalHeight;drag={x:e.clientX,y:e.clientY};clampC();sync();};
+  c.onpointerup=c.onpointercancel=()=>{drag=null;};
+  c.onwheel=e=>{if(!pend)return;e.preventDefault();t.zoom=Math.min(4,Math.max(1,t.zoom*(e.deltaY<0?1.06:1/1.06)));clampC();sync();};
+  z.oninput=()=>{if(!pend)return;t.zoom=+z.value;clampC();sync();};
+  let edFi=-1;bgEdTick=()=>{if(!pend||m.hidden||!pend.img.anim)return;const i=bgFi(pend.img);if(i!==edFi){edFi=i;sync();}};
+  const close=()=>{m.hidden=true;pend=null;drag=null;};
+  $("o-bgc").onclick=close;
+  $("o-bgok").onclick=()=>{if(!pend)return;if(bg.url&&bg.url!==pend.url){try{URL.revokeObjectURL(bg.url);}catch(x){}}
+    bg.img=pend.img;bg.url=pend.url;bg.zoom=t.zoom;bg.cx=t.cx;bg.cy=t.cy;bg.ver++;ed.hidden=false;close();bgDraw(true);};
+  $("o-bgrm").onclick=()=>{if(bg.url)try{URL.revokeObjectURL(bg.url);}catch(x){}bg.img=null;bg.url="";bg.ver++;ed.hidden=true;close();bgDraw(true);};
+  $("o-bgup").onclick=()=>$("o-bgin").click();
+  $("o-bgin").onchange=async e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(!f)return;
+    if(!/^image\/(png|jpeg|gif)$/.test(f.type)&&!/\.(png|jpe?g|gif)$/i.test(f.name)){note("Please choose a PNG, JPEG or GIF.");return;}
+    if(f.type==="image/gif"||/\.gif$/i.test(f.name)){
+      try{const a=gifAnim(await f.arrayBuffer());if(a){pend={img:a,url:""};t={zoom:1,cx:.5,cy:.5};$("o-bgrm").hidden=true;open();return;}}catch(x){}
+    }
+    const u=URL.createObjectURL(f),im=new Image();
+    im.onload=()=>{pend={img:im,url:u};t={zoom:1,cx:.5,cy:.5};$("o-bgrm").hidden=true;open();};
+    im.onerror=()=>{URL.revokeObjectURL(u);note("That picture couldn't be opened.");};im.src=u;};
+  ed.onclick=()=>{if(!bg.img)return;pend={img:bg.img,url:bg.url};t={zoom:bg.zoom,cx:bg.cx,cy:bg.cy};$("o-bgrm").hidden=false;open();};
+})();
 let saved=[];try{saved=JSON.parse(localStorage.getItem("ajp-outfits")||"[]");}catch(e){}if(!Array.isArray(saved))saved=[];
 const persist=()=>{try{localStorage.setItem("ajp-outfits",JSON.stringify(saved));}catch(e){note("Couldn't save: browser storage is full or blocked.");}};
 function snap(){const t=document.createElement("canvas"),h=96;t.height=h;t.width=Math.max(1,Math.round(cv.width*h/cv.height));t.getContext("2d").drawImage(cv,0,0,t.width,t.height);return t.toDataURL("image/png");}
@@ -1418,10 +2417,191 @@ function load(str){
   $("o-av").value=a.name;renderWorn();panel();paint();
 }
 function outfitCode(){return btoa(JSON.stringify({a:av.id,c:cl,p:pi>=0?av.pat[pi].id:null,e:ei>=0?av.eyes[ei].id:null,w:worn.map(w=>[w.it.id,w.idx])}));}
-function saveDraft(){if(!av||cmode)return;try{localStorage.setItem("ajp-draft",outfitCode());}catch(e){}}   // outfit in progress, restored after a refresh
-$("o-save").onclick=()=>{if(!av||cv.width<20)return;
-  const code=outfitCode();
-  saved.unshift({n:$("o-name").value.trim()||av.name,t:snap(),c:code});saved=saved.slice(0,40);persist();renderSaved();$("o-name").value="";note("Outfit saved.");};
+function saveDraft(){if(!av||cmode)return;try{localStorage.setItem("ajp-draft",outfitCode());}catch(e){}}
+let hist=[],hi=-1,restoring=false;
+function histUpdate(){$("o-undo").disabled=hi<=0;$("o-redo").disabled=hi>=hist.length-1;}
+function record(){if(restoring||!av||cmode)return;let c;try{c=outfitCode();}catch(e){return;}if(c===hist[hi])return;
+  hist=hist.slice(0,hi+1);hist.push(c);if(hist.length>100)hist.shift();hi=hist.length-1;histUpdate();}
+function histGo(d){const n=hi+d;if(n<0||n>=hist.length)return;hi=n;restoring=true;try{load(hist[hi]);}finally{restoring=false;}histUpdate();}
+$("o-undo").onclick=()=>histGo(-1);$("o-redo").onclick=()=>histGo(1);
+document.addEventListener("keydown",e=>{if(!(e.ctrlKey||e.metaKey)||e.altKey)return;const k=e.key.toLowerCase();if(k!=="z"&&k!=="y")return;
+  const t=e.target;if(t&&/^(input|textarea|select)$/i.test(t.tagName))return;if($("pg-outfit").hidden||cmode||!IDX)return;
+  e.preventDefault();histGo(k==="y"||e.shiftKey?1:-1);});   // outfit in progress, restored after a refresh
+/* ---------- Avatars: saved outfits kept in folders (small previews in localStorage, full previews in IndexedDB) ---------- */
+let AV={f:[],a:[],m:0};try{const d=JSON.parse(localStorage.getItem("ajp-avatars")||"null");if(d&&Array.isArray(d.f)&&Array.isArray(d.a))AV=d;}catch(e){}
+const avPersist=()=>{try{localStorage.setItem("ajp-avatars",JSON.stringify(AV));}catch(e){note("Couldn't save: browser storage is full or blocked.");}};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+let avSel=null,editId=null,lastFolder=null;
+try{editId=localStorage.getItem("ajp-editing")||null;}catch(e){}
+const setEditId=v=>{editId=v;try{v?localStorage.setItem("ajp-editing",v):localStorage.removeItem("ajp-editing");}catch(e){}showEditing();};
+const avMem=new Map();let avdb=null;
+const avOpen=()=>avdb||(avdb=new Promise(r=>{try{const q=indexedDB.open("ajp-avatars",1);q.onupgradeneeded=()=>q.result.createObjectStore("img");q.onsuccess=()=>r(q.result);q.onerror=q.onblocked=()=>r(null);}catch(e){r(null);}}));
+async function imgOp(m,k,v){const d=await avOpen();if(!d)return m==="put"?(avMem.set(k,v),true):m==="get"?avMem.get(k):avMem.delete(k);
+  return new Promise(res=>{try{const t=d.transaction("img",m==="get"?"readonly":"readwrite"),st=t.objectStore("img"),q=m==="put"?st.put(v,k):m==="get"?st.get(k):st.delete(k);
+    q.onsuccess=()=>res(q.result);q.onerror=()=>res(null);}catch(e){res(null);}});}
+/* the Dress Up render of what is on now, whatever preview mode is showing */
+async function dressCanvas(){if(!av||cmode)return null;outfitPal();const L=await stack(viewList()),c=document.createElement("canvas");return renderSprite(c,L,GAME,0,false,clipB())?c:null;}
+function thumbOf(c){const t=document.createElement("canvas"),h=120;t.height=h;t.width=Math.max(1,Math.round(c.width*h/c.height));const x=t.getContext("2d");x.imageSmoothingQuality="high";x.drawImage(c,0,0,t.width,t.height);return t.toDataURL("image/png");}
+/* the old "Save outfit" list moves into a folder the first time */
+if(!AV.m){let old=[];try{old=JSON.parse(localStorage.getItem("ajp-outfits")||"[]");}catch(e){}
+  if(Array.isArray(old)&&old.length){const f={id:uid(),n:"Saved outfits"};AV.f.push(f);old.slice().reverse().forEach(o=>{if(o&&typeof o.c==="string")AV.a.push({id:uid(),n:String(o.n||"Outfit"),f:f.id,c:o.c,t:String(o.t||"")});});}
+  AV.m=1;avPersist();}
+const folderOf=id=>AV.f.find(f=>f.id===id);
+function showEditing(){const h=$("o-editing"),a=editId&&AV.a.find(x=>x.id===editId);if(!h)return;h.hidden=!a;if(a)h.textContent="Editing: "+a.n+(folderOf(a.f)?" ("+folderOf(a.f).n+")":"");}
+/* name / folder window */
+let dlgDone=null;
+function askDlg(o){return new Promise(res=>{const d=$("avd-n");$("avd-t").textContent=o.title;d.value=o.name||"";
+  $("avd-ok").textContent=o.ok||"Save";$("avd-fw").hidden=!o.folder;$("avd-nf").hidden=true;$("avd-nf").value="";
+  const sel=$("avd-f");sel.innerHTML="";
+  if(o.folder){AV.f.forEach(f=>{const op=mk("option",null,f.n);op.value=f.id;sel.append(op);});const nw=mk("option",null,"+ New folder...");nw.value="__new";sel.append(nw);
+    sel.value=folderOf(o.fid)?o.fid:(AV.f[0]?AV.f[0].id:"__new");$("avd-nf").hidden=sel.value!=="__new";}
+  $("av-dlg").hidden=false;setTimeout(()=>{d.focus();d.select();},0);dlgDone=r=>{$("av-dlg").hidden=true;dlgDone=null;res(r);};});}
+$("avd-f").onchange=()=>{$("avd-nf").hidden=$("avd-f").value!=="__new";if(!$("avd-nf").hidden)$("avd-nf").focus();};
+$("avd-x").onclick=()=>dlgDone&&dlgDone(null);
+$("av-dlg").addEventListener("click",e=>{if(e.target===$("av-dlg")&&dlgDone)dlgDone(null);});
+$("avd-ok").onclick=()=>{if(!dlgDone)return;const n=$("avd-n").value.trim();if(!n){$("avd-n").focus();return;}
+  let fid=$("avd-fw").hidden?null:$("avd-f").value,fn=null;
+  if(fid==="__new"){fn=$("avd-nf").value.trim();if(!fn){$("avd-nf").focus();return;}}
+  dlgDone({n,fid,fn});};
+$("av-dlg").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();$("avd-ok").click();}else if(e.key==="Escape"&&dlgDone)dlgDone(null);});
+/* saving from the Outfit creator */
+async function saveAvatar(asNew){
+  if(!av||cmode){return;}
+  const c=await dressCanvas();if(!c){note("Nothing to save yet.");return;}
+  const cur=!asNew&&editId&&AV.a.find(x=>x.id===editId),code=outfitCode(),t=thumbOf(c),big=c.toDataURL("image/png");
+  if(cur){cur.c=code;cur.t=t;AV.a=AV.a;avPersist();await imgOp("put",cur.id,big);showEditing();note("Saved "+cur.n+".");return;}
+  const base=asNew&&editId&&AV.a.find(x=>x.id===editId);
+  const r=await askDlg({title:asNew?"Save as new avatar":"Save avatar",name:base?base.n+" copy":av.name,folder:true,fid:lastFolder||(base&&base.f)||(AV.f[0]&&AV.f[0].id),ok:"Save"});
+  if(!r)return;
+  let fid=r.fid;if(fid==="__new"){const f={id:uid(),n:r.fn};AV.f.push(f);fid=f.id;}
+  const a={id:uid(),n:r.n,f:fid,c:code,t};AV.a.push(a);lastFolder=fid;avPersist();await imgOp("put",a.id,big);avSel=a.id;setEditId(a.id);note("Saved "+a.n+".");
+}
+$("o-save").onclick=()=>saveAvatar(false);
+$("o-copy").onclick=()=>{if(av&&!cmode)copyOutfitCode(outfitCode(),$("o-copy"));};
+$("o-savenew").onclick=()=>saveAvatar(true);
+$("o-browseav").onclick=()=>show("avatars");
+/* the Avatars page: square folders, open one to see its avatars; a view-only preview (Dress Up or In-game) on the right */
+let avFolder=null,avMode="dress",avTok=0,avTimer=0;const avGC=new Map();
+const stopAv=()=>{clearInterval(avTimer);avTimer=0;};
+const mkb=(t,c,fn)=>{const b=mk("button",c,t);b.type="button";b.onclick=fn;return b;};
+const isPng=v=>String(v).startsWith("data:image/png");
+function stateOf(str){
+  let d;try{d=JSON.parse(atob(str));}catch(e){return null;}
+  const a=IDX&&IDX.avatars.find(x=>x.id===d.a);if(!a)return null;
+  const c=Array.isArray(d.c)&&d.c.length===3&&d.c.every(ok4)?d.c:a.c.map(unpack),w=[];
+  for(const[id,ix]of Array.isArray(d.w)?d.w:[]){const z=byId.get(String(id));if(z&&z.l[a.id])w.push({it:z,idx:ok4(ix)?ix:unpack(z.c)||[0,0,0,0]});}
+  return{av:a,cl:c,pi:d.p==null?-1:fi(a.pat,d.p,a.dp),ei:fi(a.eyes,d.e,a.de,true),worn:w};
+}
+async function avGameFrames(a){
+  const k=a.id+"|"+a.c;if(avGC.has(k))return avGC.get(k);
+  await ensure();if(!IDX)return null;
+  const S=stateOf(a.c);if(!S)return null;
+  const[L,seq]=await Promise.all([stack(S.worn,false,true,S),gseq(S.av)]);
+  const n=L.reduce((m,l)=>Math.max(m,l.data.f.length),0);if(!L.length||!n)return null;
+  const order=(seq&&seq.length?seq:Array.from({length:n},(_,i)=>i)).map(i=>Number.isInteger(i)?i:0),fr=[];
+  for(const i of order){const c=document.createElement("canvas");if(renderSprite(c,L,GAME,i,true))fr.push(c);}
+  if(avGC.size>12)avGC.clear();avGC.set(k,fr);return fr;
+}
+/* backup: every folder, outfit (with its preview), saved custom item and saved palette in one .json file; importing adds to what is already here */
+async function exportAll(){
+  try{
+    const imgs={};for(const a of AV.a){const v=await imgOp("get",a.id);if(typeof v==="string")imgs[a.id]=v;}
+    let customs=[];try{customs=(await cAll())||[];}catch(e){}
+    let palettes=[];try{palettes=JSON.parse(localStorage.getItem("ajp-saved")||"[]");}catch(e){}
+    const data={app:"ajp-backup",v:1,at:new Date().toISOString(),avatars:{f:AV.f,a:AV.a},imgs,customs,palettes};
+    const b=new Blob([JSON.stringify(data)],{type:"application/json"}),a=document.createElement("a");
+    a.href=URL.createObjectURL(b);a.download="outfits-backup-"+new Date().toISOString().slice(0,10)+".json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+    note("Exported "+AV.a.length+(AV.a.length===1?" outfit":" outfits")+(customs.length?" and "+customs.length+" custom "+(customs.length===1?"item":"items"):"")+".");
+  }catch(e){note("Couldn't export.");}
+}
+async function importAll(file){
+  try{
+    const d=JSON.parse(await file.text());
+    if(!d||d.app!=="ajp-backup"||!d.avatars||typeof d.avatars!=="object")throw new Error("format");
+    const str=v=>typeof v==="string",png=v=>str(v)&&/^data:image\/png;base64,/.test(v),arr=v=>Array.isArray(v)?v:[];
+    const fmap=new Map();let nf=0,na=0,nc=0,np=0;
+    for(const f of arr(d.avatars.f)){if(!f||!str(f.id)||!str(f.n))continue;
+      const ex=AV.f.find(x=>x.id===f.id);if(ex){fmap.set(f.id,ex.id);continue;}
+      AV.f.push({id:f.id,n:f.n.slice(0,60)});fmap.set(f.id,f.id);nf++;}
+    for(const a of arr(d.avatars.a)){if(!a||!str(a.id)||!str(a.n)||!str(a.c))continue;
+      try{JSON.parse(atob(a.c));}catch(e){continue;}
+      let id=a.id;const ex=AV.a.find(x=>x.id===id);
+      if(ex){if(ex.c===a.c)continue;id=uid();}   // same outfit already here: skip; same id but a different outfit: keep both
+      let fid=fmap.get(a.f);
+      if(!fid){let im=AV.f.find(x=>x.n==="Imported");if(!im){im={id:uid(),n:"Imported"};AV.f.push(im);nf++;}fid=im.id;}
+      AV.a.push({id,n:a.n.slice(0,60),f:fid,c:a.c,t:png(a.t)?a.t:""});
+      const big=d.imgs&&d.imgs[a.id];if(png(big))await imgOp("put",id,big);
+      na++;}
+    let have0=[];try{have0=(await cAll())||[];}catch(e){}
+    for(const r of arr(d.customs)){if(!r||!str(r.id)||!str(r.name)||!str(r.base)||!png(r.png))continue;
+      const ex=have0.find(x=>x.id===r.id);if(ex&&ex.png===r.png&&ex.name===r.name)continue;
+      try{await cPut({id:r.id,name:r.name.slice(0,30),base:r.base,mode:r.mode==="texture"?"texture":"sticker",png:r.png,p:r.p&&typeof r.p==="object"?r.p:null,t:Number(r.t)||Date.now()});nc++;}catch(e){}}
+    let pal=[];try{pal=JSON.parse(localStorage.getItem("ajp-saved")||"[]");}catch(e){}if(!Array.isArray(pal))pal=[];
+    const have=new Set(pal.map(x=>JSON.stringify(x)));
+    for(const x of arr(d.palettes)){if(!x||typeof x!=="object")continue;const j=JSON.stringify(x);if(j.length>20000||have.has(j))continue;have.add(j);pal.push(x);np++;}
+    if(np)try{localStorage.setItem("ajp-saved",JSON.stringify(pal));}catch(e){}
+    if(!(na+nf+nc+np)){note("Nothing new in that file: it is all here already.");return;}
+    avPersist();
+    const parts=[na&&na+(na===1?" outfit":" outfits"),nc&&nc+(nc===1?" custom item":" custom items"),np&&np+(np===1?" palette":" palettes")].filter(Boolean);
+    note("Imported "+(parts.join(", ")||"folders")+". Reloading...",true);setTimeout(()=>location.reload(),900);
+  }catch(e){note("That isn't a backup file from this page.");}
+}
+$("av-exp").onclick=exportAll;
+$("av-imp").onclick=()=>$("av-impf").click();
+$("av-impf").onchange=e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(f)importAll(f);};
+async function newFolder(){const r=await askDlg({title:"New folder",name:"",ok:"Create"});if(!r)return;const f={id:uid(),n:r.n};AV.f.push(f);avPersist();renderAvatars();}
+function renderAvatars(){
+  const L=$("av-list"),T=$("av-tool");L.innerHTML="";T.innerHTML="";
+  let f=avFolder&&folderOf(avFolder);if(avFolder&&!f)avFolder=null;
+  if(!f){
+    T.append(mk("b",null,"Folders"),mkb("New folder","sec",newFolder));
+    if(!AV.f.length)L.append(mk("div","avnote","No folders yet. Make one, or press Save in the Outfit creator."));
+    const g=mk("div","avfg");
+    AV.f.forEach(fo=>{const items=AV.a.filter(a=>a.f===fo.id),b=mkb("","avfo",()=>{avFolder=fo.id;renderAvatars();}),m=mk("span","avmo");
+      b.title=fo.n;items.slice(0,4).forEach(a=>{const im=mk("img");im.alt="";if(isPng(a.t))im.src=a.t;m.append(im);});
+      b.append(m,mk("span","fn",fo.n),mk("span","fc",items.length+(items.length===1?" avatar":" avatars")));g.append(b);});
+    L.append(g);
+  }else{
+    const items=AV.a.filter(a=>a.f===f.id);
+    T.append(mkb("\u2190 All folders","sec",()=>{avFolder=null;renderAvatars();}),mk("b",null,f.n),
+      mkb("Rename","sec",async()=>{const r=await askDlg({title:"Rename folder",name:f.n,ok:"Rename"});if(r){f.n=r.n;avPersist();renderAvatars();showEditing();}}),
+      mkb("Delete","sec",()=>{if(items.length&&!confirm('Delete "'+f.n+'" and the '+items.length+" avatar(s) in it?"))return;
+        items.forEach(a=>imgOp("del",a.id));AV.a=AV.a.filter(a=>a.f!==f.id);AV.f=AV.f.filter(x=>x!==f);avFolder=null;
+        if(!AV.a.some(a=>a.id===avSel))avSel=null;if(editId&&!AV.a.some(a=>a.id===editId))setEditId(null);avPersist();renderAvatars();}));
+    const g=mk("div","avg");
+    if(!items.length)g.append(mk("div","avnote","Empty folder. Save an outfit from the Outfit creator into it."));
+    items.forEach(a=>{const b=mkb("","avt",()=>{avSel=a.id;renderAvatars();}),im=mk("img");b.title=a.n;im.alt="";if(isPng(a.t))im.src=a.t;
+      b.classList.toggle("on",a.id===avSel);b.append(im,mk("span",null,a.n));g.append(b);});
+    L.append(g);
+  }
+  showAvatar();
+}
+async function showAvatar(){
+  const a=AV.a.find(x=>x.id===avSel),big=$("av-big"),t=++avTok;stopAv();
+  $("av-ctl").hidden=$("av-sub").hidden=$("av-mode").hidden=!a;$("av-hint").textContent="";
+  $("av-vd").classList.toggle("on",avMode==="dress");$("av-vg").classList.toggle("on",avMode==="game");
+  if(!a){$("av-name").textContent="No avatar selected";big.innerHTML="";big.append(mk("span","avnote","Pick an avatar to preview it."));return;}
+  $("av-name").textContent=a.n;
+  const mv=$("av-move");mv.innerHTML="";AV.f.forEach(f=>{const o=mk("option",null,f.n);o.value=f.id;mv.append(o);});mv.value=a.f;
+  if(avMode==="game"){
+    big.innerHTML="";const msg=mk("span","avnote","Loading in-game preview...");big.append(msg);
+    let fr=null;try{fr=await avGameFrames(a);}catch(e){}
+    if(t!==avTok)return;
+    if(!fr||!fr.length){msg.textContent="No in-game art found for this avatar.";return;}
+    big.innerHTML="";const cvs=document.createElement("canvas"),x=cvs.getContext("2d");big.append(cvs);let i=0;
+    const draw=()=>{const s=fr[i++%fr.length];if(cvs.width!==s.width||cvs.height!==s.height){cvs.width=s.width;cvs.height=s.height;}else x.clearRect(0,0,cvs.width,cvs.height);x.drawImage(s,0,0);};
+    draw();if(fr.length>1)avTimer=setInterval(draw,FRAME_MS);return;
+  }
+  const url=await imgOp("get",a.id);if(t!==avTok)return;
+  big.innerHTML="";const im=mk("img"),ok=typeof url==="string"&&isPng(url);im.alt=a.n;im.classList.add("frm");im.onload=()=>{const r=im.naturalWidth/im.naturalHeight;if(!(r>0))return;im.style.aspectRatio=r;if(r>=1){im.style.width="100%";im.style.height="auto";}else{im.style.height="100%";im.style.width="auto";}};im.src=ok?url:a.t;big.append(im);
+  if(!ok)$("av-hint").textContent="This is a small preview. Press Edit, then Save, to store a full-size one.";
+}
+$("av-vd").onclick=()=>{avMode="dress";showAvatar();};$("av-vg").onclick=()=>{avMode="game";showAvatar();};
+$("av-move").onchange=()=>{const a=AV.a.find(x=>x.id===avSel);if(!a)return;a.f=$("av-move").value;avPersist();renderAvatars();};
+$("av-ren").onclick=async()=>{const a=AV.a.find(x=>x.id===avSel);if(!a)return;const r=await askDlg({title:"Rename avatar",name:a.n,ok:"Rename"});if(!r)return;a.n=r.n;avPersist();renderAvatars();showEditing();};
+$("av-del").onclick=()=>{const a=AV.a.find(x=>x.id===avSel);if(!a||!confirm('Delete "'+a.n+'"?'))return;imgOp("del",a.id);AV.a=AV.a.filter(x=>x!==a);avSel=null;if(editId===a.id)setEditId(null);avPersist();renderAvatars();};
+$("av-copy").onclick=()=>{const a=AV.a.find(x=>x.id===avSel);if(a)copyOutfitCode(a.c,$("av-copy"));};
+$("av-edit").onclick=async()=>{const a=AV.a.find(x=>x.id===avSel);if(!a)return;await show("outfit");if(!IDX)return;load(a.c);setEditId(a.id);};
 /* ---------- small popups (copy-code tip, contact) ---------- */
 const pop=$("pop");
 function showPop(html){$("pop-t").innerHTML=html;pop.classList.toggle("dark",dark);pop.hidden=false;$("pop-ok").focus();}
@@ -1436,16 +2616,29 @@ async function copyText(t){
 }
 async function copyOutfitCode(code,btn){
   if(!await copyText(code)){note("Couldn't copy. Your browser blocked it.");return;}
-  btn.textContent="Copied!";setTimeout(()=>{btn.textContent="Copy code";},1500);
+  const l=btn.dataset.l||(btn.dataset.l=btn.textContent);btn.textContent="Copied!";setTimeout(()=>{btn.textContent=l;},1500);
 }
 function renderSaved(){
-  const h=$("o-saved");h.innerHTML="";if(cmode){renderCustomSaved(h);return;}if(!saved.length){h.append(mk("div","onote","No saved outfits yet."));return;}
+  const h=$("o-saved");h.innerHTML="";if(cmode){renderCustomSaved(h);return;}return;
   saved.forEach((s,i)=>{const r=mk("div","orow"),im=mk("img");if(String(s.t).startsWith("data:image/png"))im.src=s.t;im.alt="";
     const l=mk("button",null,"Load"),k=mk("button","sec","Copy code"),d=mk("button","sec","\u2715");l.type=k.type=d.type="button";d.title="Delete";
     l.onclick=()=>load(s.c);k.onclick=()=>copyOutfitCode(s.c,k);d.onclick=()=>{saved.splice(i,1);persist();renderSaved();};r.append(im,mk("span",null,s.n),l,k,d);h.append(r);});
 }
 /* ---------- Custom item preview: a PNG on top of a base item, as a sticker or a texture ---------- */
-function entryThumb(w){const c=mk("canvas");(async()=>{if(!av||!w.it.l[av.id])return;try{renderSprite(c,await stack([w],true),GAME,0);}catch(e){}})();return c;}
+/* draw an item's catalogue icon into c (with its custom image on top when it has one); false when it has no icon */
+async function iconCuPaint(c,w){
+  try{const z=w.it,base=z.cu?byId.get(String(z.base)):z,cu=cuOf(w);
+    if(!base)return false;await iconIndex();
+    if(!(ICONS&&ICONS[base.id]))return false;
+    const d=await iconLayer(base.id);
+    return !!(d&&renderSprite(c,[{data:d,indexes:(w.idx||iconStart(base)).map(v=>v==null?0:v),cu:cu||undefined}],GAME,0));
+  }catch(e){return false;}
+}
+function entryThumb(w){const c=mk("canvas");(async()=>{
+  /* same picture as every other item: the item's catalogue icon (a custom image is laid over its base item's icon); only when there is no icon does it fall back to the worn sprite */
+  if(await iconCuPaint(c,w))return;
+  if(!av||!w.it.l[av.id])return;try{renderSprite(c,await stack([w],true),GAME,0);}catch(e){}
+})();return c;}
 const CU_MAX=1024;   // uploads are shrunk to this many pixels on the long side so they stay light to store
 function toCanvas(src,w,h){const m=Math.min(1,CU_MAX/Math.max(w,h)),c=document.createElement("canvas");c.width=Math.max(1,Math.round(w*m));c.height=Math.max(1,Math.round(h*m));
   const x=c.getContext("2d");x.imageSmoothingQuality="high";x.drawImage(src,0,0,c.width,c.height);return c;}
@@ -1465,7 +2658,9 @@ function addCustom(r,base,img,front){
 async function loadCustoms(){
   let R=[];try{R=(await cAll())||[];}catch(e){}
   R.sort((a,b)=>(b.t||0)-(a.t||0));
-  for(const r of R){const base=byId.get(String(r.base));if(!base||!r.png)continue;try{addCustom(r,base,await loadImg(r.png));}catch(e){}}
+  /* decode every saved image at the same time (it used to be one after another), then add them in order */
+  const imgs=await Promise.all(R.map(r=>byId.get(String(r.base))&&r.png?loadImg(r.png).catch(()=>null):null));
+  R.forEach((r,i)=>{const base=byId.get(String(r.base));if(base&&imgs[i]){try{addCustom(r,base,imgs[i]);}catch(e){}}});
 }
 /* switch between the Outfit creator and this tab: same preview, its own list of items */
 function setCm(c){
@@ -1611,7 +2806,7 @@ function loadCustom(z){
   if(!base||!av||!base.l[av.id]){note((base?base.n:"That item")+" has no art for "+(av?av.name:"this animal")+".");return;}
   worn=worn.filter(w=>w.it!==base&&w.sid!==z.id);
   const same=worn.filter(w=>w.it.s===base.s);if(same.length>=3)worn.splice(worn.indexOf(same[0]),1);
-  worn.push({it:base,idx:unpack(base.c)||[0,0,0,0],cu:{img:z.cu.img,mode:z.cu.mode,png:z.cu.png,p:z.cu.p?Object.assign({},z.cu.p):null},sid:z.id,sname:z.n});
+  addWorn(worn,{it:base,idx:unpack(base.c)||[0,0,0,0],cu:{img:z.cu.img,mode:z.cu.mode,png:z.cu.png,p:z.cu.p?Object.assign({},z.cu.p):null},sid:z.id,sname:z.n});
   renderWorn();paint();
 }
 async function delCustom(z){
@@ -1627,12 +2822,17 @@ let ens=null;
 function ensure(){if(!ens)ens=_ensure().then(()=>{if(!IDX)ens=null;},()=>{ens=null;});return ens;}
 async function _ensure(){
   if(IDX)return;
+  note("Loading outfit art...",true);
   for(const d of (DATA_BASE?[DATA_BASE+"outfit/"]:[]).concat(["data/outfit/","outfit/"])){DB=d;try{IDX=await xhrJSON(d+"index.json");if(IDX.avatars.length)break;}catch(e){}IDX=null;}   // also finds the folder if it sits right next to this page
   if(!IDX){note("Outfit art not found. Check DATA_BASE at the top of the script (it must point at the folder holding outfit/index.json) and that the host allows cross-origin reads. The page must be opened from your website or a local server, not by double-clicking the file.",true);return;}
   note("",true);
   for(const z of IDX.items){byName.set(norm(z.n),z);byId.set(z.id,z);}
-  await loadCustoms();renderSaved();let dr=null;try{dr=localStorage.getItem("ajp-draft");}catch(e){}
-  if(dr)load(dr);if(!av){note("",true);setAv(IDX.avatars[0],false);}
+  noteOutfit(IDX.items);
+  /* saved custom items load alongside; the avatar no longer waits for them unless the outfit being restored may use one */
+  const cp=loadCustoms().catch(()=>{});let dr=null;try{dr=localStorage.getItem("ajp-draft");}catch(e){}
+  if(dr){await cp;renderSaved();load(dr);}else cp.then(()=>renderSaved());
+  showEditing();if(!av){note("",true);setAv(IDX.avatars[0],false);}
+  window.dispatchEvent(new Event("ajp-ready"));
 }
 show(location.hash==="#palette"?"color":"outfit");
 })();
