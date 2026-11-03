@@ -2599,7 +2599,7 @@ async function showAvatar(){
 $("av-vd").onclick=()=>{avMode="dress";showAvatar();};$("av-vg").onclick=()=>{avMode="game";showAvatar();};
 $("av-move").onchange=()=>{const a=AV.a.find(x=>x.id===avSel);if(!a)return;a.f=$("av-move").value;avPersist();renderAvatars();};
 $("av-ren").onclick=async()=>{const a=AV.a.find(x=>x.id===avSel);if(!a)return;const r=await askDlg({title:"Rename avatar",name:a.n,ok:"Rename"});if(!r)return;a.n=r.n;avPersist();renderAvatars();showEditing();};
-$("av-del").onclick=()=>{const a=AV.a.find(x=>x.id===avSel);if(!a||!confirm('Delete "'+a.n+'"?'))return;imgOp("del",a.id);AV.a=AV.a.filter(x=>x!==a);avSel=null;if(editId===a.id)setEditId(null);avPersist();renderAvatars();};
+$("av-del").onclick=()=>{const a=AV.a.find(x=>x.id===avSel);if(!a)return;imgOp("del",a.id);AV.a=AV.a.filter(x=>x!==a);avSel=null;if(editId===a.id)setEditId(null);avPersist();renderAvatars();};
 $("av-copy").onclick=()=>{const a=AV.a.find(x=>x.id===avSel);if(a)copyOutfitCode(a.c,$("av-copy"));};
 $("av-edit").onclick=async()=>{const a=AV.a.find(x=>x.id===avSel);if(!a)return;await show("outfit");if(!IDX)return;load(a.c);setEditId(a.id);};
 /* ---------- small popups (copy-code tip, contact) ---------- */
